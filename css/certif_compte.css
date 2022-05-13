@@ -1,0 +1,68 @@
+body{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin: 0;
+    background-image: url("../img/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    gap:140px;
+    background-attachment: fixed;
+}
+
+#upside{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 99.8%;
+    background-color: #cd0000;
+    border: 2px solid #1d1e22;
+}
+
+#agrailleImg{
+    position: relative;
+    flex-shrink: 50;
+    width: 16%;
+    height: inherit;
+}
+
+#squareSign{
+    border: 2px solid #1d1e22;
+    width:25%;
+    border-radius: 10px;
+    background-color: #b90000;
+
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    font-family: consolas;
+    padding-left: 5%;
+    padding-right: 5%;
+    gap:50px;
+    font-size: 120%;
+    align-content: space-between;
+}
+
+#main{
+    flex:0;
+    text-align:center;
+    font-size: 166%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22;
+
+}
+
+#certif{
+    flex:1;
+    text-align:center;
+    font-size: 80%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22;
+    cursor:pointer;
+    margin-bottom: 30%;
+}

@@ -1,0 +1,218 @@
+body{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin: 0;
+    background-image: url("../img/background.png");
+    background-size: cover;
+    gap:50px;
+    overflow: hidden;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+#upside{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 99.8%;
+    background-color: #cd0000;
+    border: 2px solid #1d1e22;
+}
+
+#agrailleImg{
+    position: relative;
+    flex-shrink: 50;
+    width: 16%;
+    height: inherit;
+}
+
+#squareSign{
+    flex-shrink: 100;
+    border: 2px solid #1d1e22;
+    width:25%;
+    height: auto;
+    border-radius: 10px;
+    background-color: #b90000;
+
+    display: flex;
+    flex-direction:column;
+    font-family: consolas;
+    padding-left: 2%;
+    padding-right: 2%;
+    gap:10px;
+    font-size: 120%;
+    align-content: space-between;
+}
+
+#main{
+    flex:0;
+    text-align:center;
+    font-size: 166%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22;
+    margin-bottom:0;
+}
+
+#form{
+    display:flex;
+    flex-direction:column;
+    font-family: consolas;
+    padding-left: 2%;
+    padding-right: 2%;
+    gap: 3px;
+    font-size: 120%;
+    align-content: space-between;
+}
+
+#pngD{
+    border: white dashed 2px; 
+    border-radius: 100%;
+    height: 120px;
+    width:26%;
+    margin-left: 36%;
+    position: relative;
+}
+
+#pngI{
+    border-radius: 100%;
+    height: 102%;
+    width:100%;
+    opacity: 0;
+    position: absolute;
+    cursor:pointer;
+}
+
+#labelPP{
+    font-size: 80%;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22;
+    text-align: center;
+    margin-bottom: 0;
+    position: absolute;
+}
+
+#labelPseudo{
+    flex:0;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22
+}
+
+#pseudo{
+    flex:1;
+    outline:none;
+    border-radius: 4px;
+    background-color: #ad2e2e;
+    border:1px solid #1d1e22;
+    padding:3%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+}
+
+#labelEmail{
+    flex:2;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22
+}
+
+#email{
+    flex:3;
+    outline:none;
+    border-radius: 4px;
+    background-color: #ad2e2e;
+    border:1px solid #1d1e22;
+    padding:3%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+}
+
+#labelPass{
+    flex:4;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22
+}
+
+#password{
+    flex:5;
+    outline:none;
+    border-radius: 4px;
+    background-color: #ad2e2e;
+    border:1px solid #1d1e22;
+    padding:3%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+}
+
+#labelVerif{
+    flex:6;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+    text-shadow: 2px 0 0 #1d1e22, -2px 0 0 #1d1e22, 0 2px 0 #1d1e22, 0 -2px 0 #1d1e22, 1px 1px #1d1e22, -1px -1px #1d1e22
+}
+
+#verif_password{
+    flex:7;
+    outline:none;
+    border-radius: 4px;
+    background-color: #ad2e2e;
+    border:1px solid #1d1e22;
+    padding:3%;
+    letter-spacing: 1px;
+    font-weight: bold;
+    color:white;
+}
+
+#signin{
+    flex:8;
+    padding-top:3%;
+    padding-bottom: 3%;
+    background-color: #cd0000;
+    border:2px solid #1d1e22;
+    border-radius: 3px;
+    width:50%;
+    margin-left: 24%;
+    outline:none;
+    cursor:pointer;
+    margin-top: 10%;
+    font-weight: bold;
+}
+
+#signin:hover{
+    animation: 1s linear txtBtoR forwards;
+    transition: transform 1s;
+    transform: scale(1.2,1.2);
+}
+
+
+
+/* ANIMATION */
+
+
+@keyframes txtBtoR
+{
+    0%{
+        color:#1d1e22;
+        background-color:#9A1818;
+    }
+    10%{
+        color:#9A1818;
+    }
+    100%{
+        color:#9A1818;
+        background-color:#1d1e22;
+    }
+}
