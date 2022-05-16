@@ -1,0 +1,34 @@
+  h2 {
+    position: relative;
+    text-align: center;
+    top: 2rem;
+  }
+
+  #p1 {
+    position: relative;
+    right : 15%;
+  }
+  
+  #p2 {
+    position: relative;
+  }
+
+  #p3 {
+    position: relative;
+    left: 15%;
+  }
+
+  #p4 {
+    position: relative;
+    top: 25%;
+    text-align: center;
+  }
+
+  .filtre {
+    display: flex;
+    position: relative;
+    top: 15%;
+    right: 1.4%;
+    justify-content: center;
+    text-align: center;
+  }
