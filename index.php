@@ -1,3 +1,27 @@
+<?php
+session_start();
+
+try{
+    $conn = new PDO(
+        'mysql:host=localhost;dbname=agrailledb;charset=utf8',
+        'root',
+        '',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    }
+catch (Exception $e)
+    {
+            die('Erreur : ' . $e->getMessage());
+    }
+
+    if (isset($_SESSION['idCompte']))
+    {  
+        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id = 2147185026');
+        $insertP -> execute();
+        $insertP = $insertP->fetchAll();
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,8 +82,18 @@
                     </form>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
-                        <a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
-                        <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>
+                    <?php
+                        if(isset($_SESSION['idCompte'])){
+                           echo "<img id='img_profil_pics' src='data:". $insertP[0]['mime'] .";base64," . base64_encode($insertP[0]['photo_de_profil']) . "' alt='photo de profil'>";
+                           echo "<div class='container_arrow'>
+                                    <span class='arrow'></span>
+                                    <span class='arrow'></span>
+                                 </div>";
+                        }else{
+                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                        }
+                     ?>
                 </div>
             </div>
         </nav>
