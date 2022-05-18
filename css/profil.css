@@ -1,0 +1,96 @@
+main{
+    display: grid;
+    grid-template-rows: 1px 1fr;
+    grid-template-areas:
+        "Titre"
+        "cartes";
+    /* background-color: #9A1818; */
+    }
+    
+    #main{
+    /* display: grid; */
+    grid-area: cartes;
+    /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
+    height: 100vh;
+    background-color: #9A1818;
+    border-top: none;
+    border: black solid 2px; 
+    }
+    
+    h1 {
+        text-align:center;
+    }
+    
+    #container_profil {
+        border-top: solid black;
+        width: 100%;
+        height: 200px;
+        gap: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #profil_pic_button {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: column;
+    }
+    
+    #profil_pic {
+        border: dashed black;
+        border-radius: 100%;
+    }
+    
+    #wrapper_information {
+        border-top: solid black;
+        width: 100%;
+        padding-top: 10px;
+    }
+    
+    /* #wrapper_information #password_input {
+        padding: 4px 0px 0px 0px;
+        border-radius: 3px;
+        background-color: #9A1818;
+        border: solid black;
+        outline:none;
+    } */
+    
+    label {
+        font-weight: bolder;
+        font-size: large;
+    }
+    
+    #send_form_button {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    #send_form_button input{
+        width: 150px;
+        height: 40px;
+        background: #1d1e22;
+        color: #9A1818;
+        font-weight: bold;
+    }
+    
+    #uninscription_button {
+        width: 100%;
+        text-align: center;
+    
+    }
+    
+    #uninscription_button input {
+        background-color: red;
+        font-size: x-large;
+        font-weight: bolder;
+        color: #1d1e22;
+        border: solid #1d1e22;
+        margin-top: 30px;
+        padding: 10px;
+        text-align: center;
+    }
+    
