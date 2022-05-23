@@ -68,12 +68,30 @@ $insertP = $insertP->fetchAll();
                     </form>
                 </div>
                 <div class="d-grid gap-2 d-md-block">
-                    <a href="connexion.php"><button type="button" class="btn btn-primary">Se connecter</button></a>
-                    <a href="inscription.php"><button type="button" class="btn btn-primary">S'inscrire</button></a>
+                    <?php
+                        if(isset($_SESSION['idCompte'])){
+                           echo "<img id='img_profil_pics' src='data:". $insertP[0]['mime'] .";base64," . base64_encode($insertP[0]['photo_de_profil']) . "' alt='photo de profil'>";
+                           echo "<div class='container_arrow'>
+                                    <span class='arrow'></span>
+                                    <span class='arrow'></span>
+                                 </div>";
+                        }else{
+                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                        }
+                     ?>
                 </div>
             </div>
         </nav>
     </header>
+    <div class="profil_menu">
+        <ul>
+            <li><?php echo $_SESSION["pseudo"] ?></li>
+            <li><a href="profil.php">Voir profil</a></li>
+            <li><a href="#">Créer une recette</a></li>
+            <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
+        </ul>
+    </div>
     <main>
         <div id="main">
             <h1>Profil</h1>

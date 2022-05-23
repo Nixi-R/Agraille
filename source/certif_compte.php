@@ -40,7 +40,7 @@ if (isset($recipeStatement[0]['pseudo']))
                 
         }
     }
-}
+
 
 $id = random_int(0, 2147483647);
 
