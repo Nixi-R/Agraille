@@ -6,7 +6,7 @@ if(!(isset($_SESSION['idCompte'])))
 $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
-$insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id = 2147185026');
+$insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte']);
 $insertP -> execute();
 $insertP = $insertP->fetchAll();
 
