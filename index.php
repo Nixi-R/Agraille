@@ -16,7 +16,7 @@ catch (Exception $e)
 
     if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id = 2147185026');
+        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
