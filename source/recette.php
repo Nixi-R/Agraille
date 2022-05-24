@@ -108,6 +108,7 @@ catch (Exception $e)
     </div>
     <main>
         <h2>Nom_de_la_recette</h2>
+        <div>
         <section id="image_plat">
             <img src="../img/tartine.jpg">
             <div id="recette_info">
@@ -134,6 +135,7 @@ catch (Exception $e)
         </section>
         <section id="espace_commantaire">
         </section>
+                    </div>
     </main>
     <script src="../js/scriptIndex.js"></script>
 </body>
