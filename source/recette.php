@@ -16,9 +16,22 @@ catch (Exception $e)
 
         if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id = 2147185026');
+        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id =' .$_SESSION['idCompte']);
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
+    }
+
+    if(isset($_POST['submit_commentaire'])) {
+        if(isset($_POST['pseudo'],$_POST['commentaire']) AND !empty($_POST['pseudo']) AND !empty($_POST['commentaire'])){
+            $pseudo = htmlspecialchars($_SESSION['pseudo']);
+            $commentaire = htmlspecialchars($_POST['commentaire']);
+            $ins = $bdd->prepare('INSERT INTO commentaire (pseudo, commentaire, id_recette) VALUES (?,?,?)');
+            $ins->execute(array($pseudo, $commentaire, $getid));
+            $c_error = "Votre commentaire a bien été posté";
+
+        }else {
+            $c_error = "Tous les champs doivent être complétés";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -126,6 +139,7 @@ catch (Exception $e)
             <p>ingredient<p>
         </section>
         <section id="etape">
+            <h2>Etapes</h2>
             <p>Etape 1</p>
             <p>Etape 2</p>
             <p>Etape 3</p>
@@ -134,9 +148,14 @@ catch (Exception $e)
             <p>Etape 6</p>
             <p>Etape 7</p>
         </section>
-        <section id="espace_commantaire">
-            
-        </section>
+        <section id="espace_commentaire">
+            <h2>Commentaires</h2>
+            <form method="POST">
+                <input type="text" name="pseudo" placeholder="Votre pseudo"/>
+                <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
+                <input type="submit" value="Poster mon commentaire" name="submit_commentaire">
+            </form>
+            <?php if(isset($c_error)){echo $c_error;}?>
         </div>
     </main>
     <script src="../js/scriptIndex.js"></script>

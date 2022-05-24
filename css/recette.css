@@ -42,3 +42,9 @@ h2 {
     border-bottom: solid;
     width: 50%;
 }
+
+#espace_commentaire form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
