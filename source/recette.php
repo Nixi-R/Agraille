@@ -29,13 +29,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $article->execute(array($getid));
     $article = $article->fecth();
 
-    $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_article = ?');
-    $commentaires->execute(array($getid)); 
     if(isset($_POST['submit_commentaire'])) {
         if(isset($_POST['pseudo'],$_POST['commentaire']) AND !empty($_POST['pseudo']) AND !empty($_POST['commentaire'])){
             $pseudo = htmlspecialchars($_SESSION['pseudo']);
             $commentaire = htmlspecialchars($_POST['commentaire']);
-            $ins = $bdd->prepare('INSERT INTO commentaire (pseudo, commentaire, id_recette) VALUES (?,?,?)');
+            $ins = $bdd->prepare('INSERT INTO commentaire (pseudo, commentaire, post_jour, temps, id_recette) VALUES (?,?,NOW(),NOW(),?)');
             $ins->execute(array($pseudo, $commentaire, $getid));
             $c_error = "Votre commentaire a bien été posté";
 
@@ -43,6 +41,9 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             $c_error = "Tous les champs doivent être complétés";
         }
     }
+
+    $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_article = ? ORDER BY id DESC');
+    $commentaires->execute(array($getid));
 }
 ?>
 <!DOCTYPE html>
