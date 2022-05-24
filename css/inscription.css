@@ -70,7 +70,7 @@ body{
 #pngD{
     border: white dashed 2px; 
     border-radius: 100%;
-    height: 80px;
+    height: 65px;
     width:15%;
     margin-left: 42%;
     position: relative;
@@ -109,7 +109,7 @@ body{
     border-radius: 4px;
     background-color: #ad2e2e;
     border:1px solid #1d1e22;
-    padding:3%;
+    padding:2%;
     letter-spacing: 1px;
     font-weight: bold;
     color:white;
@@ -129,7 +129,7 @@ body{
     border-radius: 4px;
     background-color: #ad2e2e;
     border:1px solid #1d1e22;
-    padding:3%;
+    padding:2%;
     letter-spacing: 1px;
     font-weight: bold;
     color:white;
@@ -149,7 +149,7 @@ body{
     border-radius: 4px;
     background-color: #ad2e2e;
     border:1px solid #1d1e22;
-    padding:3%;
+    padding:2%;
     letter-spacing: 1px;
     font-weight: bold;
     color:white;
@@ -169,7 +169,7 @@ body{
     border-radius: 4px;
     background-color: #ad2e2e;
     border:1px solid #1d1e22;
-    padding:3%;
+    padding:2%;
     letter-spacing: 1px;
     font-weight: bold;
     color:white;
@@ -186,7 +186,7 @@ body{
     margin-left: 24%;
     outline:none;
     cursor:pointer;
-    margin-top: 2%;
+    margin-top: 0%;
     font-weight: bold;
 }
 
