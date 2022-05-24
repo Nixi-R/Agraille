@@ -135,6 +135,7 @@ catch (Exception $e)
             <p>Etape 7</p>
         </section>
         <section id="espace_commantaire">
+            
         </section>
         </div>
     </main>
