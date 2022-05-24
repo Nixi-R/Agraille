@@ -17,11 +17,14 @@ h2 {
 }
 
 #ingredient {
-
+    border-top: solid;
+    border-bottom: solid;
+    width: 50%;
 }
 
 #wrapper{
     display: flex;
     align-items: center;
     flex-direction: column;
+    gap: 50px;
 }
