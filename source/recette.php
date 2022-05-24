@@ -21,6 +21,16 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
+if(isset($_GET['id']) AND !empty($_GET['id'])){
+
+    $getid = htmlspecialchars($_GET['id']);
+
+    $article = $bdd->prepare('SELECT * FROM recette WHERE id= ?');
+    $article->execute(array($getid));
+    $article = $article->fecth();
+
+    $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_article = ?');
+    $commentaires->execute(array($getid)); 
     if(isset($_POST['submit_commentaire'])) {
         if(isset($_POST['pseudo'],$_POST['commentaire']) AND !empty($_POST['pseudo']) AND !empty($_POST['commentaire'])){
             $pseudo = htmlspecialchars($_SESSION['pseudo']);
@@ -33,6 +43,7 @@ catch (Exception $e)
             $c_error = "Tous les champs doivent être complétés";
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -155,6 +166,9 @@ catch (Exception $e)
                 <input type="submit" value="Poster mon commentaire" name="submit_commentaire">
             </form>
             <?php if(isset($c_error)){echo $c_error;}?>
+            <?php while($c = $commentaires->fetch()){ ?>
+            <b><?= $c['pseudo']?>:</b> <?= $c['commentaire']; ?>
+            <?php } ?>
         </div>
     </main>
     <script src="../js/scriptIndex.js"></script>
