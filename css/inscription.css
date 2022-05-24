@@ -64,14 +64,13 @@ body{
     padding-left: 2%;
     padding-right: 2%;
     font-size: 90%;
-    align-content: space-between;
     gap: 0.3%;
 }
 
 #pngD{
     border: white dashed 2px; 
     border-radius: 100%;
-    height: 90px;
+    height: 80px;
     width:15%;
     margin-left: 42%;
     position: relative;
