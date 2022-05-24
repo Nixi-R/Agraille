@@ -13,7 +13,14 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
-$fp = fopen($_FILES['photo']['tmp_name'], 'rb');
+if (strlen($_FILES['photo']['tmp_name']) > 0){
+    $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
+    $mime = $_FILES['photo']['type'];
+}
+else{
+    $fp = fopen("../img/Logoutilisateur.png", "rb");
+    $mime = "image/png";
+}
 
 if ($_POST['verif_password'] != $_POST['password'])
     header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
@@ -72,6 +79,8 @@ if (isset($recipeStatement[0]['id']))
     }
 }
 
+
+
 $sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de_profil, mime, droit) VALUES (?,?,?,?,?,?,1)';
 
 $insertRecipe = $conn->prepare($sqlQuery);
@@ -81,7 +90,7 @@ $insertRecipe -> bindValue(2, $_POST['pseudo'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(4, $_POST['password'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
-$insertRecipe -> bindValue(6, $_FILES['photo']['type'], PDO::PARAM_STR);
+$insertRecipe -> bindValue(6, $mime, PDO::PARAM_STR);
 
 $insertRecipe->execute();
 
