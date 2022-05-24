@@ -10,6 +10,11 @@ h2 {
     width: 50%;
 }
 
+#image_plat p {
+    width: 50%;
+    text-align: center;
+}
+
 #image_plat {
     display: flex;
     flex-direction: column;

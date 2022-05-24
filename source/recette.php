@@ -111,6 +111,7 @@ catch (Exception $e)
         <div id="wrapper">
         <section id="image_plat">
             <img src="../img/tartine.jpg">
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo ad aspernatur quae deserunt unde tempora a fugiat enim vitae repellendus eaque consequuntur, atque eius maiores. Ducimus, labore? Deserunt, amet provident.</p>
             <div id="recette_info">
                  <span>25 min</span>
                  <span>3 étoiles</span>
