@@ -33,9 +33,10 @@ catch (Exception $e)
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/recette.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="./img/icone_agraille2.png" sizes="any">
+    <link rel="icon" href="../img/icone_agraille2.png" sizes="any">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title>Agraille</title>
 </head>
@@ -71,7 +72,7 @@ catch (Exception $e)
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="./img/logo_agraille.png">
+                    <img src="../img/logo_agraille.png">
                 </div>
                 <div class="search-bar">
                     <form action="#" >
@@ -89,8 +90,8 @@ catch (Exception $e)
                                     <span class='arrow'></span>
                                  </div>";
                         }else{
-                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
-                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                            echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
                         }
                      ?>
                 </div>
@@ -100,15 +101,40 @@ catch (Exception $e)
     <div class="profil_menu">
         <ul>
             <li><?php echo $_SESSION["pseudo"] ?></li>
-            <li><a href="./source/profil.php">Voir profil</a></li>
+            <li><a href="./profil.php">Voir profil</a></li>
             <li><a href="#">Créer une recette</a></li>
-            <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
+            <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
-        <div id="main">
-
-        </div>
+        <h2>Nom_de_la_recette</h2>
+        <section id="image_plat">
+            <img src="../img/tartine.jpg">
+            <div id="recette_info">
+                 <span>25 min</span>
+                 <span>3 étoiles</span>
+                 <span>Au four</span>
+                 <span>Facile</span>
+            </div>
+        </section>
+        <section id="ingredient">
+            <p>ingredient<p>
+            <p>ingredient<p>
+            <p>ingredient<p>
+            <p>ingredient<p>
+        </section>
+        <section id="etape">
+            <p>Etape 1</p>
+            <p>Etape 2</p>
+            <p>Etape 3</p>
+            <p>Etape 4</p>
+            <p>Etape 5</p>
+            <p>Etape 6</p>
+            <p>Etape 7</p>
+        </section>
+        <section id="espace_commantaire">
+        </section>
     </main>
+    <script src="../js/scriptIndex.js"></script>
 </body>
 </html>

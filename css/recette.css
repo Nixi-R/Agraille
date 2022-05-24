@@ -1,0 +1,16 @@
+#image_plat img {
+    width: 70%;
+}
+
+h2 {
+    text-align: center;
+}
+
+#image_plat img {
+    width: 50%;
+}
+
+#image_plat {
+    display: flex;
+    justify-content: center;
+}

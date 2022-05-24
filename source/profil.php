@@ -32,7 +32,7 @@ $insertP = $insertP->fetchAll();
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="../index.php"><img src="../img/icone_agraille.png"></a>
+                        <a href="../index.php"><img src="../img/icone_agraille2.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" >Aperitifs</a>
@@ -129,7 +129,7 @@ $insertP = $insertP->fetchAll();
                  </div>
                  <form method="POST" action="profil.php" name="form">
                      <div id="uninscription_button">
-                        <input type="button" name="uninscription" value="Se désinscrire" onClick="confirmDelAccount()" >
+                        <input onclick="location.href='./source/disconnect'" type="submit" name="uninscription" value="Se désinscrire">
                     </div>
                 </form>
                     <?php 
@@ -210,11 +210,11 @@ $insertP = $insertP->fetchAll();
             }
 
 
-            function confirmDelAccount() {
-                if(confirm("Voulez-vous supprimer votre compte ?")){
-                   form .submit();
-                }
-            }
+            // function confirmDelAccount() {
+            //     if(confirm("Voulez-vous supprimer votre compte ?")){
+            //        form .submit();
+            //     }
+            // }
         </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="../js/scriptIndex.js"></script>

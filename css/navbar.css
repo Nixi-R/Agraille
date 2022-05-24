@@ -189,18 +189,19 @@ font-size: 34px;
 
 /*main*/
 main {
-  grid-area: article; 
+  /* grid-area: article;  */
 }
 
 #main {
   /* display: grid; /
   grid-area: cartes;
   / grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
-  height: 100vh;
+  height: 100%;
   background-color: #9A1818;
   border-top: none;
   border: black solid 2px;
-  font-weight: bolder; 
+  font-weight: bolder;
+  gap: 0px; 
 }
 
 header #img_profil_pics{
