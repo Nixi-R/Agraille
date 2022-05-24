@@ -3,7 +3,9 @@ session_start();
 if(!(isset($_SESSION['idCompte'])))
     header('Location: ./connexion');
  
-$bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES latin1 COLLATE latin1_general_ci",
+PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
 
 
 $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte']);
@@ -95,7 +97,7 @@ $insertP = $insertP->fetchAll();
     <main>
         <div id="main">
             <h1>Profil</h1>
-            <form action="profil.php" method="POST">
+            <form action="profil.php" enctype="multipart/form-data" method="POST">
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
                         <div id="profil_pic">
@@ -103,7 +105,6 @@ $insertP = $insertP->fetchAll();
                         </div>
                         <div id="profil_pic_button">
                             <input id="file_button" type="file" name="profil_pic" accept="image/*">
-                            <p>.jpeg .jpg .png</p>
                         </div>
                 </div>
                 <h2>Informations</h2>
@@ -173,21 +174,17 @@ $insertP = $insertP->fetchAll();
                                 }
                                 $req->execute();
                                 $req = $req->fetchAll();
-                        
                             }
 
-                            if(isset($_REQUEST['profil_pic'])){
+                            if(isset($_FILES['profil_pic'])){
 
+                                $fp = fopen($_FILES['profil_pic']['tmp_name'], 'rb');
 
-                                if(empty($password)){
-                                    $req = $bdd->prepare("SELECT photo_de_profil FROM compte WHERE id=$id");
-                                    $req->execute();
-                                }else{
-                                    $pic = "UPDATE compte SET photo_de_profil = :photo_de_profil WHERE id=$id"; 
-                                    $req = $bdd->prepare($pic);
-                                    $req->execute(['photo_de_profil' => $_REQUEST['profil_pic']]);
-                                }
-                                $req = $req->fetchAll();
+                                $pic = "UPDATE compte SET photo_de_profil = ?, mime = ? WHERE id=$id"; 
+                                $req = $bdd->prepare($pic);
+                                $req -> bindValue(1, $fp, PDO::PARAM_LOB);
+                                $req -> bindValue(2, $_FILES['profil_pic']['type'], PDO::PARAM_STR);
+                                $req->execute();
                             }
                     ?>
                 </div>
