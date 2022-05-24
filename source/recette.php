@@ -151,7 +151,6 @@ catch (Exception $e)
         <section id="espace_commentaire">
             <h2>Commentaires</h2>
             <form method="POST">
-                <input type="text" name="pseudo" placeholder="Votre pseudo"/>
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="Poster mon commentaire" name="submit_commentaire">
             </form>
