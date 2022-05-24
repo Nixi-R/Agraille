@@ -16,8 +16,12 @@ h2 {
     align-items: center;
 }
 
+#recette_info {
+    border-bottom: solid;
+    width: 50%;
+}
+
 #ingredient {
-    border-top: solid;
     border-bottom: solid;
     width: 50%;
 }
@@ -27,4 +31,9 @@ h2 {
     align-items: center;
     flex-direction: column;
     gap: 50px;
+}
+
+#etape {
+    border-bottom: solid;
+    width: 50%;
 }
