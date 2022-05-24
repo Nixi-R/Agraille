@@ -50,6 +50,30 @@ if (isset($recipeStatement[0]['pseudo']))
 
 $verify = true;
 
+$recipeStatement = $conn->prepare('SELECT adresse_mail FROM compte');
+$recipeStatement -> execute();
+    
+$recipeStatement = $recipeStatement -> fetchAll();
+
+$pseudo = $_POST['email'];
+    
+if (isset($recipeStatement[0]['adresse_mail']))
+    {
+        for ($i = 0; $i < count($recipeStatement); $i++)
+        {
+            if ($pseudo == $recipeStatement[$i]['adresse_mail'])
+            {
+                header('Location: ./inscription.php?erreur=adresse mail deja existant&email='.$_POST['email'].'&password='.$_POST['password']);
+            }
+            else
+            {
+                $verify = false;
+            }
+                
+        }
+    }
+
+$verify = true;
 
 $id = random_int(0, 2147483647);
 
