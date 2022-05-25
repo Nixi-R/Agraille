@@ -48,3 +48,8 @@ h2 {
     flex-direction: column;
     gap: 10px;
 }
+
+.stars {
+    display: flex;
+    justify-content: center;
+}

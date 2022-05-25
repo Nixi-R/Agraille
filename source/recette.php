@@ -52,15 +52,13 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/recette.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="icon" href="../img/icone_agraille2.png" sizes="any">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title>Agraille</title>
@@ -162,16 +160,25 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         </section>
         <section id="espace_commentaire">
             <h2>Commentaires</h2>
+            <div class="stars">
+               <i class="lar la-star" data-value="1"></i>
+               <i class="lar la-star" data-value="2"></i>
+               <i class="lar la-star" data-value="3"></i>
+               <i class="lar la-star" data-value="4"></i>
+               <i class="lar la-star" data-value="5"></i>
+            </div>
+            <script src="../js/scriptIndex.js"></script>
+            <script src="../js/scriptNote.js"></script>
             <form method="POST">
+                <input type="hidden" name="note" id="note" value="0">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
-                <input type="submit" value="Poster mon commentaire" name="submit_commentaire">
+                <input type="submit" value="valider" name="submit_commentaire">
             </form>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php while($c = $commentaires->fetch()){ ?>
-            <b><?= $c['pseudo']?>:</b> <?= $c['commentaire']; ?>
+            <b><?= $c['pseudo']?>:</b> <?= $c['commentaire']; ?></b>
             <?php } ?>
         </div>
     </main>
-    <script src="../js/scriptIndex.js"></script>
 </body>
 </html>

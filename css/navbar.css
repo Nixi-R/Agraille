@@ -188,9 +188,9 @@ font-size: 34px;
 }
 
 /*main*/
-main {
-  /* grid-area: article;  */
-}
+/* main {
+  grid-area: article; 
+ } */
 
 #main {
   /* display: grid; /
