@@ -114,7 +114,7 @@ catch (Exception $e)
                                 <p class="card-text">Rédiger par <?$pseudo?></p>
                             </div>
                             <div class="card-footer text-center">
-                                <button class="btn btn-primary">J'veux le graille !</button>
+                                <button onclick="location.href='./source/recette.php'" class="btn btn-primary">J'veux le graille !</button>
                             </div>
                         </div>
                    </div>

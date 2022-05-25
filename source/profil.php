@@ -90,7 +90,7 @@ $insertP = $insertP->fetchAll();
         <ul>
             <li><?php echo $_SESSION["pseudo"] ?></li>
             <li><a href="profil.php">Voir profil</a></li>
-            <li><a href="#">Créer une recette</a></li>
+            <li><a href="./redaction_recette.php">Créer une recette</a></li>
             <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
@@ -130,7 +130,7 @@ $insertP = $insertP->fetchAll();
                  </div>
                  <form method="POST" action="profil.php" name="form">
                      <div id="uninscription_button">
-                        <input onclick="location.href='./source/disconnect'" type="submit" name="uninscription" value="Se désinscrire">
+                        <input onclick="location.href='./disconnect'" type="submit" name="uninscription" value="Se désinscrire">
                     </div>
                 </form>
                     <?php 
