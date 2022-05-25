@@ -94,3 +94,7 @@ main{
         text-align: center;
     }
     
+    #profil_pic img {
+        width: 50px;
+        border-radius: 100%;
+    }

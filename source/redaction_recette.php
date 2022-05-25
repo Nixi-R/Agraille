@@ -103,6 +103,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
+        <h1>Rédigez votre propre recette !<h1>
         <section id="titre">
         </section>
         <section id="description">
