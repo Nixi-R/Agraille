@@ -34,7 +34,7 @@ $insertP = $insertP->fetchAll();
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="../index.php"><img src="../img/icone_agraille2.png"></a>
+                        <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" >Aperitifs</a>
@@ -91,7 +91,7 @@ $insertP = $insertP->fetchAll();
             <li><?php echo $_SESSION["pseudo"] ?></li>
             <li><a href="profil.php">Voir profil</a></li>
             <li><a href="#">Créer une recette</a></li>
-            <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
+            <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>

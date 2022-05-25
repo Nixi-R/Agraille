@@ -192,16 +192,14 @@ font-size: 34px;
   grid-area: article; 
  } */
 
-#main {
+main {
   /* display: grid; /
   grid-area: cartes;
   / grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
-  height: 100%;
+  grid-area: article;
   background-color: #9A1818;
-  border-top: none;
   border: black solid 2px;
-  font-weight: bolder;
-  gap: 0px; 
+  width: 100%;
 }
 
 header #img_profil_pics{

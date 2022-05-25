@@ -23,27 +23,26 @@ catch (Exception $e)
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/normalize.css">
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="icon" href="../img/icone_agraille.png" sizes="any">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="./img/icone_agraille2.png" sizes="any">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title>Agraille|Accueil </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/profil.css">
+    <title>Agraille|Rédiger votre recette !</title>
 </head>
 <body>
-    <header>
+<header>
         <nav>
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <img src="img/icone_agraille.png">
+                        <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" >Aperitifs</a>
@@ -69,7 +68,7 @@ catch (Exception $e)
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="./img/logo_agraille.png">
+                    <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
                     <form action="#" >
@@ -98,29 +97,23 @@ catch (Exception $e)
     <div class="profil_menu">
         <ul>
             <li><?php echo $_SESSION["pseudo"] ?></li>
-            <li><a href="./source/profil.php">Voir profil</a></li>
-            <li><a href="./source/redaction_recette.php">Créer une recette</a></li>
-            <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
+            <li><a href="profil.php">Voir profil</a></li>
+            <li><a href="#">Créer une recette</a></li>
+            <li><a onclick="location.href='./disconnect'">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
-        <div id="main">
-               <div class="container my-2">
-                   <div class="card-deck">
-                        <div class="card">
-                            <img class="card-img-top img-fluid" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1" alt="#">
-                            <div class="card-body">
-                                <h5 class="card-title">Recette_1</h5>
-                                <p class="card-text">Rédiger par <?$pseudo?></p>
-                            </div>
-                            <div class="card-footer text-center">
-                                <button class="btn btn-primary">J'veux le graille !</button>
-                            </div>
-                        </div>
-                   </div>
-               </div>     
-        </div>
+        <section id="titre">
+        </section>
+        <section id="description">
+        </section>
+        <section id="ingredient">
+        </section>
+        <section id="etape">
+        </section>
+        <section id="user_info">
+        </section>
     </main>
-    <script src="./js/scriptIndex.js"></script>
+    <script src="../js/scriptIndex.js"></script>
 </body>
 </html>
