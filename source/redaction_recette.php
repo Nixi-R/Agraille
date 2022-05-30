@@ -33,7 +33,7 @@ catch (Exception $e)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/profil.css">
+    <link rel="stylesheet" href="../css/redaction_recette.css">
     <title>Agraille|Rédiger votre recette !</title>
 </head>
 <body>
@@ -98,22 +98,47 @@ catch (Exception $e)
         <ul>
             <li><?php echo $_SESSION["pseudo"] ?></li>
             <li><a href="profil.php">Voir profil</a></li>
-            <li><a href="#">Créer une recette</a></li>
+            <li><a onclick="location.href='./redaction_recette'">Créer une recette</a></li>
             <li><a onclick="location.href='./disconnect'">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
+        <form method="GET">
         <h1>Rédigez votre propre recette !<h1>
         <section id="titre">
+            <h6>Nommez la recette !<h6>
+            <input id="titre_input" type="text"></input> 
         </section>
         <section id="description">
+            <h6>Faites nous une description de la recette !<h6>
+            <textarea type="text" id="desc_input"></textarea>
         </section>
         <section id="ingredient">
+
         </section>
         <section id="etape">
+            <h6>Décrivez les étapes !</h6>
+            <input type="text"></input>
+            <button class="btn btn-primary">Une etape de plus !</button>
+        </section>
+        <section id="recette_info">
+            <h6>D'autres info concernant la recette</h6>
+            <input id="methode_cuisson" name="methode_cuisson"></input>
+            <span></span>
+            <input id="temps_cuisson" name="temps_cuisson"></input>
+            <span></span>
+            <input id="difficulte" name="difficulte"></input>
+            <span></span>
+            <input id="type_recette" name="type_recette"></input>
+            <h6>Choisissez une illustration pour votre recette !</h6>
+            <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
         </section>
         <section id="user_info">
+           <!-- <input type="hidden" value=""></input> -->
+           <input type="hidden" value=""></input>
         </section>
+        <input type="submit"></input>
+    </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
 </body>

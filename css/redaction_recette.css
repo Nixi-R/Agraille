@@ -1,0 +1,38 @@
+h1 {
+    text-align: center;
+}
+
+form button {
+    width: 10%;
+    height: 40px;
+    font-size: 10px;
+}
+
+#etape {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#etape input {
+    width: 30%;
+}
+
+#recette_info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+span {
+    border: 1px solid black;
+    width: 30%;
+    background-color: black;
+}
+
+#recette_image {
+    width: 10%;
+    height: 40px;
+    font-size: 10px;
+}

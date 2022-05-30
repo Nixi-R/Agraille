@@ -11,7 +11,6 @@ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte']);
 $insertP -> execute();
 $insertP = $insertP->fetchAll();
-
 ?>
 
 <!DOCTYPE html>
@@ -128,9 +127,9 @@ $insertP = $insertP->fetchAll();
                         <input type="submit" name="send" value="Envoyer">
                     </div>
                  </div>
-                 <form method="POST" action="profil.php" name="form">
+                 <form method="POST" action="./disconnect" name="form">
                      <div id="uninscription_button">
-                        <input onclick="location.href='./disconnect'" type="submit" name="uninscription" value="Se désinscrire">
+                        <input  type="submit" name="uninscription" value="Se désinscrire">
                     </div>
                 </form>
                     <?php 
@@ -139,30 +138,30 @@ $insertP = $insertP->fetchAll();
                             echo "ça fonctionne";
                             $req = $bdd->prepare("DELETE FROM compte WHERE id=$id" );
                             $req->execute();
-                            $req = $req-> fetchAll();
                             }
 
                             if(isset($_REQUEST['email_form'])){
                                 $email = $_REQUEST['email_form'];
                                 if(empty($email)){
                                     $req = $bdd->prepare("SELECT adresse_mail FROM compte WHERE id=$id");
+
                                 }else{
                                     $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id=$id");
+                                    $_SESSION["adresse_mail"] = $_REQUEST["email_form"];
                                 }
                                     $req->execute();
-                                    $req = $req-> fetchAll();
                             }
 
+                            echo $_REQUEST["pseudo_form"];
                             if(isset($_REQUEST['pseudo_form'])){
                                 $pseudo = $_REQUEST['pseudo_form'];
-                                if(empty($pseudo)){
+                                if(isset($pseudo) == false){
                                     $req = $bdd->prepare("SELECT pseudo FROM compte WHERE id=$id");
                                 }else{
                                     $req = $bdd->prepare("UPDATE compte SET pseudo='$pseudo' WHERE id=$id");
+                                    $_SESSION["pseudo"] = $_REQUEST["pseudo_form"];
                                 }
                                 $req->execute();
-                                $req = $req-> fetchAll();
-                                
                             }
                             
                             if(isset($_REQUEST['password_form'])){
@@ -173,7 +172,7 @@ $insertP = $insertP->fetchAll();
                                     $req = $bdd->prepare("UPDATE compte SET mot_de_passe = '$password' WHERE id=$id");
                                 }
                                 $req->execute();
-                                $req = $req->fetchAll();
+                                // $req = $req->fetchAll();
                             }
 
                             if(isset($_FILES['profil_pic'])){
