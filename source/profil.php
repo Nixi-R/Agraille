@@ -127,24 +127,24 @@ $insertP = $insertP->fetchAll();
                         <input type="submit" name="send" value="Envoyer">
                     </div>
                  </div>
-                 <form method="POST" action="./disconnect" name="form">
+                 </form>
+                 <form method="POST" action="./desinscription" name="form">
                      <div id="uninscription_button">
                         <input  type="submit" name="uninscription" value="Se désinscrire">
                     </div>
                 </form>
                     <?php 
                     $id = $_SESSION["idCompte"];
-                    if(isset($_REQUEST["uninscription"])){
-                            echo "ça fonctionne";
-                            $req = $bdd->prepare("DELETE FROM compte WHERE id=$id" );
-                            $req->execute();
-                            }
+                    // if(isset($_REQUEST["uninscription"])){
+                    //         $req = $bdd->prepare("DELETE FROM compte WHERE id=$id" );
+                    //         $req->execute();
+                    //         header('Location: ./disconnect');
+                    //         }
 
                             if(isset($_REQUEST['email_form'])){
                                 $email = $_REQUEST['email_form'];
                                 if(empty($email)){
                                     $req = $bdd->prepare("SELECT adresse_mail FROM compte WHERE id=$id");
-
                                 }else{
                                     $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id=$id");
                                     $_SESSION["adresse_mail"] = $_REQUEST["email_form"];
@@ -152,14 +152,13 @@ $insertP = $insertP->fetchAll();
                                     $req->execute();
                             }
 
-                            echo $_REQUEST["pseudo_form"];
                             if(isset($_REQUEST['pseudo_form'])){
                                 $pseudo = $_REQUEST['pseudo_form'];
-                                if(isset($pseudo) == false){
+                                if(empty($pseudo)){
                                     $req = $bdd->prepare("SELECT pseudo FROM compte WHERE id=$id");
                                 }else{
                                     $req = $bdd->prepare("UPDATE compte SET pseudo='$pseudo' WHERE id=$id");
-                                    $_SESSION["pseudo"] = $_REQUEST["pseudo_form"];
+                                    $_SESSION["pseudo"] = $pseudo;
                                 }
                                 $req->execute();
                             }
@@ -187,7 +186,6 @@ $insertP = $insertP->fetchAll();
                             }
                     ?>
                 </div>
-            </form>
         </div>
     </main>
     <script>
