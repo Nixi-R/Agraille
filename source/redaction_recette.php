@@ -123,17 +123,31 @@ catch (Exception $e)
         </section>
         <section id="recette_info">
             <h6>D'autres informations concernant la recette...</h6>
+            <p>Methode de cuisson.<p>
             <select id="methode_cuisson" name="methode_cuisson">
-                <option>
+                <option>Marinade</option>
+                <option>Bouillir</option>
+                <option>Mijoter</option>
+                <option>A la poêle</option>
+                <option> A la marmite</option>
+                <option>Au four</option>
             </select>
             <span></span>
-            <select id="temps_cuisson" name="temps_cuisson">
-            </select>
+            <p>Selectionnez votre temps de cuisson.<p>
+            <input id="temps_cuisson" type ="number" min="10" max="180" name="temps_cuisson">
             <span></span>
+            <p>Selectionnez la difficulté de la recette.<p>
             <select id="difficulte" name="difficulte">
+                <option>Facile</option>
+                <option>Intermédiaire</option>
+                <option>Difficile</option>
             </select>
             <span></span>
+            <p>Selectionnez la catégorie de la recette.<p>
             <select id="type_recette" name="type_recette">
+                <option>Plat</option>
+                <option>Cocktail</option>
+                <option>Dessert</option>
             </select>
             <h6>Choisissez une illustration pour votre recette !</h6>
             <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
