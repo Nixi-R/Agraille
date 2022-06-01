@@ -62,7 +62,7 @@ catch (Exception $e)
             
             if($_POST['password'] == $recipeS['mot_de_passe'])
             {
-                header('Location: ./connexion.php?erreur=La connexion sest effectuee avec succes');
+                header('Location: ../');
             }
             else
             {
