@@ -103,13 +103,13 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form method="GET">
+        <form method="POST">
         <h1>Rédigez votre propre recette !</h1>
         <section id="titre">
             <h6>Nommez la recette !<h6>
-            <input id="titre_input" type="text"></input> 
+            <input id="titre_input" type="text" name = "title"></input> 
         </section>
-        <section id="description">
+        <section id="description" name = "description">
             <h6>Faites nous une description de la recette !<h6>
             <textarea type="text" id="desc_input"></textarea>
         </section>
@@ -117,7 +117,7 @@ catch (Exception $e)
         </section>
         <section id="etape">
             <h6>Décrivez les étapes !</h6>
-            <input type="text" id="step_1" placeholder="1 - Décrivez l'étape"></input>
+            <input type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
             <div id="etapes"></div>
             <span id="etape_button" class="btn btn-primary" value="+" >+</span>
         </section>
@@ -133,8 +133,8 @@ catch (Exception $e)
                 <option>Au four</option>
             </select>
             <span></span>
-            <p>Selectionnez votre temps de cuisson.<p>
-            <input id="temps_cuisson" type ="number" min="10" max="180" name="temps_cuisson">
+            <p>Selectionnez le temps de réalisation de la recette.<p>
+            <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation">
             <span></span>
             <p>Selectionnez la difficulté de la recette.<p>
             <select id="difficulte" name="difficulte">
@@ -153,7 +153,7 @@ catch (Exception $e)
             <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
         </section>
         <section id="user_info">
-           <!-- <input type="hidden" value=""></input> -->
+           <!-- <input type="hidden" value=""></input> pour les trucs automatiques -->
            <input type="hidden" value=""></input>
         </section>
         <input type="submit"></input>
@@ -174,6 +174,7 @@ catch (Exception $e)
                     newInput.type = 'text'
                     newInput.placeholder = i + " - Décrivez l'étape";
                     newInput.id = 'step_'+i;
+                    newInput.name = "step_" + i;
                 step.appendChild(newInput);
             }
         })
