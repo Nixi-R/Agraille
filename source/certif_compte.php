@@ -25,6 +25,9 @@ else{
 if ($_POST['verif_password'] != $_POST['password'])
     header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
 
+if (strlen($_POST['password']) < 4 || strlen($_POST['password'] > 30) || strlen($_POST['pseudo']) < 4 || strlen($_POST['pseudo']) > 30 )
+    header("Location: ./inscription.php?erreur=erreur de saisie&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+
 $recipeStatement = $conn->prepare('SELECT id FROM compte');
 $recipeStatement -> execute();
     
