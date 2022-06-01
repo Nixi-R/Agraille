@@ -104,7 +104,7 @@ catch (Exception $e)
     </div>
     <main>
         <form method="GET">
-        <h1>Rédigez votre propre recette !<h1>
+        <h1>Rédigez votre propre recette !</h1>
         <section id="titre">
             <h6>Nommez la recette !<h6>
             <input id="titre_input" type="text"></input> 
@@ -114,12 +114,12 @@ catch (Exception $e)
             <textarea type="text" id="desc_input"></textarea>
         </section>
         <section id="ingredient">
-
         </section>
         <section id="etape">
             <h6>Décrivez les étapes !</h6>
-            <input type="text"></input>
-            <button class="btn btn-primary">Une etape de plus !</button>
+            <input type="text" id="step_1" placeholder="1 - Décrivez l'étape"></input>
+            <div id="etapes"></div>
+            <span id="etape_button" class="btn btn-primary" value="+" >+</span>
         </section>
         <section id="recette_info">
             <h6>D'autres info concernant la recette</h6>
@@ -141,5 +141,26 @@ catch (Exception $e)
     </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
+    <script>
+        
+        window.onload = function(){
+        let button = document.getElementById('etape_button');
+        let adresses = document.getElementById('etapes');
+        let i = 1;
+
+        button.addEventListener('click', function(event){
+            i++
+            if (button.textContent === '+'){
+                let p = document.createElement('p')
+                let newInput = document.createElement('input')
+                    newInput.type = 'text'
+                    newInput.placeholder = i + " - Décrivez l'étape";
+                    newInput.id = 'step_'+i;
+                p.appendChild(newInput)
+                adresses.appendChild(p)
+            }
+        })
+        }
+    </script>
 </body>
 </html>

@@ -113,18 +113,18 @@ $insertP = $insertP->fetchAll();
                 <div id="wrapper_information">
                     <div id="pseudo_container">
                         <label>Pseudo : </label>
-                        <input id="pseudo_input" type="text" name="pseudo_form" minlength=4 maxlength=30 placeholder="<?php echo $_SESSION['pseudo'] ?>" readonly>
-                        <a  id="pseudo_button" onclick="javascript:document.getElementById('pseudo_input').removeAttribute('readonly');">Modifier pseudo</a onclick="javascript:document.getElementById('password_input').style.opacity='1';">
+                        <input id="pseudo_input" type="text" name="pseudo_form" minlength=4 maxlength=30 placeholder="<?php echo $_SESSION['pseudo'] ?>">
+                        <!-- <a  id="pseudo_button" onclick="javascript:document.getElementById('pseudo_input').removeAttribute('readonly');">Modifier pseudo</a onclick="javascript:document.getElementById('password_input').style.opacity='1';"> -->
                     </div>
                     <div id="mail_container">
                         <label>Adresse e-mail : </label>
-                        <input id="email_input" type="email" name="email_form" placeholder="<?php echo $_SESSION['adresse_mail'] ?>" readonly>
-                        <a id="email_button" onclick="javascript:document.getElementById('email_input').removeAttribute('readonly');" >Modifier e-mail</a onclick="javascript:document.getElementById('password_input').style.opacity='1';">
+                        <input id="email_input" type="email" name="email_form" placeholder="<?php echo $_SESSION['adresse_mail'] ?>">
+                        <!-- <a id="email_button" onclick="javascript:document.getElementById('email_input').removeAttribute('readonly');" >Modifier e-mail</a onclick="javascript:document.getElementById('password_input').style.opacity='1';"> -->
                     </div>
                     <div id="password_container">
                         <label>Mot de passe : </label>
-                        <input id="password_input" type="password" name="password_form" readonly>
-                        <a id="password_button"  onclick="javascript:document.getElementById('password_input').removeAttribute('readonly');">Modifier mot de passe</a>
+                        <input id="password_input" type="password" name="password_form">
+                        <!-- <a id="password_button"  onclick="javascript:document.getElementById('password_input').removeAttribute('readonly');">Modifier mot de passe</a> -->
                     </div>
                     <div id="send_form_button">
                         <input type="submit" name="send" value="Envoyer">
