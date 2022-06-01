@@ -11,7 +11,6 @@ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte']);
 $insertP -> execute();
 $insertP = $insertP->fetchAll();
-
 ?>
 
 <!DOCTYPE html>
@@ -90,14 +89,14 @@ $insertP = $insertP->fetchAll();
         <ul>
             <li><?php echo $_SESSION["pseudo"] ?></li>
             <li><a href="profil.php">Voir profil</a></li>
-            <li><a href="#">Créer une recette</a></li>
+            <li><a href="./redaction_recette.php">Créer une recette</a></li>
             <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
         <div id="main">
             <h1>Profil</h1>
-            <form action="profil.php" enctype="multipart/form-data" method="POST">
+            <form action="update.php" enctype="multipart/form-data" method="POST">
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
                         <div id="profil_pic">
@@ -105,9 +104,12 @@ $insertP = $insertP->fetchAll();
                         </div>
                         <div id="profil_pic_button">
                             <input id="file_button" type="file" name="profil_pic" accept="image/*">
+                            <input type="submit">
                         </div>
                 </div>
                 <h2>Informations</h2>
+            </form>
+                <form action="update.php" method="POST">
                 <div id="wrapper_information">
                     <div id="pseudo_container">
                         <label>Pseudo : </label>
@@ -128,67 +130,13 @@ $insertP = $insertP->fetchAll();
                         <input type="submit" name="send" value="Envoyer">
                     </div>
                  </div>
-                 <form method="POST" action="profil.php" name="form">
+                 </form>
+                 <form method="POST" action="./desinscription" name="form">
                      <div id="uninscription_button">
-                        <input onclick="location.href='./source/disconnect'" type="submit" name="uninscription" value="Se désinscrire">
+                        <input  type="submit" name="uninscription" value="Se désinscrire">
                     </div>
                 </form>
-                    <?php 
-                    $id = $_SESSION["idCompte"];
-                    if(isset($_REQUEST["uninscription"])){
-                            echo "ça fonctionne";
-                            $req = $bdd->prepare("DELETE FROM compte WHERE id=$id" );
-                            $req->execute();
-                            $req = $req-> fetchAll();
-                            }
-
-                            if(isset($_REQUEST['email_form'])){
-                                $email = $_REQUEST['email_form'];
-                                if(empty($email)){
-                                    $req = $bdd->prepare("SELECT adresse_mail FROM compte WHERE id=$id");
-                                }else{
-                                    $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id=$id");
-                                }
-                                    $req->execute();
-                                    $req = $req-> fetchAll();
-                            }
-
-                            if(isset($_REQUEST['pseudo_form'])){
-                                $pseudo = $_REQUEST['pseudo_form'];
-                                if(empty($pseudo)){
-                                    $req = $bdd->prepare("SELECT pseudo FROM compte WHERE id=$id");
-                                }else{
-                                    $req = $bdd->prepare("UPDATE compte SET pseudo='$pseudo' WHERE id=$id");
-                                }
-                                $req->execute();
-                                $req = $req-> fetchAll();
-                                
-                            }
-                            
-                            if(isset($_REQUEST['password_form'])){
-                                $password = $_REQUEST['password_form'];
-                                if(empty($password)){
-                                    $req = $bdd->prepare("SELECT mot_de_passe FROM compte WHERE id=$id");
-                                }else{
-                                    $req = $bdd->prepare("UPDATE compte SET mot_de_passe = '$password' WHERE id=$id");
-                                }
-                                $req->execute();
-                                $req = $req->fetchAll();
-                            }
-
-                            if(isset($_FILES['profil_pic'])){
-
-                                $fp = fopen($_FILES['profil_pic']['tmp_name'], 'rb');
-
-                                $pic = "UPDATE compte SET photo_de_profil = ?, mime = ? WHERE id=$id"; 
-                                $req = $bdd->prepare($pic);
-                                $req -> bindValue(1, $fp, PDO::PARAM_LOB);
-                                $req -> bindValue(2, $_FILES['profil_pic']['type'], PDO::PARAM_STR);
-                                $req->execute();
-                            }
-                    ?>
-                </div>
-            </form>
+            </div>
         </div>
     </main>
     <script>
@@ -205,13 +153,6 @@ $insertP = $insertP->fetchAll();
                     reader.readAsDataURL(file);
                 }
             }
-
-
-            // function confirmDelAccount() {
-            //     if(confirm("Voulez-vous supprimer votre compte ?")){
-            //        form .submit();
-            //     }
-            // }
         </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="../js/scriptIndex.js"></script>

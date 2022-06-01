@@ -11,7 +11,7 @@ if (isset($_SESSION['idCompte']))
 <html>
     <head>
         <link rel="stylesheet" href="../css/connexion.css">
-        <title>Agraille Connexion</title>
+        <title>Agraille | Connexion</title>
         <link rel="icon" href="../img/icone_agraille.png" sizes="any">
     </head>
     <body>
