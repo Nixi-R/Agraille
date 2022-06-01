@@ -46,10 +46,10 @@ catch (Exception $e)
                         <img src="img/icone_agraille.png">
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Aperitifs</a>
+                        <a class="nav-link" href="#" >Apéritifs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrees</a>
+                        <a class="nav-link" href="#">Entrées</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Plats</a>
@@ -111,7 +111,7 @@ catch (Exception $e)
                             <img class="card-img-top img-fluid" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1" alt="#">
                             <div class="card-body">
                                 <h5 class="card-title">Recette_1</h5>
-                                <p class="card-text">Rédiger par <?$pseudo?></p>
+                                <p class="card-text">Rédigé par <?$pseudo?></p>
                             </div>
                             <div class="card-footer text-center">
                                 <button onclick="location.href='./source/recette.php'" class="btn btn-primary">J'veux le graille !</button>
