@@ -26,11 +26,11 @@ if (isset($_SESSION['idCompte']))
                     <input id="pngI" type="file" name="photo" accept="image/*">
                 </div>
                 <label id="labelPseudo">Pseudo :</label></br>
-                <input id="pseudo" type="text" name="pseudo" value="<?php if (isset($_POST['pseudo'])) echo $_POST['pseudo']; ?>" minlength=4 maxlength=30 required></br>
+                <input id="pseudo" type="text" name="pseudo" value="<?php if (isset($_GET['pseudo'])) echo $_GET['pseudo']; ?>" minlength=4 maxlength=30 required></br>
                 <label id="labelEmail">E-mail :</label></br>
-                <input id="email" type="email" name="email" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required></br>
+                <input id="email" type="email" name="email" value="<?php if (isset($_GET['email'])) echo $_GET['email']; ?>" required></br>
                 <label id="labelPass">Mot de passe :</label></br>
-                <input id="password" type="password" name="password" value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>" minlength=4 maxlength=30 required></br>
+                <input id="password" type="password" name="password" value="<?php if (isset($_GET['password'])) echo $_GET['password']; ?>" minlength=4 maxlength=30 required></br>
                 <label id="labelVerif">Vérification :</label></br>
                 <input id="verif_password" type="password" name="verif_password" minlength=4 maxlength=30 required></br>
                 <input id="signin" type="submit" value="S'inscrire">

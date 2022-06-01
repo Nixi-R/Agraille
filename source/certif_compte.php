@@ -4,7 +4,7 @@ $conn = new PDO(
     'mysql:host=localhost;dbname=agrailledb;charset=utf8',
     'root',
     '',
-    [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES latin1 COLLATE latin1_general_ci",
+    [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
 );
 }
@@ -12,6 +12,14 @@ catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
 }
+
+
+if ($_POST['verif_password'] != $_POST['password'])
+    header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
+
+if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 30 || iconv_strlen($_POST['pseudo']) < 4 || iconv_strlen($_POST['pseudo']) > 30 )
+    header("Location: ./inscription.php?erreur=erreur de saisie".iconv_strlen($_POST['pseudo'])."p". iconv_strlen($_POST['password']) ."&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+
 
 if (strlen($_FILES['photo']['tmp_name']) > 0){
     $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
@@ -21,12 +29,6 @@ else{
     $fp = fopen("../img/Logoutilisateur.png", "rb");
     $mime = "image/png";
 }
-
-if ($_POST['verif_password'] != $_POST['password'])
-    header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
-
-if (strlen($_POST['password']) < 4 || strlen($_POST['password'] > 30) || strlen($_POST['pseudo']) < 4 || strlen($_POST['pseudo']) > 30 )
-    header("Location: ./inscription.php?erreur=erreur de saisie&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 
 $recipeStatement = $conn->prepare('SELECT id FROM compte');
 $recipeStatement -> execute();
