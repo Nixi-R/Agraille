@@ -71,10 +71,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                         <img src="../img/icone_agraille.png">
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Aperitifs</a>
+                        <a class="nav-link" href="#" >Apéritifs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrees</a>
+                        <a class="nav-link" href="#">Entrées</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Plats</a>
