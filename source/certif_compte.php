@@ -1,4 +1,11 @@
 <?php
+
+if ($_POST['verif_password'] != $_POST['password'])
+    header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
+
+if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 30 || iconv_strlen($_POST['pseudo']) < 4 || iconv_strlen($_POST['pseudo']) > 30 )
+    header("Location: ./inscription.php?erreur=erreur de saisie".iconv_strlen($_POST['pseudo'])."p". iconv_strlen($_POST['password']) ."&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+
 try{
 $conn = new PDO(
     'mysql:host=localhost;dbname=agrailledb;charset=utf8',
@@ -12,13 +19,6 @@ catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
 }
-
-
-if ($_POST['verif_password'] != $_POST['password'])
-    header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
-
-if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 30 || iconv_strlen($_POST['pseudo']) < 4 || iconv_strlen($_POST['pseudo']) > 30 )
-    header("Location: ./inscription.php?erreur=erreur de saisie".iconv_strlen($_POST['pseudo'])."p". iconv_strlen($_POST['password']) ."&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 
 
 if (strlen($_FILES['photo']['tmp_name']) > 0){
@@ -108,7 +108,7 @@ if (isset($recipeStatement[0]['id']))
     }
 }
 
-
+$hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 $sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de_profil, mime, droit) VALUES (?,?,?,?,?,?,1)';
 
@@ -117,7 +117,7 @@ $insertRecipe = $conn->prepare($sqlQuery);
 $insertRecipe -> bindValue(1, $id, PDO::PARAM_STR);
 $insertRecipe -> bindValue(2, $_POST['pseudo'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
-$insertRecipe -> bindValue(4, $_POST['password'], PDO::PARAM_STR);
+$insertRecipe -> bindValue(4, $hash, PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
 $insertRecipe -> bindValue(6, $mime, PDO::PARAM_STR);
 

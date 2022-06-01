@@ -33,7 +33,7 @@ catch (Exception $e)
             $recipeS -> execute();
             $recipeS = $recipeS -> fetch();
             
-            if($_POST['password'] == $recipeS['mot_de_passe'])
+            if(password_verify($_POST['password'],$recipeS['mot_de_passe']))
             {
                 $recipeS = $conn->query('SELECT * FROM compte WHERE pseudo = \''.$_POST['pseudo']. '\'');
                 $recipeS -> execute();
@@ -60,8 +60,20 @@ catch (Exception $e)
             $recipeS -> execute();
             $recipeS = $recipeS -> fetch();
             
-            if($_POST['password'] == $recipeS['mot_de_passe'])
+            if(password_verify($_POST['password'],$recipeS['mot_de_passe']))
             {
+                $recipeS = $conn->query('SELECT * FROM compte WHERE adresse_mail = \''.$_POST['pseudo']. '\'');
+                $recipeS -> execute();
+                $recipeS = $recipeS -> fetchAll();
+        
+                session_start();
+                $_SESSION['idCompte'] = $recipeS[0]['id'];
+                $_SESSION['pseudo'] = $recipeS[0]['pseudo'];
+                $_SESSION['adresse_mail'] = $recipeS[0]['adresse_mail'];
+                $_SESSION['mot_de_passe'] = $recipeS[0]['mot_de_passe'];
+                $_SESSION['droit'] = $recipeS[0]['droit'];
+
+
                 header('Location: ../');
             }
             else
