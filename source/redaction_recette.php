@@ -45,10 +45,10 @@ catch (Exception $e)
                         <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Aperitifs</a>
+                        <a class="nav-link" href="#" >Apéritifs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrees</a>
+                        <a class="nav-link" href="#">Entrées</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Plats</a>
@@ -122,7 +122,7 @@ catch (Exception $e)
             <button class="btn btn-primary">Une etape de plus !</button>
         </section>
         <section id="recette_info">
-            <h6>D'autres info concernant la recette</h6>
+            <h6>D'autres informations concernant la recette...</h6>
             <input id="methode_cuisson" name="methode_cuisson"></input>
             <span></span>
             <input id="temps_cuisson" name="temps_cuisson"></input>

@@ -41,7 +41,7 @@ if (isset($recipeStatement[0]['pseudo']))
         {
             if ($pseudo == $recipeStatement[$i]['pseudo'])
             {
-                header('Location: ./inscription.php?erreur=pseudo deja existant&email='.$_POST['email'].'&password='.$_POST['password']);
+                header('Location: ./inscription.php?erreur=pseudo deja éxistant&email='.$_POST['email'].'&password='.$_POST['password']);
             }
             else
             {
@@ -66,7 +66,7 @@ if (isset($recipeStatement[0]['adresse_mail']))
         {
             if ($pseudo == $recipeStatement[$i]['adresse_mail'])
             {
-                header('Location: ./inscription.php?erreur=adresse mail deja existant&email='.$_POST['email'].'&password='.$_POST['password']);
+                header('Location: ./inscription.php?erreur=adresse mail déjà éxistante&email='.$_POST['email'].'&password='.$_POST['password']);
             }
             else
             {
