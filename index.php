@@ -21,6 +21,8 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +37,7 @@ catch (Exception $e)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="./img/icone_agraille2.png" sizes="any">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title>Agraille|Accueil </title>
+    <title>Agraille|<?php if (isset($_SESSION['mode'])  && $_SESSION['mode'] == 1) echo "Validation"; else echo "Accueil";?></title>
 </head>
 <body>
     <header>

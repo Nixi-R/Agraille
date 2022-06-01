@@ -3,7 +3,7 @@ session_start();
 if(!(isset($_SESSION['idCompte'])))
     header('Location: ./connexion');
  
-$bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES latin1 COLLATE latin1_general_ci",
+$bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 

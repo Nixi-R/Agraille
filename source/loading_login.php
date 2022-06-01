@@ -46,6 +46,8 @@ catch (Exception $e)
                 $_SESSION['mot_de_passe'] = $recipeS[0]['mot_de_passe'];
                 $_SESSION['droit'] = $recipeS[0]['droit'];
 
+                if ($_SESSION['droit'] > 1)
+                    $_SESSION['mode'] = 1;
 
                 header('Location: ../');
             }
@@ -73,6 +75,8 @@ catch (Exception $e)
                 $_SESSION['mot_de_passe'] = $recipeS[0]['mot_de_passe'];
                 $_SESSION['droit'] = $recipeS[0]['droit'];
 
+                if ($_SESSION['droit'] > 1)
+                    $_SESSION['mode'] = 1;
 
                 header('Location: ../');
             }
