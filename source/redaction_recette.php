@@ -123,13 +123,18 @@ catch (Exception $e)
         </section>
         <section id="recette_info">
             <h6>D'autres informations concernant la recette...</h6>
-            <input id="methode_cuisson" name="methode_cuisson"></input>
+            <select id="methode_cuisson" name="methode_cuisson">
+                <option>
+            </select>
             <span></span>
-            <input id="temps_cuisson" name="temps_cuisson"></input>
+            <select id="temps_cuisson" name="temps_cuisson">
+            </select>
             <span></span>
-            <input id="difficulte" name="difficulte"></input>
+            <select id="difficulte" name="difficulte">
+            </select>
             <span></span>
-            <input id="type_recette" name="type_recette"></input>
+            <select id="type_recette" name="type_recette">
+            </select>
             <h6>Choisissez une illustration pour votre recette !</h6>
             <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
         </section>
@@ -142,22 +147,20 @@ catch (Exception $e)
     </main>
     <script src="../js/scriptIndex.js"></script>
     <script>
-        
+
         window.onload = function(){
         let button = document.getElementById('etape_button');
-        let adresses = document.getElementById('etapes');
+        let step = document.getElementById('etapes');
         let i = 1;
 
         button.addEventListener('click', function(event){
             i++
             if (button.textContent === '+'){
-                let p = document.createElement('p')
                 let newInput = document.createElement('input')
                     newInput.type = 'text'
                     newInput.placeholder = i + " - Décrivez l'étape";
                     newInput.id = 'step_'+i;
-                p.appendChild(newInput)
-                adresses.appendChild(p)
+                step.appendChild(newInput);
             }
         })
         }
