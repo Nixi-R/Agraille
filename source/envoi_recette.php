@@ -11,7 +11,11 @@
     $type_recette = $_POST["type_recette"];
     $recette_image = $_POST["recette_image"];
 
-    $sql = 'INSERT INTO recette(nom,description,date_publication,etape,temps_realisation,ingredients,illustration,methode_cuisson,auteur,type,difficulte) VALUES ('$title','$description',/*date*/,'$etape','$temps_realisation',/*ingredient*/,'$recette_image','$methode_cuisson',/*auteur*/,'$type_recette','$dificulte')';
+    print("$title<br>$description<br>$methode_cuisson<br>$etape<br>$temps_realisation<br>$difficulte<br>$type_recette<br>$recette_image");
+
+    $sql = "INSERT INTO recette (id, nom, description, date_publication, etape, temps_realisation, ingredients, illustration, methode_cuisson, auteur, type, difficulte) VALUES (30,'titre','description','2022-05-10','etape','10','ouais','recette_image','Marinade','moi','type_recette','facile');";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql->execute();
+
+    //probleme sur l'acquisition des valeurs POST mais liaison avec la bdd ok 
 ?>
