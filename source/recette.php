@@ -2,7 +2,7 @@
 session_start();
 
 try{
-    $conn = new PDO(
+    $bdd = new PDO(
         'mysql:host=localhost;dbname=agrailledb;charset=utf8',
         'root',
         '',
@@ -16,18 +16,28 @@ catch (Exception $e)
 
         if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id =' .$_SESSION['idCompte']);
+        $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id =' .$_SESSION['idCompte']);
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
-
+   
+    
 if(isset($_GET['id']) AND !empty($_GET['id'])){
 
     $getid = htmlspecialchars($_GET['id']);
 
-    $article = $bdd->prepare('SELECT * FROM recette WHERE id= ?');
-    $article->execute(array($getid));
-    $article = $article->fecth();
+    $description = $bdd->prepare('SELECT representation FROM recette WHERE id= ?');
+    $description->execute(array($getid));
+    $description = $description->fetch(PDO::FETCH_ASSOC);
+    
+    $title = $bdd->prepare('SELECT nom FROM recette WHERE id= ?');
+    $title->execute(array($getid));
+    $title = $title->fetch(PDO::FETCH_ASSOC);
+
+    $image = $bdd->prepare('SELECT illustration FROM recette WHERE id= ?');
+    $image->execute(array($getid));
+    $image = $image->fetch(PDO::FETCH_ASSOC);
+
 
     if(isset($_POST['submit_commentaire'])) {
         if(isset($_POST['pseudo'],$_POST['commentaire']) AND !empty($_POST['pseudo']) AND !empty($_POST['commentaire'])){
@@ -36,13 +46,12 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             $ins = $bdd->prepare('INSERT INTO commentaire (pseudo, commentaire, post_jour, temps, id_recette) VALUES (?,?,NOW(),NOW(),?)');
             $ins->execute(array($pseudo, $commentaire, $getid));
             $c_error = "Votre commentaire a bien été posté";
-
         }else {
             $c_error = "Tous les champs doivent être complétés";
         }
     }
 
-    $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_article = ? ORDER BY id DESC');
+    $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id = ? ORDER BY id DESC');
     $commentaires->execute(array($getid));
 }
 ?>
@@ -122,18 +131,18 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     </header>
     <div class="profil_menu">
         <ul>
-            <li><?php echo $_SESSION["pseudo"] ?></li>
+            <li><?php echo $_SESSION["pseudo"];?></li>
             <li><a href="./profil.php">Voir profil</a></li>
             <li><a href="#">Créer une recette</a></li>
             <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
-        <h2>Nom_de_la_recette</h2>
+        <h2><?=$title['nom']?></h2>
         <div id="wrapper">
         <section id="image_plat">
             <img src="../img/tartine.jpg">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo ad aspernatur quae deserunt unde tempora a fugiat enim vitae repellendus eaque consequuntur, atque eius maiores. Ducimus, labore? Deserunt, amet provident.</p>
+            <p><?=$description['representation']?></p>
             <div id="recette_info">
                  <span>25 min</span>
                  <span>3 étoiles</span>
