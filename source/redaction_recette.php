@@ -103,61 +103,61 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form method="POST">
-        <h1>Rédigez votre propre recette !</h1>
-        <section id="titre">
-            <h6>Nommez la recette !<h6>
-            <input id="titre_input" type="text" name = "title"></input> 
-        </section>
-        <section id="description" name = "description">
-            <h6>Faites nous une description de la recette !<h6>
-            <textarea type="text" id="desc_input"></textarea>
-        </section>
-        <section id="ingredient">
-        </section>
-        <section id="etape">
-            <h6>Décrivez les étapes !</h6>
-            <input type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
-            <div id="etapes"></div>
-            <span id="etape_button" class="btn btn-primary" value="+" >+</span>
-        </section>
-        <section id="recette_info">
-            <h6>D'autres informations concernant la recette...</h6>
-            <p>Methode de cuisson.<p>
-            <select id="methode_cuisson" name="methode_cuisson">
-                <option>Marinade</option>
-                <option>Bouillir</option>
-                <option>Mijoter</option>
-                <option>A la poêle</option>
-                <option> A la marmite</option>
-                <option>Au four</option>
-            </select>
-            <span></span>
-            <p>Selectionnez le temps de réalisation de la recette.<p>
-            <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation">
-            <span></span>
-            <p>Selectionnez la difficulté de la recette.<p>
-            <select id="difficulte" name="difficulte">
-                <option>Facile</option>
-                <option>Intermédiaire</option>
-                <option>Difficile</option>
-            </select>
-            <span></span>
-            <p>Selectionnez la catégorie de la recette.<p>
-            <select id="type_recette" name="type_recette">
-                <option>Plat</option>
-                <option>Cocktail</option>
-                <option>Dessert</option>
-            </select>
-            <h6>Choisissez une illustration pour votre recette !</h6>
-            <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
-        </section>
-        <section id="user_info">
-           <!-- <input type="hidden" value=""></input> pour les trucs automatiques -->
-           <input type="hidden" value=""></input>
-        </section>
-        <input type="submit"></input>
-    </form>
+        <form action="./envoi_recette.php" method="post">
+            <h1>Rédigez votre propre recette !</h1>
+            <section id="titre">
+                <h6>Nommez la recette !<h6>
+                <input id="titre_input" type="text" name ="title"></input> 
+            </section>
+            <section id="description" name ="description">
+                <h6>Faites nous une description de la recette !<h6>
+                <textarea type="text" id="desc_input" name="description"></textarea>
+            </section>
+            <section id="ingredient">
+            </section>
+            <section id="etape">
+                <h6>Décrivez les étapes !</h6>
+                <input type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
+                <div id="etapes"></div>
+                <span id="etape_button" class="btn btn-primary" value="+" >+</span>
+            </section>
+            <section id="recette_info">
+                <h6>D'autres informations concernant la recette...</h6>
+                <p>Methode de cuisson.<p>
+                <select id="methode_cuisson" name="methode_cuisson">
+                    <option>Marinade</option>
+                    <option>Bouillir</option>
+                    <option>Mijoter</option>
+                    <option>A la poêle</option>
+                    <option> A la marmite</option>
+                    <option>Au four</option>
+                </select>
+                <span></span>
+                <p>Selectionnez le temps de réalisation de la recette.<p>
+                <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation">
+                <span></span>
+                <p>Selectionnez la difficulté de la recette.<p>
+                <select id="difficulte" name="difficulte">
+                    <option>Facile</option>
+                    <option>Intermédiaire</option>
+                    <option>Difficile</option>
+                </select>
+                <span></span>
+                <p>Selectionnez la catégorie de la recette.<p>
+                <select id="type_recette" name="type_recette">
+                    <option>Plat</option>
+                    <option>Cocktail</option>
+                    <option>Dessert</option>
+                </select>
+                <h6>Choisissez une illustration pour votre recette !</h6>
+                <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
+            </section>
+            <section id="user_info">
+            <!-- <input type="hidden" value=""></input> pour les trucs automatiques -->
+            <input type="hidden" value=""></input>
+            </section>
+            <input type="submit"></input>
+        </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
     <script>
@@ -167,17 +167,17 @@ catch (Exception $e)
         let step = document.getElementById('etapes');
         let i = 1;
 
-        button.addEventListener('click', function(event){
-            i++
-            if (button.textContent === '+'){
-                let newInput = document.createElement('input')
-                    newInput.type = 'text'
-                    newInput.placeholder = i + " - Décrivez l'étape";
-                    newInput.id = 'step_'+i;
-                    newInput.name = "step_" + i;
-                step.appendChild(newInput);
-            }
-        })
+            button.addEventListener('click', function(event){
+                i++
+                if (button.textContent === '+'){
+                    let newInput = document.createElement('input')
+                        newInput.type = 'text'
+                        newInput.placeholder = i + " - Décrivez l'étape";
+                        newInput.id = 'step_'+i;
+                        newInput.name = "step_" + i;
+                    step.appendChild(newInput);
+                }
+            })
         }
     </script>
 </body>
