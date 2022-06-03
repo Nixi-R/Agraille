@@ -30,3 +30,7 @@ form {
 #etape_button{
     cursor: pointer;
 }
+
+p {
+    margin: 0px;
+}
