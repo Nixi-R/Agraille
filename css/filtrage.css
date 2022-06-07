@@ -1,9 +1,27 @@
+  .flexCentre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flexAround {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .flexBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
   h2 {
     position: relative;
     text-align: center;
-    top: 2rem;
   }
 
+/*
   #p1 {
     position: relative;
     right : 15%;
@@ -31,4 +49,50 @@
     right: 1.4%;
     justify-content: center;
     text-align: center;
+  }
+*/
+  .margFiltre {
+    margin-top: 200px;
+    margin-left: 20px;
+    margin-bottom: 40px;
+  }
+
+  .filtre {
+    display: flex;
+    align-items: center;
+  }
+
+  .margFiltreTitre {
+    margin-top: 50px;
+  }
+
+  .filtreTexteIcons {
+    border: 2px solid #f2f2f2;
+    height: 50px;
+    border-radius: 30px;
+    margin-right: 25px;
+  }
+
+  .filtreTexteIcons:hover > .filtreTexte {
+    color: #0065fc;
+  }
+
+  .filtreTexteIcons:hover > .filtreIcons {
+    color: white;
+    background-color: #0065fc;
+  }
+
+  .filtreTexte {
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 0 25px 25px 0;
+  }
+
+  .filtreIcons {
+    border-radius: 25px;
+    width: 52px;
+    height: 52px;
+    color: #0065fc;
+    background-color: #deebff;
   }
