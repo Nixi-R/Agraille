@@ -65,19 +65,19 @@
             <div class="margFiltreTitre"><h2>Filtrage</h2></div>
             <div class="filtre margFiltre flexCentre"> 
                 <div class="flexBetween filtreTexteIcons">
-                    <i class="fa-solid fa-timer filtreIcons flexCentre"></i>
+                    <i class="fa-solid fa-timer fa-lg filtreIcons flexCentre"></i>
                     <div class="filtreTexte flexCentre">Par temps de cuisson (en min)<input type="number" name="temps" min="0" max="180"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
-                    <i class="fa-solid fa-star filtreIcons flexCentre"></i>
+                    <i class="fa-solid fa-star fa-lg filtreIcons flexCentre"></i>
                     <div class="filtreTexte flexCentre">Par note (1 à 5)<input type="number" name="note" min="1" max="5"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
-                    <i class="fa-solid fa-font filtreIcons flexCentre"></i>
+                    <i class="fa-solid fa-font fa-lg filtreIcons flexCentre"></i>
                     <div class="filtreTexte flexCentre">Par nom<input type="text" name="name"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
-                    <i class="fa-solid fa-cherries filtreIcons flexCentre"></i>
+                    <i class="fa-solid fa-cherries fa-lg filtreIcons flexCentre"></i>
                     <div class="filtreTexte flexCentre">Par ingrédient <input type="text" name="name"></div>
                 </div>
             </div>
