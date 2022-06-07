@@ -4,12 +4,6 @@
     align-items: center;
   }
 
-  .flexAround {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-
   .flexBetween {
     display: flex;
     justify-content: space-between;
@@ -90,6 +84,7 @@
   }
 
   .filtreIcons {
+    margin-left: -2px;
     border-radius: 25px;
     width: 52px;
     height: 52px;
