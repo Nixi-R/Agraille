@@ -23,7 +23,7 @@ catch (Exception $e)
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -133,7 +133,7 @@ catch (Exception $e)
                     <option>Au four</option>
                 </select>
                 <span></span>
-                <p>Selectionnez le temps de réalisation de la recette.<p>
+                <p>Entrez le temps de réalisation de la recette.<p>
                 <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation">
                 <span></span>
                 <p>Selectionnez la difficulté de la recette.<p>
