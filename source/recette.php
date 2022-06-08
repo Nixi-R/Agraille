@@ -53,25 +53,29 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $image = $image->fetch(PDO::FETCH_ASSOC);
 
 
-    if(isset($_POST['submit_commentaire'])) {
-        if(isset($_POST['note'],$_POST['commentaire']) AND !empty($_POST['note']) AND !empty($_POST['commentaire'])){
-            $id = random_int(0, 2147483647);
-            $pseudo = htmlspecialchars($_SESSION['pseudo']);
-            $commentaire = htmlspecialchars($_POST['commentaire']);
-            $note = $_POST['note'];
-            $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
-            $ins->execute(array($id,$pseudo, $commentaire, $getid));
-            
-            // $insr = $bdd->prepare('INSERT INTO recette (note) VALUES (?)');
-            // $insr->execute(array($note));
-            $c_error = "Votre commentaire a bien été posté";
-        }else {
-            $c_error = "Tous les champs doivent être complétés";
+    if ($valider['valider'] == 1)
+    {
+        if(isset($_POST['submit_commentaire'])) {
+            if(isset($_POST['note'],$_POST['commentaire']) AND !empty($_POST['note']) AND !empty($_POST['commentaire'])){
+                $id = random_int(0, 2147483647);
+                $pseudo = htmlspecialchars($_SESSION['pseudo']);
+                $commentaire = htmlspecialchars($_POST['commentaire']);
+                $note = $_POST['note'];
+                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
+                $ins->execute(array($id,$pseudo, $commentaire, $getid));
+                
+                // $insr = $bdd->prepare('INSERT INTO recette (note) VALUES (?)');
+                // $insr->execute(array($note));
+                $c_error = "Votre commentaire a bien été posté";
+            }else {
+                $c_error = "Tous les champs doivent être complétés";
+            }
         }
-    }
+    
 
-    $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_recette = ? ORDER BY id_recette DESC');
-    $commentaires->execute(array($getid));
+        $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_recette = ? ORDER BY id_recette DESC');
+        $commentaires->execute(array($getid));
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -174,7 +178,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <section id="etape">
             <h2>Etapes</h2>
         </section>
-        <section id="espace_commentaire">
+        <?php if ($valider['valider'] == 1)
+        echo '<section id="espace_commentaire">
             <h2>Commentaires</h2>
             <div class="stars">
                <i class="lar la-star" data-value="1"></i>
@@ -189,11 +194,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <input type="hidden" name="note" id="note" value="0">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="valider" name="submit_commentaire">
-            </form>
+            </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
-            <?php while($c = $commentaires->fetch()){ ?>
+            <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
             <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></b>
-            <?php } ?>
+            <?php }} ?>
         </div>
     </main>
 </body>
