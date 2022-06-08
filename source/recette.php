@@ -14,7 +14,21 @@ catch (Exception $e)
             die('Erreur : ' . $e->getMessage());
     }
 
-        if (isset($_SESSION['idCompte']))
+    $valider = $bdd->prepare('SELECT valider FROM recette where id = '.$_GET["id"]);
+    $valider -> execute();
+    $valider = $valider->fetch();
+
+    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+    {
+        if ($valider['valider'] == 1)
+                header('Location: ../404.php?erreur=recette déjà validée');
+    }
+    else 
+        if ($valider['valider'] == 0)
+            header('Location: ../404.php?erreur=recette non validée');
+
+
+    if (isset($_SESSION['idCompte']))
     {  
         $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id =' .$_SESSION['idCompte']);
         $insertP -> execute();
