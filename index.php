@@ -33,6 +33,8 @@ catch (Exception $e)
         $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
 
     $recette->execute();
+
+    echo $_SESSION['mode'];
     
 ?>
 <!DOCTYPE html>

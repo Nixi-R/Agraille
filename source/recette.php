@@ -170,7 +170,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <img src="../img/tartine.jpg">
             <?= if ($admin) echo '<input type="text" name="representation" value="'.$description["representation"].'">'; 
             else 
-            echo '<p>'.$description['representation'].'</p>'; ?>
+            echo '<p>'.$description["representation"].'</p>'; ?>
             <div id="recette_info">
                  <span>25 min</span>
                  <span>3 étoiles</span>
