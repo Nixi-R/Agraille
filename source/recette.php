@@ -26,9 +26,11 @@ catch (Exception $e)
             $admin = true;
     }
     else 
+    {
+        $admin = 0;
         if ($valider['valider'] == 0)
             header('Location: ../404.php?erreur=recette non validée');
-
+    }
 
     if (isset($_SESSION['idCompte']))
     {  
@@ -165,9 +167,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     <main>
         <?php 
         if ($admin) 
-            echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php">';
-        if ($admin) 
-            echo '<input type="text" name="nom" value="'.$title['nom'].'>'; 
+            echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php" id="form_modif">
+            <input type="text" name="nom" value="'.$title['nom'].'" style="margin-left: 42%; outline: none;">'; 
         else 
             echo "<h2>".$title['nom']."</h2>";?>
         <div id="wrapper">
@@ -175,7 +176,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <img src="../img/tartine.jpg">
             <?php 
             if ($admin) 
-                echo '<input type="text" name="representation" value="'.$description["representation"].'">'; 
+                echo '<textarea name="representation" form="form_modif" style="width: 50%; outline: none;">'.$description["representation"].'</textarea>'; 
             else 
                 echo '<p>'.$description["representation"].'</p>'; ?>
             <div id="recette_info">

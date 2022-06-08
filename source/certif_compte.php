@@ -35,7 +35,7 @@ $recipeStatement -> execute();
     
 $recipeStatement = $recipeStatement -> fetchAll();
 
-$pseudo = $_POST['pseudo'];
+$pseudo = strtoupper($_POST['pseudo']);
     
 if (isset($recipeStatement[0]['pseudo']))
     {
