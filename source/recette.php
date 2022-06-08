@@ -22,6 +22,8 @@ catch (Exception $e)
     {
         if ($valider['valider'] == 1)
                 header('Location: ../404.php?erreur=recette déjà validée');
+        else
+            $admin = true;
     }
     else 
         if ($valider['valider'] == 0)
@@ -161,11 +163,14 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         </ul>
     </div>
     <main>
-        <h2><?=$title['nom'];?></h2>
+        <?php if ($admin) echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php">'; ?>
+        <?=if ($admin) echo '<input type="text" name="nom" value="'.$title['nom'].'>'; else echo "<h2>".$title['nom']."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
             <img src="../img/tartine.jpg">
-            <p><?=$description['representation'];?></p>
+            <?= if ($admin) echo '<input type="text" name="representation" value="'.$description["representation"].'">'; 
+            else 
+            echo '<p>'.$description['representation'].'</p>'; ?>
             <div id="recette_info">
                  <span>25 min</span>
                  <span>3 étoiles</span>
@@ -199,6 +204,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
             <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></b>
             <?php }} ?>
+            <?php
+            if ($admin) echo "<input type='submit' name='valider' value='Valider'>";
+            ?>
+            </form>
         </div>
     </main>
 </body>
