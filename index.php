@@ -107,7 +107,6 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <div id="main">
             <?php while($r = $recette->fetch()){
                 $auteur = $r['auteur'];
                 $nom = $r['nom'];
@@ -129,7 +128,6 @@ catch (Exception $e)
                    </div>
                </div>");
         };?>   
-        </div>
     </main>
     <script src="./js/scriptIndex.js"></script>
 </body>
