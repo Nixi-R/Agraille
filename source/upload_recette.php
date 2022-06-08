@@ -17,11 +17,19 @@
         if (!(isset($_SESSION['mode'])))
             header('Location: ../');
 
-    $sqlQuery = 'UPDATE recette SET nom = "'.$_GET['nom'].'", representation = "'. $_GET["representation"]. '",
+    $insertRecipe = 'UPDATE recette SET nom = "'.$_GET['nom'].'", representation = "'. $_GET["representation"]. '",
      date = "'.date("Y-m-d H:i:s").'", etape = "'.$_GET["etape"].'", temps_realisation = "'.$_GET["temps_realisation"].'",
      ingredients = "'.$_GET["ingredients"]. '", methode_cuisson = "'.$_GET["methode_cuisson"].'", valider = 1, type = "'.$_GET["type"].'",
       difficulte = "'.$_GET["difficulte"].'" WHERE id = "'.$_GET["id"].'"';
 
-    $insertRecipe = $conn->prepare($sqlQuery);
+    $insertRecipe = $conn->prepare($insertRecipe);
 
     $insertRecipe->execute();
+
+    if (strlen($_FILES['illustration']['tmp_name']) > 0)
+    {
+        $insertRecipe = "UPDATE recette SET illustration = '".fopen($_FILES['photo']['tmp_name'], 'rb')."', 
+        mime = '".$_FILES['photo']['type']."'";
+        $insertRecipe = $conn->prepare($insertRecipe);
+        $insertRecipe->execute();
+    }
