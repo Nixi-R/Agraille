@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 h1 {
     text-align: center;
 }
@@ -15,7 +16,7 @@ h1 {
     gap: 10px;
 }
 
-span {
+.span {
     border: 1px solid black;
     width: 30%;
     background-color: black;
@@ -33,4 +34,43 @@ form {
 
 p {
     margin: 0px;
+}
+
+.tag-container {
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.tag-container .tag {
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    background: #f2f2f2;
+    cursor: default;
+}
+
+.tag i {
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.tag-container input {
+    flex: 1;
+    font-size: 16px;
+    padding: 5px;
+    outline: none;
+    border: 0;
+}
+
+.tag-container button {
+    height: 25px;
+    width: 100px;
 }

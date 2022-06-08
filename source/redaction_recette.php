@@ -103,7 +103,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form action="./envoi_recette.php" method="post">
+        <!-- <form action="./envoi_recette.php" method="post" name="myForm"> -->
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
@@ -114,6 +114,13 @@ catch (Exception $e)
                 <textarea type="text" id="desc_input" name="description"></textarea>
             </section>
             <section id="ingredient">
+                <select>
+                </select>
+                <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous une proposition !<p>
+                <div class="tag-container">
+                    <input/>
+                    <button id="button_tag">
+                </div>
             </section>
             <section id="etape">
                 <h6>Décrivez les étapes !</h6>
@@ -132,17 +139,17 @@ catch (Exception $e)
                     <option> A la marmite</option>
                     <option>Au four</option>
                 </select>
-                <span></span>
+                <span class="span"></span>
                 <p>Entrez le temps de réalisation de la recette.<p>
                 <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation">
-                <span></span>
+                <span class="span"></span>
                 <p>Selectionnez la difficulté de la recette.<p>
                 <select id="difficulte" name="difficulte">
                     <option>Facile</option>
                     <option>Intermédiaire</option>
                     <option>Difficile</option>
                 </select>
-                <span></span>
+                <span class="span"></span>
                 <p>Selectionnez la catégorie de la recette.<p>
                 <select id="type_recette" name="type_recette">
                     <option>Plat</option>
@@ -150,16 +157,17 @@ catch (Exception $e)
                     <option>Dessert</option>
                 </select>
                 <h6>Choisissez une illustration pour votre recette !</h6>
-                <input id="recette_image" name="recette_image" type="file" accept="image/"></input>
+                <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
             </section>
             <section id="user_info">
             <!-- <input type="hidden" value=""></input> pour les trucs automatiques -->
             <input type="hidden" value=""></input>
             </section>
-            <input type="submit"></input>
+            <input type="submit" onclick="document.recette_envoi.submit()"></input>
         </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
+    <script src="../js/scriptTag.js"></script>
     <script>
 
         window.onload = function(){
@@ -178,7 +186,10 @@ catch (Exception $e)
                     step.appendChild(newInput);
                 }
             })
+
+            
         }
+
     </script>
 </body>
 </html>
