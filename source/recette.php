@@ -163,14 +163,21 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         </ul>
     </div>
     <main>
-        <?php if ($admin) echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php">'; ?>
-        <?=if ($admin) echo '<input type="text" name="nom" value="'.$title['nom'].'>'; else echo "<h2>".$title['nom']."</h2>";?>
+        <?php 
+        if ($admin) 
+            echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php">';
+        if ($admin) 
+            echo '<input type="text" name="nom" value="'.$title['nom'].'>'; 
+        else 
+            echo "<h2>".$title['nom']."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
             <img src="../img/tartine.jpg">
-            <?= if ($admin) echo '<input type="text" name="representation" value="'.$description["representation"].'">'; 
+            <?php 
+            if ($admin) 
+                echo '<input type="text" name="representation" value="'.$description["representation"].'">'; 
             else 
-            echo '<p>'.$description["representation"].'</p>'; ?>
+                echo '<p>'.$description["representation"].'</p>'; ?>
             <div id="recette_info">
                  <span>25 min</span>
                  <span>3 étoiles</span>
