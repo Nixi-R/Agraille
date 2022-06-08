@@ -28,13 +28,14 @@ catch (Exception $e)
             $_SESSION['mode'] = 1;
 
     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+    {
         $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
-    else 
+    }
+    else
+    { 
         $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
-
+    }
     $recette->execute();
-
-    echo $_SESSION['mode'];
     
 ?>
 <!DOCTYPE html>
