@@ -21,10 +21,16 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
-    if (isset($_SESSION['mode']) && $_SESSION['mode'] = 1)
-        $recette = $bdd->prepare('SELECT * FROM recette WHERE validation = 0 ORDER BY id DESC');
+    if (isset($_SESSION['mode']) && isset($_GET['mode']))
+        if ($_SESSION['mode'] == 1)
+            $_SESSION['mode'] = 0;
+        else
+            $_SESSION['mode'] = 1;
+
+    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
     else 
-        $recette = $bdd->prepare('SELECT * FROM recette WHERE validation = 1 ORDER BY id DESC');
+        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
 
     $recette->execute();
     
