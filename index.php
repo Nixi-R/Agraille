@@ -2,7 +2,7 @@
 session_start();
 
 try{
-    $conn = new PDO(
+    $bdd = new PDO(
         'mysql:host=localhost;dbname=agrailledb;charset=utf8',
         'root',
         '',
@@ -16,13 +16,14 @@ catch (Exception $e)
 
     if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte'] );
+        $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
 
-
-
+    $recette = $bdd->prepare('SELECT * FROM recette ORDER BY id DESC');
+    $recette->execute();
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -99,7 +100,7 @@ catch (Exception $e)
     </header>
     <div class="profil_menu">
         <ul>
-            <li><?php echo $_SESSION["pseudo"] ?></li>
+            <li><?php echo $_SESSION["pseudo"]; ?></li>
             <li><a href="./source/profil.php">Voir profil</a></li>
             <li><a href="./source/redaction_recette.php">Créer une recette</a></li>
             <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
@@ -107,20 +108,27 @@ catch (Exception $e)
     </div>
     <main>
         <div id="main">
-               <div class="container my-2">
-                   <div class="card-deck">
-                        <div class="card">
-                            <img class="card-img-top img-fluid" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1" alt="#">
-                            <div class="card-body">
-                                <h5 class="card-title">Recette_1</h5>
-                                <p class="card-text">Rédigé par <?$pseudo?></p>
+            <?php while($r = $recette->fetch()){
+                $auteur = $r['auteur'];
+                $nom = $r['nom'];
+                $id = $r['id'];
+                $button = `<button onclick="location.href='./source/recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
+
+                echo("<div class='container my-2'>
+                   <div class='card-deck'>
+                        <div class='card'>
+                            <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
+                            <div class='card-body'>
+                                <h5 class='card-title'>$nom</h5>
+                                <p class='card-text'>Rédigé par $auteur</p>
                             </div>
-                            <div class="card-footer text-center">
-                                <button onclick="location.href='./source/recette.php'" class="btn btn-primary">J'veux le graille !</button>
+                            <div class='card-footer text-center'>
+                           <a href='./source/recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
                             </div>
                         </div>
                    </div>
-               </div>     
+               </div>");
+        };?>   
         </div>
     </main>
     <script src="./js/scriptIndex.js"></script>

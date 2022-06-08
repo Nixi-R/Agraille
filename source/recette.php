@@ -47,6 +47,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             $note = $_POST['note'];
             $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
             $ins->execute(array($id,$pseudo, $commentaire, $getid));
+            
             // $insr = $bdd->prepare('INSERT INTO recette (note) VALUES (?)');
             // $insr->execute(array($note));
             $c_error = "Votre commentaire a bien été posté";
