@@ -103,7 +103,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <!-- <form action="./envoi_recette.php" method="post" name="myForm"> -->
+        <form action="./envoi_recette.php" method="post" name="myForm">
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
