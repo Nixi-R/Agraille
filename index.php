@@ -21,7 +21,17 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
-    $recette = $bdd->prepare('SELECT * FROM recette ORDER BY id DESC');
+    if (isset($_SESSION['mode']) && isset($_GET['mode']))
+        if ($_SESSION['mode'] == 1)
+            $_SESSION['mode'] = 0;
+        else
+            $_SESSION['mode'] = 1;
+
+    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
+    else 
+        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+
     $recette->execute();
     
 ?>
@@ -103,6 +113,10 @@ catch (Exception $e)
             <li><?php echo $_SESSION["pseudo"]; ?></li>
             <li><a href="./source/profil.php">Voir profil</a></li>
             <li><a href="./source/redaction_recette.php">Créer une recette</a></li>
+            <?php
+            if (isset($_SESSION['mode']))
+                echo "<li><a href='./index?mode=change'>Changement de mode</a></li>";
+            ?>
             <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
