@@ -2,7 +2,7 @@
     session_start();
 
     try{
-        $bdd = new PDO(
+        $conn = new PDO(
             'mysql:host=localhost;dbname=agrailledb;charset=utf8',
             'root',
             '',
@@ -14,22 +14,30 @@
                 die('Erreur : ' . $e->getMessage());
         }
 
-        if (!(isset($_SESSION['mode'])))
-            header('Location: ../');
+    if (!(isset($_SESSION['mode'])))
+        header('Location: ../');
 
-    $insertRecipe = 'UPDATE recette SET nom = "'.$_GET['nom'].'", representation = "'. $_GET["representation"]. '",
-     date = "'.date("Y-m-d H:i:s").'", etape = "'.$_GET["etape"].'", temps_realisation = "'.$_GET["temps_realisation"].'",
-     ingredients = "'.$_GET["ingredients"]. '", methode_cuisson = "'.$_GET["methode_cuisson"].'", valider = 1, type = "'.$_GET["type"].'",
-      difficulte = "'.$_GET["difficulte"].'" WHERE id = "'.$_GET["id"].'"';
+    if (isset($_POST['valider']))
+    {    $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
+        date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
+        ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, type = "'.$_POST["type"].'",
+        difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
 
-    $insertRecipe = $conn->prepare($insertRecipe);
+        $insertRecipe = $conn->prepare($insertRecipe);
 
-    $insertRecipe->execute();
+        $insertRecipe->execute();
 
-    if (strlen($_FILES['illustration']['tmp_name']) > 0)
+        if (count($_FILES) > 0)
+        {
+            $insertRecipe = "UPDATE recette SET illustration = '".fopen($_FILES['photo']['tmp_name'], 'rb')."', 
+            mime = '".$_FILES['photo']['type']."'";
+            $insertRecipe = $conn->prepare($insertRecipe);
+            $insertRecipe->execute();
+        }
+    }
+    else if (isset($_POST['refuser']))
     {
-        $insertRecipe = "UPDATE recette SET illustration = '".fopen($_FILES['photo']['tmp_name'], 'rb')."', 
-        mime = '".$_FILES['photo']['type']."'";
+        $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
         $insertRecipe = $conn->prepare($insertRecipe);
         $insertRecipe->execute();
     }

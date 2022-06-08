@@ -44,6 +44,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
 
     $getid = htmlspecialchars($_GET['id']);
 
+    $recette = $bdd->prepare('SELECT * FROM recette WHERE id= ?');
+    $recette->execute(array($getid));
+    $recette = $recette->fetch(PDO::FETCH_ASSOC);
+
     $description = $bdd->prepare('SELECT representation FROM recette WHERE id= ?');
     $description->execute(array($getid));
     $description = $description->fetch(PDO::FETCH_ASSOC);
@@ -180,10 +184,21 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else 
                 echo '<p>'.$description["representation"].'</p>'; ?>
             <div id="recette_info">
-                 <span>25 min</span>
-                 <span>3 étoiles</span>
-                 <span>Au four</span>
-                 <span>Facile</span>
+            <?php
+            if ($admin)
+                echo "<input type='text' name='temps_realisation' value='".$recette['temps_realisation']."' style='outline: none;'><input type='text' name='note' value='".$recette['note']."' style='outline: none;'>
+                <input type='methode_cuisson' name='methode_cuisson' value='".$recette['methode_cuisson']."' style='outline: none;'><input type='text' name='difficulte' value='".$recette['difficulte']."' style='outline: none;'>
+                <input type='text' name='type' value='".$recette['type']."' style='outline: none;'></br><textarea name='etape' form='form_modif' style='width: 100%; outline: none;'>".$recette['etape']."</textarea>
+                <input type='hidden' name='id' value='".$_GET['id']."'><textarea name='ingredients' form='form_modif'>".$recette['ingredients']."></textarea>";
+            else
+            {   
+                echo "<span>25 min</span>
+                <span>3 étoiles</span>
+                <span>Au four</span>
+                <span>Facile</span>";
+            }
+            ?>
+                
             </div>
         </section>
         <section id="ingredient">
@@ -213,9 +228,9 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></b>
             <?php }} ?>
             <?php
-            if ($admin) echo "<input type='submit' name='valider' value='Valider'>";
+            if ($admin) echo "<input type='submit' name='valider' value='Valider'><input type='submit' name='refuser' value='refuser'></form>";
             ?>
-            </form>
+            
         </div>
     </main>
 </body>
