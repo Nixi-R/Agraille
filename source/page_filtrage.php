@@ -153,12 +153,12 @@ catch (Exception $e)
 
                 $SQL = "SELECT * FROM recette WHERE ";
                 
-                if ($temps != null){
+                if (isset($temps) && $temps != null){
                     $SQL = $SQL . "temps_realisation <= " . $temps ;
                     $test = 1;
                 }
 
-                if ($note != null){
+                if (isset($note) && $note != null){
                     if ($test == 1){
                         $SQL = $SQL . "AND note = " . $note ;
                     } else {
@@ -167,7 +167,7 @@ catch (Exception $e)
                     $test = 1;
                     
                 }
-                if ($nom != null){
+                if (isset($nom) && $nom != null){
                     if ($test == 1){
                         $SQL = $SQL . "AND nom LIKE " . $nom ;
                     } else {
@@ -176,7 +176,7 @@ catch (Exception $e)
                     $test = 1;
                 }
 
-                if ($ingredients != null){
+                if (isset($ingredients) && $ingredients != null){
                     if ($test == 1){
                         $SQL = $SQL . "AND ingredients IN " . $ingredients . " AND *";
                     } else {
@@ -194,17 +194,13 @@ catch (Exception $e)
                     $SQL = $SQL . " AND valider = 1 ORDER BY id DESC";
                     $SQL = $bdd->prepare($SQL);
                 }
-                var_dump($_POST);
-                print_r($SQL);
                 $SQL->execute();
-                
-                while($SQL->fetch()){
-                    /*for ($i=0; $i<count($SQL); $i++){
-                        $SQL[$i]= ;
-                    }*/
-                    $auteur = $SQL['auteur'];
-                    $nom = $SQL['nom'];
-                    $id = $SQL['id'];
+                $SQL = $SQL->fetchAll();
+
+                for($i=0; $i<count($SQL); $i++){
+                    $auteur = $SQL[$i]['auteur'];
+                    $nom = $SQL[$i]['nom'];
+                    $id = $SQL[$i]['id'];
                     $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
     
                     echo("<div class='container my-2'>
