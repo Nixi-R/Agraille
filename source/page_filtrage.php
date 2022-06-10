@@ -138,67 +138,73 @@ catch (Exception $e)
             </div>
             <?php
                 $test = 0;
-                if ( isset ($temps) ){
+                if ($_POST['temps'] != null ){
                     $temps = $_POST['temps'];
-                    $test = 1;
                 }
-                if ( isset ($note) ){
+                if ($_POST['note'] != null ){
                     $note = $_POST['note'];
-                    $test = 1;
                 }
-                if ( isset ($note) ){
+                if ($_POST['nom'] != null ){
                     $nom = $_POST['nom'];
-                    $test = 1;
                 }
-                if ( isset ($ingredients) ){
+                if ($_POST['ingredients'] != null ){
                     $ingredients = $_POST['ingredients'];
                 }
 
-                $SQL = "SELECT * FROM recette WHERE";
+                $SQL = "SELECT * FROM recette WHERE ";
                 
-                if ( isset ($temps) ){
-                    $SQL += "recette.temps <= " . $temps ;
+                if ($temps != null){
+                    $SQL = $SQL . "temps_realisation <= " . $temps ;
+                    $test = 1;
                 }
-                if ( isset ($note) ){
+
+                if ($note != null){
                     if ($test == 1){
-                        $SQL += "AND recette.note == " . $note ;
+                        $SQL = $SQL . "AND note = " . $note ;
                     } else {
-                        $SQL += "recette.note == " . $note ;
+                        $SQL = $SQL . "note = " . $note ;
                     }
+                    $test = 1;
                     
                 }
-                if ( isset ($nom) ){
+                if ($nom != null){
                     if ($test == 1){
-                        $SQL += "AND recette.nom LIKE " . $nom ;
+                        $SQL = $SQL . "AND nom LIKE " . $nom ;
                     } else {
-                        $SQL += "recette.nom LIKE " . $nom ;
+                        $SQL = $SQL . "nom LIKE " . $nom ;
                     }
+                    $test = 1;
                 }
 
-                if ( isset ($ingredients) ){
+                if ($ingredients != null){
                     if ($test == 1){
-                        $SQL += "AND recette.ingredients IN " . $ingredients . "AND *";
+                        $SQL = $SQL . "AND ingredients IN " . $ingredients . " AND *";
                     } else {
-                        $SQL += "recette.ingredients IN " . $ingredients . "AND *";
+                        $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
                     }
                 }
-
+                
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
-                    $SQL += "AND valider = 0 ORDER BY id DESC";
+                    $SQL = $SQL . " AND valider = 0 ORDER BY id DESC";
                     $SQL = $bdd->prepare($SQL);
                 }
                 else
-                { 
-                    $SQL = $bdd->prepare($SQL . 'AND valider = 1 ORDER BY id DESC');
+                {
+                    $SQL = $SQL . " AND valider = 1 ORDER BY id DESC";
+                    $SQL = $bdd->prepare($SQL);
                 }
+                var_dump($_POST);
+                print_r($SQL);
                 $SQL->execute();
                 
-
                 while($SQL->fetch()){
-                    $auteur = $r['auteur'];
-                    $nom = $r['nom'];
-                    $id = $r['id'];
+                    /*for ($i=0; $i<count($SQL); $i++){
+                        $SQL[$i]= ;
+                    }*/
+                    $auteur = $SQL['auteur'];
+                    $nom = $SQL['nom'];
+                    $id = $SQL['id'];
                     $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
     
                     echo("<div class='container my-2'>
