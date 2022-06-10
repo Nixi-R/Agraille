@@ -118,15 +118,14 @@ catch (Exception $e)
             </section>
             <section id="ingredient">
                 <div class="tag-container">
-                    <h6>Les ingrédients maintenant !</h6>
+                    <!-- <h6>Les ingrédients maintenant !</h6>
                     <select>
-                        <?php
-                        while($i = $ingredient->fetch()){
-                            echo "<option>".$ingredient["ingredient"]."</option>";
-                        } 
-                        ?>
-                    </select>
-                    <button id="button_select" onclick="return false;">
+                      // while($i = $ingredient->fetch()){
+                        //     echo "<option>".$ingredient["ingredient"]."</option>";
+                        // } 
+ 
+                    </select> -->
+                    <!-- <button id="button_select" onclick="return false;"> -->
                 <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
                     <input />
                     <button id="button_input" onclick="return false;">

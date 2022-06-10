@@ -1,6 +1,6 @@
 const tagContainer = document.querySelector('.tag-container');
 const input = document.querySelector('.tag-container input');
-const buttonTag = document.querySelector('#button_tag');
+const buttonTag = document.querySelector('#button_input');
 let i = 0;
 let tags = [];
 
