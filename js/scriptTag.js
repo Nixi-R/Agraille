@@ -1,7 +1,7 @@
 const tagContainer = document.querySelector('.tag-container');
 const input = document.querySelector('.tag-container input');
 const buttonTag = document.querySelector('#button_tag');
-
+let i = 0;
 let tags = [];
 
 function createTag(label) {
@@ -9,6 +9,10 @@ function createTag(label) {
     div.setAttribute('class', 'tag');
     const span = document.createElement('span');
     span.innerHTML = label;
+    const inputHide = document.createElement("input");
+    inputHide.value = label;
+    inputHide.name = "ingredient_prop_"+i;
+    inputHide.type = "hidden";
     const closeBtn = document.createElement('i');
     closeBtn.setAttribute('class', 'material-icons');
     closeBtn.setAttribute('data-item', label);
@@ -16,6 +20,7 @@ function createTag(label) {
 
     div.appendChild(span);
     div.appendChild(closeBtn);
+    div.appendChild(inputHide);
     return div;
 }
 
@@ -34,6 +39,7 @@ function addTags() {
 }
 
 buttonTag.addEventListener('click', function(e){
+        i++
         tags.push(input.value);
         addTags();
         input.value = "";

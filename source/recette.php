@@ -48,18 +48,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $recette->execute(array($getid));
     $recette = $recette->fetch(PDO::FETCH_ASSOC);
 
-    $description = $bdd->prepare('SELECT representation FROM recette WHERE id= ?');
-    $description->execute(array($getid));
-    $description = $description->fetch(PDO::FETCH_ASSOC);
-    
-    $title = $bdd->prepare('SELECT nom FROM recette WHERE id= ?');
-    $title->execute(array($getid));
-    $title = $title->fetch(PDO::FETCH_ASSOC);
-
-    $image = $bdd->prepare('SELECT illustration FROM recette WHERE id= ?');
-    $image->execute(array($getid));
-    $image = $image->fetch(PDO::FETCH_ASSOC);
-
 
     if ($valider['valider'] == 1)
     {
@@ -72,8 +60,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
                 $ins->execute(array($id,$pseudo, $commentaire, $getid));
                 
-                // $insr = $bdd->prepare('INSERT INTO recette (note) VALUES (?)');
-                // $insr->execute(array($note));
                 $c_error = "Votre commentaire a bien été posté";
             }else {
                 $c_error = "Tous les champs doivent être complétés";
@@ -192,16 +178,17 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <input type='hidden' name='id' value='".$_GET['id']."'><textarea name='ingredients' form='form_modif'>".$recette['ingredients']."></textarea>";
             else
             {   
-                echo "<span>25 min</span>
+                echo "<span>".$recette['temps_realisation']."25 min</span>
                 <span>3 étoiles</span>
-                <span>Au four</span>
-                <span>Facile</span>";
+                <span>".$recette['methode_cuisson']."</span>
+                <span>".$recette['difficulte']."</span>";
             }
             ?>
                 
             </div>
         </section>
         <section id="ingredient">
+            <h2>Ingredients</h2>
         </section>
         <section id="etape">
             <h2>Etapes</h2>
@@ -225,7 +212,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
-            <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></b>
+            <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></br>
             <?php }} ?>
             <?php
             if ($admin) echo "<input type='submit' name='valider' value='Valider'><input type='submit' name='refuser' value='refuser'></form>";

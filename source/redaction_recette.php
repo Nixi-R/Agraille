@@ -21,6 +21,9 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
+    $ingredient = $conn->prepare('SELECT * FROM ingredient');
+    $ingredient->execute();
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -103,7 +106,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form action="./envoi_recette.php" method="post" name="myForm">
+        <form action="./envoi_recette.php" method="post" name="myForm" onsubmit>
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
@@ -114,12 +117,19 @@ catch (Exception $e)
                 <textarea type="text" id="desc_input" name="description"></textarea>
             </section>
             <section id="ingredient">
-                <select>
-                </select>
-                <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous une proposition !<p>
                 <div class="tag-container">
-                    <input/>
-                    <button id="button_tag">
+                    <h6>Les ingrédients maintenant !</h6>
+                    <select>
+                        <?php
+                        while($i = $ingredient->fetch()){
+                            echo "<option>".$ingredient["ingredient"]."</option>";
+                        } 
+                        ?>
+                    </select>
+                    <button id="button_select" onclick="return false;">
+                <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
+                    <input />
+                    <button id="button_input" onclick="return false;">
                 </div>
             </section>
             <section id="etape">
@@ -159,10 +169,6 @@ catch (Exception $e)
                 <h6>Choisissez une illustration pour votre recette !</h6>
                 <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
             </section>
-            <section id="user_info">
-            <!-- <input type="hidden" value=""></input> pour les trucs automatiques -->
-            <input type="hidden" value=""></input>
-            </section>
             <input type="submit" onclick="document.recette_envoi.submit()"></input>
         </form>
     </main>
@@ -185,9 +191,7 @@ catch (Exception $e)
                         newInput.name = "step_" + i;
                     step.appendChild(newInput);
                 }
-            })
-
-            
+            }) 
         }
 
     </script>

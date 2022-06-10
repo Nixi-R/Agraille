@@ -39,16 +39,32 @@
     $recette_image = $_POST["recette_image"];
     $date = date("Y-m-d");
     $auteur = $_SESSION["pseudo"];
+    $idRecette = random_int(0, 2147483647);
 
+    // for($i= 1; isset($_POST["ing"]))
+
+    for($i = 1; isset($_POST["ingredient_prop_$i"]; $i++)){
+        array_push($ingredient_prop, $_POST["ingredient_prop_$i"]);
+    }
     for ($i = 1; isset($_POST["step_$i"]); $i++) {
-        array_push($etape, "$i-".$_POST["step_$i"]);
+        array_push($etape, $_POST["step_$i"]);
     }
 
     $str_etape = implode(". ", $etape);
 
-    $sql = "INSERT INTO recette (id, nom, description, date_publication, etape, temps_realisation, ingredients, illustration, methode_cuisson, auteur, type, difficulte) VALUES (30,'$title','$description','$date','$str_etape','$temps_realisation','ouais','$recette_image','$methode_cuisson','$auteur','$type_recette','$difficulte');";
+    for($i = 0; $i>count($ingredient_prop); $i++){
+        $prop = $ingredient_prop[$i];
+        $idIngredient = random_int(0, 2147483647);
+        $ingredient_sql = "INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$prop,0)";
+        $ingredientRecetteSql = "INSERT INTO recette(id_ingredient)  WHERE id = $idRecette  VALUES($idIngredient)" 
+        $ingredient_sql = $bdd->prepare($ingredient_sql);
+        $ingredient_sql->execute();
+    }
+
+    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, auteur, categorie, difficulte) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation','$recette_image','$methode_cuisson','$auteur','$type_recette','$difficulte');";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql->execute();
+
 
     print("Nous avons reçu votre recette !");
 
