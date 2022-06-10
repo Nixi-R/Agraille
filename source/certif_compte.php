@@ -23,7 +23,7 @@ catch (Exception $e)
 if (strlen($_FILES['photo']['tmp_name']) > 0)
 {
     if (filesize($_FILES['photo']['tmp_name']) > 16000)
-        header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password'])
+        header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 }
 
 $fp = fopen("../img/Logoutilisateur.png", "rb");

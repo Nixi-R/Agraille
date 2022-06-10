@@ -48,6 +48,9 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $recette->execute(array($getid));
     $recette = $recette->fetch(PDO::FETCH_ASSOC);
 
+    $title = $recette['nom'];
+    $description = $recette['representation'];
+
 
     if ($valider['valider'] == 1)
     {
@@ -158,24 +161,24 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <?php 
         if ($admin) 
             echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php" id="form_modif">
-            <input type="text" name="nom" value="'.$title['nom'].'" style="margin-left: 42%; outline: none;">'; 
+            <input type="text" name="nom" value="'.$title.'" style="margin-left: 42%; outline: none;">'; 
         else 
-            echo "<h2>".$title['nom']."</h2>";?>
+            echo "<h2>".$title."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
             <img src="../img/tartine.jpg">
             <?php 
             if ($admin) 
-                echo '<textarea name="representation" form="form_modif" style="width: 50%; outline: none;">'.$description["representation"].'</textarea>'; 
+                echo '<textarea name="representation" form="form_modif" style="width: 50%; outline: none;resize:both;">'.$description.'</textarea>'; 
             else 
-                echo '<p>'.$description["representation"].'</p>'; ?>
+                echo '<p>'.$description.'</p>'; ?>
             <div id="recette_info">
             <?php
             if ($admin)
                 echo "<input type='text' name='temps_realisation' value='".$recette['temps_realisation']."' style='outline: none;'><input type='text' name='note' value='".$recette['note']."' style='outline: none;'>
                 <input type='methode_cuisson' name='methode_cuisson' value='".$recette['methode_cuisson']."' style='outline: none;'><input type='text' name='difficulte' value='".$recette['difficulte']."' style='outline: none;'>
-                <input type='text' name='type' value='".$recette['type']."' style='outline: none;'></br><textarea name='etape' form='form_modif' style='width: 100%; outline: none;'>".$recette['etape']."</textarea>
-                <input type='hidden' name='id' value='".$_GET['id']."'><textarea name='ingredients' form='form_modif'>".$recette['ingredients']."></textarea>";
+                <input type='text' name='type' value='".$recette['type']."' style='outline: none;'></br>
+                <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
                 echo "<span>".$recette['temps_realisation']."25 min</span>
@@ -189,9 +192,17 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         </section>
         <section id="ingredient">
             <h2>Ingredients</h2>
+            <?php
+            if ($admin)
+                echo "<textarea name='ingredients' form='form_modif' style='resize:both;'>".$recette['ingredients']."</textarea>";
+            ?>
         </section>
         <section id="etape">
             <h2>Etapes</h2>
+            <?php
+            if ($admin)
+                echo "<textarea name='etape' form='form_modif' style='width: 100%; outline: none;resize:both;'>".$recette['etape']."</textarea>";
+            ?>
         </section>
         <?php if ($valider['valider'] == 1)
         echo '<section id="espace_commentaire">
