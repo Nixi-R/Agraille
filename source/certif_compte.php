@@ -20,15 +20,9 @@ catch (Exception $e)
         die('Erreur : ' . $e->getMessage());
 }
 
+$fp = fopen("../img/Logoutilisateur.png", "rb");
+$mime = "image/png";
 
-if (strlen($_FILES['photo']['tmp_name']) > 0){
-    $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
-    $mime = $_FILES['photo']['type'];
-}
-else{
-    $fp = fopen("../img/Logoutilisateur.png", "rb");
-    $mime = "image/png";
-}
 
 $recipeStatement = $conn->prepare('SELECT id FROM compte');
 $recipeStatement -> execute();
@@ -115,13 +109,26 @@ $sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de
 $insertRecipe = $conn->prepare($sqlQuery);
 
 $insertRecipe -> bindValue(1, $id, PDO::PARAM_STR);
-$insertRecipe -> bindValue(2, $pseudo, PDO::PARAM_STR);
+$insertRecipe -> bindValue(2, strtoupper($_POST['pseudo']), PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(4, $hash, PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
 $insertRecipe -> bindValue(6, $mime, PDO::PARAM_STR);
 
 $insertRecipe->execute();
+
+
+if (strlen($_FILES['photo']['tmp_name']) > 0){
+    $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
+    $mime = $_FILES['photo']['type'];
+
+    $sqlQuery = 'UPDATE compte SET photo_de_profil = ?, mime = ?';
+    $insertRecipe = $conn->prepare($sqlQuery);
+    $insertRecipe -> bindValue(1, $fp, PDO::PARAM_LOB);
+    $insertRecipe -> bindValue(2, $mime, PDO::PARAM_STR);
+    $insertRecipe->execute();
+}
+
 
 ?>
 

@@ -29,8 +29,8 @@
 
         if (count($_FILES) > 0)
         {
-            $insertRecipe = "UPDATE recette SET illustration = '".fopen($_FILES['photo']['tmp_name'], 'rb')."', 
-            mime = '".$_FILES['photo']['type']."'";
+            $insertRecipe = "UPDATE recette SET illustration = '".fopen($_FILES['photo']['tmp_name'], 'rb')."',
+            mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
             $insertRecipe = $conn->prepare($insertRecipe);
             $insertRecipe->execute();
         }
