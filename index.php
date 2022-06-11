@@ -94,6 +94,7 @@ catch (Exception $e)
                         </input>
                     </form>
                 </div>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img src="./img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
