@@ -32,13 +32,15 @@ catch (Exception $e)
             header('Location: ../404.php?erreur=recette non validée');
     }
 
+
+
     if (isset($_SESSION['idCompte']))
     {  
         $insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id =' .$_SESSION['idCompte']);
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
-   
+    
     
 if(isset($_GET['id']) AND !empty($_GET['id'])){
 
@@ -124,7 +126,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img onclick="location.href='../index.php'"src="../img/logo_agraille.png">
+                    <img onclick="location.href='../index.php'"src="../img/logo_agraille.png" style="cursor:pointer;">
                 </div>
                 <div class="search-bar">
                     <form action="#" >
@@ -155,6 +157,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <li><?php echo $_SESSION["pseudo"];?></li>
             <li><a href="./profil.php">Voir profil</a></li>
             <li><a href="#">Créer une recette</a></li>
+            <?php
+            if (isset($_SESSION['mode']))
+                echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";
+            ?>
             <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
@@ -167,7 +173,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             echo "<h2>".$title."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
-            <img src="../img/tartine.jpg">
+            <img <?php if (!(isset($recette['illustration']))) 
+                echo 'src="../img/tartine.jpg">'; 
+            else 
+                echo "src='data:". $recette['mime'] .";base64," . base64_encode($recette['illustration']) . "' alt='illustration'>"; 
+            ?>
             <?php 
             if ($admin) 
                 echo '<label>Description</label><textarea id="description" name="representation" form="form" required >'.$description.'</textarea>'; 
@@ -183,20 +193,22 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
-                echo "<span>".$recette['temps_realisation']."25 min</span>
-                <span>3 étoiles</span>
-                <span>".$recette['methode_cuisson']."</span>
-                <span>".$recette['difficulte']."</span>";
+                echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
+                <div id='note'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
+                <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
+                <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }
             ?>
-                
-            </div>
+
+        </div>
         </section>
         <section id="ingredient">
             <h2>Ingredients</h2>
             <?php
             if ($admin)
                 echo "<textarea id='ingredients' name='ingredients' form='form' required  >".$recette['ingredients']."</textarea>";
+            else 
+                echo $recette['ingredients'];
             ?>
         </section>
         <section id="etape">
@@ -204,9 +216,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <?php
             if ($admin)
                 echo "<textarea id='etapes' name='etape' form='form' required >".$recette['etape']."</textarea>";
+            else
+                echo $recette['etape'];
             ?>
         </section>
-        <?php if ($valider['valider'] == 1)
+        <?php if ($valider['valider'] == 1 && isset($_SESSION['idCompte']))
         echo '<section id="espace_commentaire">
             <h2>Commentaires</h2>
             <div class="stars">

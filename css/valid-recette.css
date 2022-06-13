@@ -1,3 +1,7 @@
+#title{
+    font-size: 30px;
+}
+
 #description{
     width: 50%; 
     background-color: #b90000;
@@ -5,6 +9,7 @@
     text-align: center;
     border:none;
     outline: none;
+    resize:both;
 }
 
 #ingredients{
@@ -13,6 +18,7 @@
     border:none;
     outline: none;
     width:100%;
+    resize:both;
 }
 
 #etapes{
@@ -20,6 +26,7 @@
     color:white;
     border:none;
     width:100%;
+    resize:both;
 }
 
 
