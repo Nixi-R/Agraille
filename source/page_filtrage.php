@@ -135,6 +135,22 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🍒</p>
                     <div class="filtreTexte flexCentre">Par ingrédient<input type="text" name="ingredients"></div>
                 </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">📚</p>
+                    <div class="filtreTexte flexCentre">Par auteur<input type="text" name="auteur"></div>
+                </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">🍹</p>
+                    <div class="filtreTexte flexCentre">Par type<input type="text" name="type"></div>
+                </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">📆</p>
+                    <div class="filtreTexte flexCentre">Par date<input type="text" name="date"></div>
+                </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">🌡️</p>
+                    <div class="filtreTexte flexCentre">Par difficulté<input type="text" name="difficulte"></div>
+                </div>
                 <div class="bouton flexCentre"><input type="submit" value="Chercher"></div>
             </form>
             </div>
@@ -152,6 +168,19 @@ catch (Exception $e)
                 if ($_POST['ingredients'] != null ){
                     $ingredients = $_POST['ingredients'];
                 }
+                if ($_POST['auteur'] != null ){
+                    $auteur = $_POST['auteur'];
+                }
+                if ($_POST['type'] != null ){
+                    $type = $_POST['type'];
+                }
+                if ($_POST['date'] != null ){
+                    $date = $_POST['date'];
+                }
+                if ($_POST['difficulte'] != null ){
+                    $date = $_POST['difficulte'];
+                }
+
 
                 $SQL = "SELECT * FROM recette WHERE ";
                 
@@ -169,6 +198,7 @@ catch (Exception $e)
                     $test = 1;
                     
                 }
+
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
                         $SQL = $SQL . "AND nom LIKE " . $nom ;
@@ -185,7 +215,43 @@ catch (Exception $e)
                         $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
                     }
                 }
+
+                if (isset($auteur) && $auteur != null){
+                    if ($test == 1){
+                        $SQL = $SQL . "AND auteur LIKE " . $auteur ;
+                    } else {
+                        $SQL = $SQL . "auteur LIKE " . $auteur ;
+                    }
+                    $test = 1;
+                }
                 
+                if (isset($type) && $type != null){
+                    if ($test == 1){
+                        $SQL = $SQL . "AND 'type' LIKE " . $type ;
+                    } else {
+                        $SQL = $SQL . "'type' LIKE " . $type ;
+                    }
+                    $test = 1;
+                }
+                
+                if (isset($date) && $date != null){
+                    if ($test == 1){
+                        $SQL = $SQL . "AND 'date' LIKE " . $date ;
+                    } else {
+                        $SQL = $SQL . "'date' LIKE " . $date ;
+                    }
+                    $test = 1;
+                }
+
+                if (isset($difficulte) && $difficulte != null){
+                    if ($test == 1){
+                        $SQL = $SQL . "AND difficulte LIKE " . $difficulte ;
+                    } else {
+                        $SQL = $SQL . "difficulte LIKE " . $difficulte ;
+                    }
+                    $test = 1;
+                }
+
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
                     $SQL = $SQL . " AND valider = 0 ORDER BY id DESC";

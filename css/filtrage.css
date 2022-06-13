@@ -31,7 +31,7 @@
 
   .filtreTexteIcons {
     position: relative;
-    bottom: 500px;
+    bottom: 750px;
     border: 2px solid #f2f2f2;
     height: 50px;
     border-radius: 30px;
@@ -67,5 +67,5 @@
 
   .bouton {
     position: relative;
-    bottom: 480px;
+    bottom: 720px;
   }
