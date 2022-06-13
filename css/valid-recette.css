@@ -29,6 +29,22 @@
     resize:both;
 }
 
+#modif_illu{
+    background-image: url("../img/tartine.jpg");
+    position: relative;
+    border: white dashed 2px; 
+    width: 300%;
+    height: 300px;
+    background-size: cover;
+}
+
+#file{
+    opacity: 0;
+    position: absolute;
+    cursor:pointer;
+    width:100%;
+    height:100%;
+}
 
 #form{
     display:flex;

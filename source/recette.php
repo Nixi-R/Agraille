@@ -173,11 +173,19 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             echo "<h2>".$title."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
-            <img <?php if (!(isset($recette['illustration']))) 
-                echo 'src="../img/tartine.jpg">'; 
-            else 
-                echo "src='data:". $recette['mime'] .";base64," . base64_encode($recette['illustration']) . "' alt='illustration'>"; 
+            <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1) 
+            echo "<div id='modif_illu'>";
+
+            if ($recette['illustration'] == null && $_SESSION['mode'] == 0) 
+                echo '<img src="../img/tartine.jpg">'; 
+            else if ($recette['illustration'] != null && $_SESSION['mode'] == 1)
+                echo "<img src='data:". $recette['mime'] .";base64," . base64_encode($recette['illustration']) . "' alt='illustration'>";
+            else    
+                echo "<input id='file' type='file' name='illustration' accept='image/*'>"; 
+
+            
             ?>
+            </div>
             <?php 
             if ($admin) 
                 echo '<label>Description</label><textarea id="description" name="representation" form="form" required >'.$description.'</textarea>'; 
@@ -246,5 +254,19 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <script src="../js/scriptNote.js"></script>
         </div>
     </main>
+    <?php if ($_SESSION['mode'] == 1)
+    echo '<script>
+            document.getElementById(\'file\').onchange = function (e){
+                var file = e.target.files[0];
+
+                var reader = new FileReader();
+                reader.onloadend = function(){
+                    document.getElementById(\'modif_illu\').style.backgroundImage = "url(" + reader.result + ")";
+                }
+                if(file){
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>'; ?>
 </body>
 </html>
