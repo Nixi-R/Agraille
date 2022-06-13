@@ -170,7 +170,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <img src="../img/tartine.jpg">
             <?php 
             if ($admin) 
-                echo '<label>Description</label><textarea id="description" name="representation" form="form_modif" required >'.$description.'</textarea>'; 
+                echo '<label>Description</label><textarea id="description" name="representation" form="form" required >'.$description.'</textarea>'; 
             else 
                 echo '<p>'.$description.'</p><div id="recette_info">'; ?>
             
@@ -196,14 +196,14 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <h2>Ingredients</h2>
             <?php
             if ($admin)
-                echo "<textarea id='ingredients' name='ingredients' form='form_modif' required  >".$recette['ingredients']."</textarea>";
+                echo "<textarea id='ingredients' name='ingredients' form='form' required  >".$recette['ingredients']."</textarea>";
             ?>
         </section>
         <section id="etape">
             <h2>Etapes</h2>
             <?php
             if ($admin)
-                echo "<textarea id='etapes' name='etape' form='form_modif' required >".$recette['etape']."</textarea>";
+                echo "<textarea id='etapes' name='etape' form='form' required >".$recette['etape']."</textarea>";
             ?>
         </section>
         <?php if ($valider['valider'] == 1)
