@@ -128,7 +128,7 @@ if (strlen($_FILES['photo']['tmp_name']) > 0){
     $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
     $mime = $_FILES['photo']['type'];
 
-    $sqlQuery = 'UPDATE compte SET photo_de_profil = ?, mime = ?';
+    $sqlQuery = 'UPDATE compte SET photo_de_profil = ?, mime = ? WHERE id = '.$id;
     $insertRecipe = $conn->prepare($sqlQuery);
     $insertRecipe -> bindValue(1, $fp, PDO::PARAM_LOB);
     $insertRecipe -> bindValue(2, $mime, PDO::PARAM_STR);

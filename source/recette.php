@@ -178,10 +178,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
 
             if ($recette['illustration'] == null && $_SESSION['mode'] == 0) 
                 echo '<img src="../img/tartine.jpg">'; 
-            else if ($recette['illustration'] != null && $_SESSION['mode'] == 1)
-                echo "<img src='data:". $recette['mime'] .";base64," . base64_encode($recette['illustration']) . "' alt='illustration'>";
-            else    
-                echo "<input id='file' type='file' name='illustration' accept='image/*'>"; 
+            else if ($recette['illustration'] != null && $_SESSION['mode'] == 0)
+                echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
+            else if ($_SESSION['mode'] == 1)
+                echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
 
             
             ?>

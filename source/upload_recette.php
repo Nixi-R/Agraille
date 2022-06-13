@@ -34,9 +34,11 @@
 
             if (count($_FILES) > 0)
             {
-                $insertRecipe = "UPDATE recette SET illustration = '".fopen($_FILES['photo']['tmp_name'], 'rb')."',
+                $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
+                $insertRecipe = "UPDATE recette SET illustration = ?,
                 mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
                 $insertRecipe = $conn->prepare($insertRecipe);
+                $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
                 $insertRecipe->execute();
             }
 
