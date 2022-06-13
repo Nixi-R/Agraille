@@ -60,16 +60,7 @@
     for ($i = 1; isset($_POST["step_$i"]); $i++) {
         array_push($etape, $_POST["step_$i"]);
     }
-
     $str_etape = implode(". ", $etape);
-
-    for($i = 0; $i>count($ingredient_prop); $i++){
-        $prop = $ingredient_prop[$i];
-        $idIngredient = random_int(0, 2147483647);;
-        $ingredientRecetteSql = $bdd->prepare("INSERT INTO recette(id_ingredient)  WHERE id = $idRecette  VALUES($idIngredient)")
-        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$prop,0)");
-        $ingredient_sql->execute($ingredientRecetteSql, $ingredient_sql);
-    }
 
     $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, auteur, categorie, difficulte, ingredient) VALUES ($idRecette,$title,$description,$date,$str_etape,$temps_realisation,$recette_image,$methode_cuisson,$auteur,$type_recette,$difficulte,$ingredient);";
     $insert_sql = $bdd->prepare($sql);
