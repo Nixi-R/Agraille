@@ -141,15 +141,27 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍹</p>
-                    <div class="filtreTexte flexCentre">Par type<input type="text" name="type"></div>
+                    <div class="filtreTexte flexCentre"><label for="type">Par type</label>
+                        <select name="table" id="table">
+                            <option name="facile">Plat</option>
+                            <option name="inter">Cocktail</option>
+                            <option name="diff">Dessert</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📆</p>
-                    <div class="filtreTexte flexCentre">Par date<input type="text" name="date"></div>
+                    <div class="filtreTexte flexCentre">Par date<input type="date" name="date"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🌡️</p>
-                    <div class="filtreTexte flexCentre">Par difficulté<input type="text" name="difficulte"></div>
+                    <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
+                        <select name="difficulte" id="difficulte">
+                            <option name="facile">Facile</option>
+                            <option name="inter">Intermédiaire</option>
+                            <option name="diff">Difficile</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="bouton flexCentre"><input type="submit" value="Chercher"></div>
             </form>
