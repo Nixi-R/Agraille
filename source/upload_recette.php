@@ -39,31 +39,51 @@
                 $insertRecipe = $conn->prepare($insertRecipe);
                 $insertRecipe->execute();
             }
+
+            echo "<!DOCTYPE html>
+            <html>
+                <head>
+                    <link rel=\"stylesheet\" href=\"../css/certif_compte.css\">
+                    <title>Agraille Validation</title>
+                    <link rel=\"icon\" href=\"../img/icone_agraille.png\" sizes=\"any\">
+                </head>
+                <body>
+                    <div id=\"upside\">
+                        <img onclick=\"location.href='../'\" id=\"agrailleImg\" src=\"../img/logo_agraille.png\">
+                    </div>
+                    <div id=\"squareSign\">
+                        <p id=\"main\">".$_POST['nom']."</p>
+                        <p onclick=\"location.href='../'\" id=\"certif\">La recette est maintenant validée</br>
+                        Vous pouvez retourner à l'index en cliquant sur ce texte</p>
+                    </div>
+                </body>
+            </html>";
         }
         else if (isset($_POST['refuser']))
         {
             $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
             $insertRecipe = $conn->prepare($insertRecipe);
             $insertRecipe->execute();
+
+            echo "<!DOCTYPE html>
+            <html>
+                <head>
+                    <link rel=\"stylesheet\" href=\"../css/certif_compte.css\">
+                    <title>Agraille Validation</title>
+                    <link rel=\"icon\" href=\"../img/icone_agraille.png\" sizes=\"any\">
+                </head>
+                <body>
+                    <div id=\"upside\">
+                        <img onclick=\"location.href='../'\" id=\"agrailleImg\" src=\"../img/logo_agraille.png\">
+                    </div>
+                    <div id=\"squareSign\">
+                        <p id=\"main\">".$_POST['nom']."</p>
+                        <p onclick=\"location.href='../'\" id=\"certif\">La recette a été refusée</br>
+                        Vous pouvez retourner à l'index en cliquant sur ce texte</p>
+                    </div>
+                </body>
+            </html>";
         }
     }?>
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <link rel="stylesheet" href="../css/certif_compte.css">
-            <title>Agraille Validation</title>
-            <link rel="icon" href="../img/icone_agraille.png" sizes="any">
-        </head>
-        <body>
-            <div id="upside">
-                <img onclick="location.href='../'" id="agrailleImg" src="../img/logo_agraille.png">
-            </div>
-            <div id="squareSign">
-                <p id="main"><?php echo $_POST['id'];?></p>
-                <p onclick="location.href='../'" id="certif">La recette est maintenant validée</br>
-                Vous pouvez retourner à l'index en cliquant sur ce texte</p>
-            </div>
-        </body>
-    </html>
     
     
