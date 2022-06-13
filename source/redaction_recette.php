@@ -24,6 +24,25 @@ catch (Exception $e)
     $ingredient = $conn->prepare('SELECT * FROM ingredient');
     $ingredient->execute();
 
+    function eventClick(){
+        $conn = new PDO(
+            'mysql:host=localhost;dbname=agrailledb;charset=utf8',
+            'root',
+            '',
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+        );
+        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte'] );
+        $insertP -> execute();
+        $insertP = $insertP->fetchAll();
+        $ingredient = $conn->prepare('SELECT * FROM ingredient');
+        $ingredient->execute();
+        echo "<select>";
+        while($i = $ingredient->fetch()){
+            echo "<option>".$i["ingredient"]."</option>";
+        }
+        echo "</select>";
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,7 +125,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form action="./envoi_recette.php" method="post" name="myForm" onsubmit>
+        <!-- <form action="./envoi_recette.php" method="post" name="myForm" onsubmit> -->
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
@@ -116,17 +135,29 @@ catch (Exception $e)
                 <h6>Faites nous une description de la recette !<h6>
                 <textarea type="text" id="desc_input" name="description"></textarea>
             </section>
-            <section id="ingredient">
+            <section id="ingredient_container">
+                <h6>Les ingredients<h6>
+                <div id="ingredient_info_1">
+                    <select name="ingredient_1">
+                        <?php 
+                            while($i = $ingredient->fetch()){
+                                echo "<option>".$i["ingredient"]."</option>";
+                            }
+                        ?>
+                    </select>
+                    <input type="number" min="0" max="100" name="quantite_1"/>
+                    <select name="mesure_1">
+                        <option>Aucune</option>
+                        <option>centilitre</option>
+                        <option>litre</option>
+                        <option>gramme</option>
+                        <option>kilos</option>
+                        <option>cuil à soupe</option>
+                    </select>
+                </div>
+                <button id="boutton_ingredient" onclick="let select = document.getElementById('ingredient_info_1'); let result ='<?php eventClick(); ?>'; select.write(result);">ajoutez un ingredient</button>
                 <div class="tag-container">
-                    <!-- <h6>Les ingrédients maintenant !</h6>
-                    <select>
-                      // while($i = $ingredient->fetch()){
-                        //     echo "<option>".$ingredient["ingredient"]."</option>";
-                        // } 
- 
-                    </select> -->
-                    <!-- <button id="button_select" onclick="return false;"> -->
-                <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
+                    <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
                     <input />
                     <button id="button_input" onclick="return false;">
                 </div>
@@ -169,16 +200,16 @@ catch (Exception $e)
                 <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
             </section>
             <input type="submit" onclick="document.recette_envoi.submit()"></input>
-        </form>
+        <!-- </form> -->
     </main>
     <script src="../js/scriptIndex.js"></script>
     <script src="../js/scriptTag.js"></script>
+    <script src="../js/script"></script>
     <script>
-
         window.onload = function(){
-        let button = document.getElementById('etape_button');
-        let step = document.getElementById('etapes');
-        let i = 1;
+            let button = document.getElementById('etape_button');
+            let step = document.getElementById('etapes');
+            let i = 1;
 
             button.addEventListener('click', function(event){
                 i++
@@ -190,9 +221,8 @@ catch (Exception $e)
                         newInput.name = "step_" + i;
                     step.appendChild(newInput);
                 }
-            }) 
-        }
-
+            })
+          }
     </script>
 </body>
 </html>
