@@ -27,83 +27,25 @@ catch (Exception $e)
         else
             $_SESSION['mode'] = 1;
 
-    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1){
-       if(empty($_GET['categorie'])){
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
-       }else if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
-            $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-            $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
-        }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
-            $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-            $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
-        }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
-            $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-            $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
-        }
-    }else{ 
-        if(empty($_GET['categorie'])){
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
-        }else if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
-            $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-            $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
-        }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
-            $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-            $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
-        }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
-            $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-            $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
-        }
-    }
-    // $recette->execute();
-    // if(isset($_SESSION['mode']) && $_SESSION['mode'] == 1){
-    //     if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
-    //         $getcategorie = htmlspecialchars($_GET['categorie']);
-    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-    //         $recette->execute(array($getcategorie));
-    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    //     }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
-    //         $getcategorie = htmlspecialchars($_GET['categorie']);
-    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-    //         $recette->execute(array($getcategorie));
-    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    //     }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
-    //         $getcategorie = htmlspecialchars($_GET['categorie']);
-    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-    //         $recette->execute(array($getcategorie));
-    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    //     }
-    // }else{
-    //     if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
-    //         $getcategorie = htmlspecialchars($_GET['categorie']);
-    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-    //         $recette->execute(array($getcategorie));
-    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    //     }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
-    //         $getcategorie = htmlspecialchars($_GET['categorie']);
-    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-    //         $recette->execute(array($getcategorie));
-    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    //     }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
-    //         $getcategorie = htmlspecialchars($_GET['categorie']);
-    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
-    //         $recette->execute(array($getcategorie));
-    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    //     }
+    // if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+    // {
+    //     $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
     // }
+    // else
+    // { 
+    //     $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+    // }
+    // $recette->execute();
 
-
+    if(isset($_GET['categorie']) AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    }else{
+        $recette = $bdd->prepare('SELECT * FROM recette ORDER BY id DESC');
+        $recette->execute();
+    }
     
 ?>
 <!DOCTYPE html>
