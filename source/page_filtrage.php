@@ -41,7 +41,7 @@ catch (Exception $e)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="../img/icone_agraille2.png" sizes="any">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <title>Agraille|<?php if (isset($_SESSION['mode'])  && $_SESSION['mode'] == 1) echo "Validation"; else echo "Accueil";?></title>
+    <title>Agraille|Filtrage</title>
 </head>
 <body>
     <header>
@@ -167,7 +167,7 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🍒</p>
                     <div class="filtreTexte flexCentre">Par ingrédient<input type="text" name="ingredients"></div>
                 </div>
-                <div class="bouton flexCentre"><input type="submit" value="Chercher"></div>
+                <div class="bouton flexCentre"><input type="submit" value="Chercher🔎"></div>
             </form>
             </div>
             <?php
@@ -245,20 +245,20 @@ catch (Exception $e)
                     $test = 1;
                 }
                 
-                if (isset($types) && $types != null){
+                if (isset($type) && $type != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND types LIKE " . $types ;
+                        $SQL = $SQL . "AND type LIKE " . $type ;
                     } else {
-                        $SQL = $SQL . "types LIKE " . $types ;
+                        $SQL = $SQL . "type LIKE " . $type ;
                     }
                     $test = 1;
                 }
                 
-                if (isset($dates) && $dates != null){
+                if (isset($date) && $date != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND dates LIKE " . $dates ;
+                        $SQL = $SQL . "AND date LIKE " . $date ;
                     } else {
-                        $SQL = $SQL . "dates LIKE " . $dates ;
+                        $SQL = $SQL . "date LIKE " . $date ;
                     }
                     $test = 1;
                 }
