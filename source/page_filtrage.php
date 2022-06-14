@@ -118,26 +118,30 @@ catch (Exception $e)
         <div id="main">
             <div class="margFiltreTitre"><h2>Filtrage</h2></div>
             <div class="filtre margFiltre flexCentre"> 
-            <form action="#" method="post">   
-                <div class="flexBetween filtreTexteIcons">
-                    <p class="filtreIcons flexCentre">⏱️</p>
-                    <div class="filtreTexte flexCentre">Par temps de cuisson (en min)<input type="number" name="temps" min="0" max="180"></div>
-                </div>
-                <div class="flexBetween filtreTexteIcons">
-                    <p class="filtreIcons flexCentre">⭐</p>
-                    <div class="filtreTexte flexCentre">Par note (1 à 5)<input type="number" name="note" min="1" max="5"></div>
-                </div>
+            <form action="#" method="post">
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📝</p>
                     <div class="filtreTexte flexCentre">Par nom<input type="text" name="nom"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
-                    <p class="filtreIcons flexCentre">🍒</p>
-                    <div class="filtreTexte flexCentre">Par ingrédient<input type="text" name="ingredients"></div>
+                    <p class="filtreIcons flexCentre">📆</p>
+                    <div class="filtreTexte flexCentre">Par date de publication<input type="date" name="dates"></div>
+                </div>   
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">⏱️</p>
+                    <div class="filtreTexte flexCentre">Par temps de réalisation (en min)<input type="number" name="temps" min="0" max="180"></div>
+                </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">♨️</p>
+                    <div class="filtreTexte flexCentre">Par méthode de cuisson<input type="text" name="methode"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📚</p>
                     <div class="filtreTexte flexCentre">Par auteur<input type="text" name="auteur"></div>
+                </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">⭐</p>
+                    <div class="filtreTexte flexCentre">Par note (1 à 5)<input type="number" name="note" min="1" max="5"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍹</p>
@@ -150,10 +154,6 @@ catch (Exception $e)
                     </div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
-                    <p class="filtreIcons flexCentre">📆</p>
-                    <div class="filtreTexte flexCentre">Par date<input type="date" name="dates"></div>
-                </div>
-                <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🌡️</p>
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
@@ -163,34 +163,41 @@ catch (Exception $e)
                         </select>
                     </div>
                 </div>
+                <div class="flexBetween filtreTexteIcons">
+                    <p class="filtreIcons flexCentre">🍒</p>
+                    <div class="filtreTexte flexCentre">Par ingrédient<input type="text" name="ingredients"></div>
+                </div>
                 <div class="bouton flexCentre"><input type="submit" value="Chercher"></div>
             </form>
             </div>
             <?php
                 $test = 0;
-                if ($_POST['temps'] != null ){
-                    $temps = $_POST['temps'];
-                }
-                if ($_POST['note'] != null ){
-                    $note = $_POST['note'];
-                }
                 if ($_POST['nom'] != null ){
                     $nom = $_POST['nom'];
-                }
-                if ($_POST['ingredients'] != null ){
-                    $ingredients = $_POST['ingredients'];
-                }
-                if ($_POST['auteur'] != null ){
-                    $auteur = $_POST['auteur'];
-                }
-                if ($_POST['types'] != null ){
-                    $type = $_POST['types'];
                 }
                 if ($_POST['dates'] != null ){
                     $date = $_POST['dates'];
                 }
+                if ($_POST['temps'] != null ){
+                    $temps = $_POST['temps'];
+                }
+                if ($_POST['methode'] != null ){
+                    $methode = $_POST['methode'];
+                }
+                if ($_POST['auteur'] != null ){
+                    $auteur = $_POST['auteur'];
+                }
+                if ($_POST['note'] != null ){
+                    $note = $_POST['note'];
+                }
+                if ($_POST['types'] != null ){
+                    $type = $_POST['types'];
+                }
                 if ($_POST['difficulte'] != null ){
                     $date = $_POST['difficulte'];
+                }
+                if ($_POST['ingredients'] != null ){
+                    $ingredients = $_POST['ingredients'];
                 }
 
 
@@ -220,12 +227,13 @@ catch (Exception $e)
                     $test = 1;
                 }
 
-                if (isset($ingredients) && $ingredients != null){
+                if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . "AND methode LIKE " . $methode ;
                     } else {
-                        $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . "methode LIKE " . $methode ;
                     }
+                    $test = 1;
                 }
 
                 if (isset($auteur) && $auteur != null){
@@ -263,6 +271,15 @@ catch (Exception $e)
                     }
                     $test = 1;
                 }
+
+                if (isset($ingredients) && $ingredients != null){
+                    if ($test == 1){
+                        $SQL = $SQL . "AND ingredients IN " . $ingredients . " AND *";
+                    } else {
+                        $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
+                    }
+                }
+
 
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
