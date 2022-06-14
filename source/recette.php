@@ -176,11 +176,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1) 
             echo "<div id='modif_illu'>";
 
-            if ($recette['illustration'] == null && $_SESSION['mode'] == 0) 
+            if ($recette['illustration'] == null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0) 
                 echo '<img src="../img/tartine.jpg">'; 
-            else if ($recette['illustration'] != null && $_SESSION['mode'] == 0)
+            else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
                 echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
-            else if ($_SESSION['mode'] == 1)
+            else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
 
             
@@ -259,7 +259,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
 
         </div>
     </main>
-    <?php if ($_SESSION['mode'] == 1)
+    <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
     echo '<script>
             document.getElementById(\'file\').onchange = function (e){
                 var file = e.target.files[0];
