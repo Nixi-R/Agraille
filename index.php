@@ -27,25 +27,27 @@ catch (Exception $e)
         else
             $_SESSION['mode'] = 1;
 
-    // if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-    // {
-    //     $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
-    // }
-    // else
-    // { 
-    //     $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
-    // }
-    // $recette->execute();
-
-    if(isset($_GET['categorie']) AND !empty($_GET['categorie'])){
+    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1){
+        if(isset($_GET['categorie']) AND !empty($_GET['categorie'])){
             $getcategorie = htmlspecialchars($_GET['categorie']);
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE (categorie = ?) AND (valider = 0)');
             $recette->execute(array($getcategorie));
-            // $recette = $recette->fetch(PDO::FETCH_ASSOC);
-    }else{
-        $recette = $bdd->prepare('SELECT * FROM recette ORDER BY id DESC');
-        $recette->execute();
+        }else{
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
+            $recette->execute();
+        }
+    }else{ 
+        if(isset($_GET['categorie']) AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE (categorie= ?) AND (valider = 1)');
+            $recette->execute(array($getcategorie));
+        }else{
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+            $recette->execute();
+        }
     }
+
+
     
 ?>
 <!DOCTYPE html>
@@ -69,7 +71,7 @@ catch (Exception $e)
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <img src="img/icone_agraille.png">
+                       <a href="/index"><img src="img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
