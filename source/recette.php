@@ -168,7 +168,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <?php 
         if ($admin) 
             echo '<form id="form" enctype="multipart/form-data" method="POST" action="./upload_recette.php" id="form_modif">
-            <input type="text" id="title" name="nom" value="'.$title.'" required >'; 
+            <input type="text" id="title" name="nom" value="'.$title.'">'; 
         else 
             echo "<h2>".$title."</h2>";?>
         <div id="wrapper">
@@ -188,16 +188,16 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <?php 
             if ($admin) 
-                echo '<label>Description</label><textarea id="description" name="representation" form="form" required >'.$description.'</textarea>'; 
+                echo '<label>Description</label><textarea id="description" name="representation" form="form">'.$description.'</textarea>'; 
             else 
                 echo '<p>'.$description.'</p><div id="recette_info">'; ?>
             
             <?php
             if ($admin)
-                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."' required ></br>
-                <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'  required ></br>
-                <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'  required ></br>
-                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['type']."'  required ></br>
+                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
+                <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
+                <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
+                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['type']."'></br>
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
@@ -214,7 +214,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <h2>Ingredients</h2>
             <?php
             if ($admin)
-                echo "<textarea id='ingredients' name='ingredients' form='form' required  >".$recette['ingredients']."</textarea>";
+                echo "<textarea id='ingredients' name='ingredients' form='form'>".$recette['ingredients']."</textarea>";
             else 
                 echo $recette['ingredients'];
             ?>
@@ -223,7 +223,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <h2>Etapes</h2>
             <?php
             if ($admin)
-                echo "<textarea id='etapes' name='etape' form='form' required >".$recette['etape']."</textarea>";
+                echo "<textarea id='etapes' name='etape' form='form'>".$recette['etape']."</textarea>";
             else
                 echo $recette['etape'];
             ?>
@@ -252,6 +252,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             ?>
             <script src="../js/scriptIndex.js"></script>
             <script src="../js/scriptNote.js"></script>
+            <?php 
+            if (isset($_GET['err']))
+                echo $_GET['err'];
+            ?>
+
         </div>
     </main>
     <?php if ($_SESSION['mode'] == 1)
@@ -267,6 +272,9 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                     reader.readAsDataURL(file);
                 }
             }
-        </script>'; ?>
+        </script>'; 
+        
+        
+        ?>
 </body>
 </html>
