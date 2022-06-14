@@ -41,7 +41,7 @@ catch (Exception $e)
             $getcategorie = htmlspecialchars($_GET['categorie']);
             $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
             $recette->execute(array($getcategorie));
-            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+            // $recette = $recette->fetch(PDO::FETCH_ASSOC);
     }else{
         $recette = $bdd->prepare('SELECT * FROM recette ORDER BY id DESC');
         $recette->execute();
@@ -132,7 +132,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-            <?php while($r = $recette->fetchAll()){
+            <?php while($r = $recette->fetch()){
                 $auteur = $r['auteur'];
                 $nom = $r['nom'];
                 $id = $r['id'];
