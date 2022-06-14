@@ -12,6 +12,7 @@
   h2 {
     position: relative;
     text-align: center;
+    font-weight: bold;
   }
 
   .margFiltre {
@@ -31,11 +32,10 @@
 
   .filtreTexteIcons {
     position: relative;
-    bottom: 750px;
+    bottom: 770px;
     border: 2px solid #f2f2f2;
     height: 50px;
     border-radius: 30px;
-    margin-right: 25px;
   }
 
   .filtreTexteIcons:hover > .filtreTexte {
@@ -49,6 +49,8 @@
 
   .filtreTexte {
     height: 50px;
+    font-size: 17px;
+    font-weight: 650;
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 0 25px 25px 0;
@@ -67,5 +69,7 @@
 
   .bouton {
     position: relative;
-    bottom: 720px;
+    font-size: 18px;
+    font-weight: 200;
+    bottom: 740px;
   }
