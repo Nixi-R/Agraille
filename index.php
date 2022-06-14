@@ -27,15 +27,83 @@ catch (Exception $e)
         else
             $_SESSION['mode'] = 1;
 
-    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-    {
-        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
+    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1){
+       if(empty($_GET['categorie'])){
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
+       }else if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+        }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+        }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+        }
+    }else{ 
+        if(empty($_GET['categorie'])){
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+        }else if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+        }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+        }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+            $recette->execute(array($getcategorie));
+            $recette = $recette->fetch(PDO::FETCH_ASSOC);
+        }
     }
-    else
-    { 
-        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
-    }
-    $recette->execute();
+    // $recette->execute();
+    // if(isset($_SESSION['mode']) && $_SESSION['mode'] == 1){
+    //     if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
+    //         $getcategorie = htmlspecialchars($_GET['categorie']);
+    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+    //         $recette->execute(array($getcategorie));
+    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    //     }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
+    //         $getcategorie = htmlspecialchars($_GET['categorie']);
+    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+    //         $recette->execute(array($getcategorie));
+    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    //     }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
+    //         $getcategorie = htmlspecialchars($_GET['categorie']);
+    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+    //         $recette->execute(array($getcategorie));
+    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    //     }
+    // }else{
+    //     if($_GET["categorie"] == "cocktail" AND !empty($_GET['categorie'])){
+    //         $getcategorie = htmlspecialchars($_GET['categorie']);
+    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+    //         $recette->execute(array($getcategorie));
+    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    //     }else if ($_GET["categorie"] == "plats" AND !empty($_GET['categorie'])){
+    //         $getcategorie = htmlspecialchars($_GET['categorie']);
+    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+    //         $recette->execute(array($getcategorie));
+    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    //     }else if($_GET["categorie"] == "dessert" AND !empty($_GET['categorie'])){
+    //         $getcategorie = htmlspecialchars($_GET['categorie']);
+    //         $recette = $bdd->prepare('SELECT * FROM recette WHERE categorie= ?');
+    //         $recette->execute(array($getcategorie));
+    //         $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    //     }
+    // }
+
+
     
 ?>
 <!DOCTYPE html>
@@ -62,16 +130,13 @@ catch (Exception $e)
                         <img src="img/icone_agraille.png">
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Apéritifs</a>
+                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrées</a>
+                        <a class="nav-link" href="index?categorie=plats">Plats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Plats</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Desserts</a>
+                        <a class="nav-link" href="index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">A propos</a>
@@ -125,7 +190,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-            <?php while($r = $recette->fetch()){
+            <?php while($r = $recette->fetchAll()){
                 $auteur = $r['auteur'];
                 $nom = $r['nom'];
                 $id = $r['id'];
