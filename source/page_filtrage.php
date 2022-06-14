@@ -141,8 +141,8 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍹</p>
-                    <div class="filtreTexte flexCentre"><label for="type">Par type</label>
-                        <select name="table" id="table">
+                    <div class="filtreTexte flexCentre"><label for="types">Par type</label>
+                        <select name="types" id="types">
                             <option name="facile">Plat</option>
                             <option name="inter">Cocktail</option>
                             <option name="diff">Dessert</option>
@@ -151,7 +151,7 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📆</p>
-                    <div class="filtreTexte flexCentre">Par date<input type="date" name="date"></div>
+                    <div class="filtreTexte flexCentre">Par date<input type="date" name="dates"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🌡️</p>
@@ -183,11 +183,11 @@ catch (Exception $e)
                 if ($_POST['auteur'] != null ){
                     $auteur = $_POST['auteur'];
                 }
-                if ($_POST['type'] != null ){
-                    $type = $_POST['type'];
+                if ($_POST['types'] != null ){
+                    $type = $_POST['types'];
                 }
-                if ($_POST['date'] != null ){
-                    $date = $_POST['date'];
+                if ($_POST['dates'] != null ){
+                    $date = $_POST['dates'];
                 }
                 if ($_POST['difficulte'] != null ){
                     $date = $_POST['difficulte'];
@@ -237,20 +237,20 @@ catch (Exception $e)
                     $test = 1;
                 }
                 
-                if (isset($type) && $type != null){
+                if (isset($types) && $types != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND 'type' LIKE " . $type ;
+                        $SQL = $SQL . "AND types LIKE " . $types ;
                     } else {
-                        $SQL = $SQL . "'type' LIKE " . $type ;
+                        $SQL = $SQL . "types LIKE " . $types ;
                     }
                     $test = 1;
                 }
                 
-                if (isset($date) && $date != null){
+                if (isset($dates) && $dates != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND 'date' LIKE " . $date ;
+                        $SQL = $SQL . "AND dates LIKE " . $dates ;
                     } else {
-                        $SQL = $SQL . "'date' LIKE " . $date ;
+                        $SQL = $SQL . "dates LIKE " . $dates ;
                     }
                     $test = 1;
                 }
