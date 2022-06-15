@@ -242,6 +242,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <input type="hidden" name="note" id="note" value="0">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="valider" name="submit_commentaire">
+                <script src="../js/scriptNote.js"></script>
             </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
@@ -251,7 +252,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
             ?>
             <script src="../js/scriptIndex.js"></script>
-            <script src="../js/scriptNote.js"></script>
             <?php 
             if (isset($_GET['err']))
                 echo $_GET['err'];
