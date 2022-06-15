@@ -197,7 +197,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
                 <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
                 <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
-                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['type']."'></br>
+                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['categorie']."'></br>
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   

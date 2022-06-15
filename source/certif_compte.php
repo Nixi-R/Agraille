@@ -6,6 +6,12 @@ if ($_POST['verif_password'] != $_POST['password'])
 if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 30 || iconv_strlen($_POST['pseudo']) < 4 || iconv_strlen($_POST['pseudo']) > 30 )
     header("Location: ./inscription.php?erreur=erreur de saisie&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 
+if (strlen($_FILES['photo']['tmp_name']) > 0)
+{
+    if (filesize($_FILES['photo']['tmp_name']) > 16000)
+        header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+}
+
 try{
 $conn = new PDO(
     'mysql:host=localhost;dbname=agrailledb;charset=utf8',
@@ -18,12 +24,6 @@ $conn = new PDO(
 catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
-}
-
-if (strlen($_FILES['photo']['tmp_name']) > 0)
-{
-    if (filesize($_FILES['photo']['tmp_name']) > 16000)
-        header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 }
 
 $fp = fopen("../img/Logoutilisateur.png", "rb");
