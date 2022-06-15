@@ -21,6 +21,8 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
+    $ingredient = $conn->prepare('SELECT * FROM ingredient');
+    $ingredient->execute();
 ?>
 <!DOCTYPE html>
 <html>
@@ -115,6 +117,11 @@ catch (Exception $e)
             </section>
             <section id="ingredient">
                 <select>
+                   <?php while($i = $ingredient->fetch()){
+                       $fruit = $i["ingredient"];
+                       echo "<option>" .$fruit ."</option>";
+                   } 
+                   ?> 
                 </select>
                 <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous une proposition !<p>
                 <div class="tag-container">

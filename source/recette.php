@@ -42,18 +42,9 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
 
     $getid = htmlspecialchars($_GET['id']);
 
-    $description = $bdd->prepare('SELECT representation FROM recette WHERE id= ?');
+    $description = $bdd->prepare('SELECT*FROM recette WHERE id= ?');
     $description->execute(array($getid));
     $description = $description->fetch(PDO::FETCH_ASSOC);
-    
-    $title = $bdd->prepare('SELECT nom FROM recette WHERE id= ?');
-    $title->execute(array($getid));
-    $title = $title->fetch(PDO::FETCH_ASSOC);
-
-    $image = $bdd->prepare('SELECT illustration FROM recette WHERE id= ?');
-    $image->execute(array($getid));
-    $image = $image->fetch(PDO::FETCH_ASSOC);
-
 
     if ($valider['valider'] == 1)
     {
@@ -164,7 +155,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     </div>
     <main>
         <?php if ($admin) echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php">'; ?>
-        <?=if ($admin) echo '<input type="text" name="nom" value="'.$title['nom'].'>'; else echo "<h2>".$title['nom']."</h2>";?>
+        <?=if ($admin) echo '<input type="text" name="nom" value="'.$description['nom'].'>'; else echo "<h2>".$description['nom']."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
             <img src="../img/tartine.jpg">
@@ -172,10 +163,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else 
             echo '<p>'.$description['representation'].'</p>'; ?>
             <div id="recette_info">
-                 <span>25 min</span>
+                 <span><?=$description['temps_realisation']?></span>
                  <span>3 étoiles</span>
-                 <span>Au four</span>
-                 <span>Facile</span>
+                 <span><?=$description['methode_cuisson'] ?></span>
+                 <span><?=$description['difficulte'] ?></span>
             </div>
         </section>
         <section id="ingredient">
