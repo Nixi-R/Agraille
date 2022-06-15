@@ -238,7 +238,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                <i class="lar la-star" data-value="4"></i>
                <i class="lar la-star" data-value="5"></i>
             </div>
-            <form method="POST" action="recette.php?id=<?=$getid;?>">
+            <form method="POST" action="recette.php?id='.$getid.'">
                 <input type="hidden" name="note" id="note" value="0">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="valider" name="submit_commentaire">
