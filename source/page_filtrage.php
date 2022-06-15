@@ -49,19 +49,16 @@ catch (Exception $e)
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <img src="../img/icone_agraille.png">
+                       <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Apéritifs</a>
+                        <a class="nav-link" href="./index?categorie=cocktail" >Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrées</a>
+                        <a class="nav-link" href="./index?categorie=plats">Plats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Plats</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Desserts</a>
+                        <a class="nav-link" href="./index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">A propos</a>
