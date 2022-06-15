@@ -78,8 +78,17 @@ h2 {
     font-size: 20px;
 }
 
-#note label{
-    font-size: calc(1.325rem + .9vw);
+#note1{
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-bottom: solid;
+    width: 100%;
+}
+
+#note1 label{
+    font-size:calc(1.325rem + .9vw);
 }
 
 #methode_cuisson{

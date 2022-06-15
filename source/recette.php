@@ -202,7 +202,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else
             {   
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
+                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
                 <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }
