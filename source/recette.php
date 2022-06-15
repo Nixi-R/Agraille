@@ -199,7 +199,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else
             {   
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
+                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
                 <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }
@@ -239,6 +239,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <input type="hidden" name="note" id="note" value="0">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="valider" name="submit_commentaire">
+                <script src="../js/scriptNote.js"></script>
             </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
@@ -248,7 +249,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
             ?>
             <script src="../js/scriptIndex.js"></script>
-            <script src="../js/scriptNote.js"></script>
             <?php 
             if (isset($_GET['err']))
                 echo $_GET['err'];
