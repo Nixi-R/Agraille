@@ -43,26 +43,30 @@
     $ingredient = array();
 
 
+    if($_POST["methode_cuisson"] == "Aucune"){
+        $methode_cuisson = "";
+    }
+
     for($i = 1; isset($_POST["ingredient_$i"]); $i++){
-        $ingredient[$i] = $_POST["quantite_$i"]  +" "+ $_POST["mesure_$i"]+" "+ $_POST["ingredient_$i"];
+        $ingredient[$i] = $_POST["quantite_$i"]  ." " .$_POST["mesure_$i"] ." de " .$_POST["ingredient_$i"];
     }
     $ingredient = implode(". ", $ingredient);
 
-    for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
-        $ingredient_prop = $_POST["ingredient_prop_$i"];
-        $idIngredient = random_int(0, 2147483647);
-        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
-        $ingredient_sql->execute();
-    }
+    // for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
+    //     $ingredient_prop = $_POST["ingredient_prop_$i"];
+    //     $idIngredient = random_int(0, 2147483647);
+    //     $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
+    //     $ingredient_sql->execute();
+    // }
 
-    $str_ingredient = implode(". ", $ingredient_prop);
+    // $str_ingredient = implode(". ", $ingredient_prop);
 
     for ($i = 1; isset($_POST["step_$i"]); $i++) {
         array_push($etape, $_POST["step_$i"]);
     }
     $str_etape = implode(". ", $etape);
 
-    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, auteur, categorie, difficulte, ingredient) VALUES ($idRecette,$title,$description,$date,$str_etape,$temps_realisation,$recette_image,$methode_cuisson,$auteur,$type_recette,$difficulte,$ingredient);";
+    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, auteur, categorie, difficulte, ingredients, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation  min','$recette_image','$methode_cuisson','$auteur','$type_recette','$difficulte','$ingredient', 0);";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql->execute();
 

@@ -147,7 +147,7 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🍹</p>
                     <div class="filtreTexte flexCentre"><label for="types">Par type</label>
                         <select name="types" id="types">
-                            <option name="facile">Plat</option>
+                            <option name="facile">plats</option>
                             <option name="inter">Cocktail</option>
                             <option name="diff">Dessert</option>
                         </select>
@@ -170,6 +170,7 @@ catch (Exception $e)
                 <div class="bouton flexCentre"><input type="submit" value="Chercher🔎"></div>
             </form>
             </div>
+            <script src="../js/scriptIndex.js"></script>
             <?php
                 $test = 0;
                 if ($_POST['nom'] != null ){
@@ -210,7 +211,7 @@ catch (Exception $e)
 
                 if (isset($note) && $note != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND note = " . $note ;
+                        $SQL = $SQL . " AND note = " . $note ;
                     } else {
                         $SQL = $SQL . "note = " . $note ;
                     }
@@ -220,7 +221,7 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND nom LIKE " . $nom ;
+                        $SQL = $SQL . " AND nom LIKE " . $nom ;
                     } else {
                         $SQL = $SQL . "nom LIKE " . $nom ;
                     }
@@ -229,7 +230,7 @@ catch (Exception $e)
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND methode LIKE " . $methode ;
+                        $SQL = $SQL . " AND methode LIKE " . $methode ;
                     } else {
                         $SQL = $SQL . "methode LIKE " . $methode ;
                     }
@@ -238,7 +239,7 @@ catch (Exception $e)
 
                 if (isset($auteur) && $auteur != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND auteur LIKE " . $auteur ;
+                        $SQL = $SQL . " AND auteur LIKE " . $auteur ;
                     } else {
                         $SQL = $SQL . "auteur LIKE " . $auteur ;
                     }
@@ -247,16 +248,16 @@ catch (Exception $e)
                 
                 if (isset($type) && $type != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND type LIKE " . $type ;
+                        $SQL = $SQL . " AND categorie LIKE " . $type ;
                     } else {
-                        $SQL = $SQL . "type LIKE " . $type ;
+                        $SQL = $SQL . "categorie LIKE " . $type ;
                     }
                     $test = 1;
                 }
                 
                 if (isset($date) && $date != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND date LIKE " . $date ;
+                        $SQL = $SQL . " AND date LIKE " . $date ;
                     } else {
                         $SQL = $SQL . "date LIKE " . $date ;
                     }
@@ -265,7 +266,7 @@ catch (Exception $e)
 
                 if (isset($difficulte) && $difficulte != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND difficulte LIKE " . $difficulte ;
+                        $SQL = $SQL . " AND difficulte LIKE " . $difficulte ;
                     } else {
                         $SQL = $SQL . "difficulte LIKE " . $difficulte ;
                     }
@@ -274,7 +275,7 @@ catch (Exception $e)
 
                 if (isset($ingredients) && $ingredients != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . " AND ingredients IN " . $ingredients . " AND *";
                     } else {
                         $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
                     }

@@ -1,8 +1,9 @@
 const tagContainer = document.querySelector('.tag-container');
-const input = document.querySelector('.tag-container input');
+const select = document.querySelector('.tag-container select');
 const buttonTag = document.querySelector('#button_input');
 let i = 0;
 let tags = [];
+let option = ["centilitres","litres","grammes","kilos","cuil à soupe"];
 
 function createTag(label) {
     const div = document.createElement('div');
@@ -13,11 +14,27 @@ function createTag(label) {
     inputHide.value = label;
     inputHide.name = "ingredient_prop_"+i;
     inputHide.type = "hidden";
+    const quantiteInput = document.createElement("input");
+    quantiteInput.name = "quantite_"+i;
+    quantiteInput.type = "number";
+    quantiteInput.min = "0";
+    quantiteInput.max = "100";
+    const mesureSelect = document.createElement("select")
+    mesureSelect.name = "mesure_"+i;
+
+    for(let j = 0; j<option.length; j++){
+        let mesureOption= document.createElement("option");
+        mesureOption.value = option[j];
+        mesureOption.text = option[j];
+        mesureSelect.appendChild(mesureOption);
+    } 
     const closeBtn = document.createElement('i');
     closeBtn.setAttribute('class', 'material-icons');
     closeBtn.setAttribute('data-item', label);
     closeBtn.innerHTML = 'close'; 
-
+    i++
+    div.appendChild(mesureSelect);
+    div.appendChild(quantiteInput);
     div.appendChild(span);
     div.appendChild(closeBtn);
     div.appendChild(inputHide);
@@ -33,16 +50,14 @@ function reset(){
 function addTags() {
     reset();
     tags.slice().reverse().forEach(function(tag){
-        const input = createTag(tag);
-        tagContainer.prepend(input);
+        const select = createTag(tag);
+        tagContainer.prepend(select);
     })
 }
 
 buttonTag.addEventListener('click', function(e){
-        i++
-        tags.push(input.value);
+        tags.push(select.value);
         addTags();
-        input.value = "";
 })
 
 document.addEventListener('click', function(e){

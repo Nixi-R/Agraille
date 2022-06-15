@@ -71,7 +71,7 @@ catch (Exception $e)
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                       <a href="/index"><img src="img/icone_agraille.png"></a>
+                       <a href="./index.php"><img src="img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
@@ -94,7 +94,7 @@ catch (Exception $e)
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="./img/logo_agraille.png">
+                <a href="./index.php"><img src="./img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
                     <form action="#" >
@@ -134,13 +134,14 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
+        <div class='container my-2'>
             <?php while($r = $recette->fetch()){
                 $auteur = $r['auteur'];
                 $nom = $r['nom'];
                 $id = $r['id'];
                 $button = `<button onclick="location.href='./source/recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
 
-                echo("<div class='container my-2'>
+                echo("
                    <div class='card-deck'>
                         <div class='card'>
                             <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
@@ -153,8 +154,9 @@ catch (Exception $e)
                             </div>
                         </div>
                    </div>
-               </div>");
-        };?>   
+               ");
+        };?>
+        </div>   
     </main>
     <script src="./js/scriptIndex.js"></script>
 </body>

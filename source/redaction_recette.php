@@ -125,7 +125,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <!-- <form action="./envoi_recette.php" method="post" name="myForm" onsubmit> -->
+        <form action="./envoi_recette.php" method="post" name="myForm" onsubmit>
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
@@ -138,6 +138,8 @@ catch (Exception $e)
             <section id="ingredient_container">
                 <h6>Les ingredients<h6>
                 <div id="ingredient_info_1">
+                <div class="tag-container">
+                    <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
                     <select name="ingredient_1">
                         <?php 
                             while($i = $ingredient->fetch()){
@@ -145,20 +147,6 @@ catch (Exception $e)
                             }
                         ?>
                     </select>
-                    <input type="number" min="0" max="100" name="quantite_1"/>
-                    <select name="mesure_1">
-                        <option>Aucune</option>
-                        <option>centilitre</option>
-                        <option>litre</option>
-                        <option>gramme</option>
-                        <option>kilos</option>
-                        <option>cuil à soupe</option>
-                    </select>
-                </div>
-                <button id="boutton_ingredient" onclick="let select = document.getElementById('ingredient_info_1'); let result ='<?php eventClick(); ?>'; select.write(result);">ajoutez un ingredient</button>
-                <div class="tag-container">
-                    <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
-                    <input />
                     <button id="button_input" onclick="return false;">
                 </div>
             </section>
@@ -172,6 +160,7 @@ catch (Exception $e)
                 <h6>D'autres informations concernant la recette...</h6>
                 <p>Methode de cuisson.<p>
                 <select id="methode_cuisson" name="methode_cuisson">
+                    <option>Aucune</option>
                     <option>Marinade</option>
                     <option>Bouillir</option>
                     <option>Mijoter</option>
@@ -181,7 +170,7 @@ catch (Exception $e)
                 </select>
                 <span class="span"></span>
                 <p>Entrez le temps de réalisation de la recette.<p>
-                <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation">
+                <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation"><span>min</span>
                 <span class="span"></span>
                 <p>Selectionnez la difficulté de la recette.<p>
                 <select id="difficulte" name="difficulte">
@@ -200,10 +189,10 @@ catch (Exception $e)
                 <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
             </section>
             <input type="submit" onclick="document.recette_envoi.submit()"></input>
-        <!-- </form> -->
+            <script src="../js/scriptTag.js"></script>
+        </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
-    <script src="../js/scriptTag.js"></script>
     <script src="../js/script"></script>
     <script>
         window.onload = function(){
