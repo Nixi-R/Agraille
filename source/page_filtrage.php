@@ -72,7 +72,7 @@ catch (Exception $e)
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="../img/logo_agraille.png">
+                <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
                     <form action="#" >
