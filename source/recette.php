@@ -62,8 +62,30 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $pseudo = htmlspecialchars($_SESSION['pseudo']);
                 $commentaire = htmlspecialchars($_POST['commentaire']);
                 $note = $_POST['note'];
+                $old_note = $recette['note'];
+                $compteur = $recette['nb_note'];
+                
+                $nb_note = $compteur + 1;
+                $moy = ($compteur * $old_note + $note) / $nb_note;
+                print($moy);
+                print(floor($moy));
+                if (is_int($moy) == false) {
+                    if ($moy - floor($moy) < 0.5) {
+                        $moy = floor($moy);
+                    } else if ($moy - floor($moy) >= 0.5) {
+                        $moy = ceil($moy);
+                    }
+                }
+
+                print("nombre de notes: $nb_note");
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
                 $ins->execute(array($id,$pseudo, $commentaire, $getid));
+
+                $add = $bdd->prepare("UPDATE recette SET note = '$moy' WHERE id = '$getid'");
+                $add->execute();
+
+                $add_nb = $bdd->prepare("UPDATE recette SET nb_note = '$nb_note' WHERE id = '$getid'");
+                $add_nb->execute();
                 
                 $c_error = "Votre commentaire a bien été posté";
             }else {
