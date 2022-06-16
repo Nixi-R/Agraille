@@ -26,8 +26,12 @@ catch (Exception $e)
             $admin = true;
     }
     else 
+    {
+        $admin = 0;
         if ($valider['valider'] == 0)
             header('Location: ../404.php?erreur=recette non validée');
+    }
+
 
 
     if (isset($_SESSION['idCompte']))
@@ -36,15 +40,19 @@ catch (Exception $e)
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
-   
+    
     
 if(isset($_GET['id']) AND !empty($_GET['id'])){
 
     $getid = htmlspecialchars($_GET['id']);
 
-    $description = $bdd->prepare('SELECT*FROM recette WHERE id= ?');
-    $description->execute(array($getid));
-    $description = $description->fetch(PDO::FETCH_ASSOC);
+    $recette = $bdd->prepare('SELECT * FROM recette WHERE id= ?');
+    $recette->execute(array($getid));
+    $recette = $recette->fetch(PDO::FETCH_ASSOC);
+
+    $title = $recette['nom'];
+    $description = $recette['representation'];
+
 
     if ($valider['valider'] == 1)
     {
@@ -57,8 +65,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
                 $ins->execute(array($id,$pseudo, $commentaire, $getid));
                 
-                // $insr = $bdd->prepare('INSERT INTO recette (note) VALUES (?)');
-                // $insr->execute(array($note));
                 $c_error = "Votre commentaire a bien été posté";
             }else {
                 $c_error = "Tous les champs doivent être complétés";
@@ -85,6 +91,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="icon" href="../img/icone_agraille2.png" sizes="any">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <?php if ($admin) echo "<link rel='stylesheet' href='../css/valid-recette.css'>"; ?>
     <title>Agraille</title>
 </head>
 <body>
@@ -92,20 +99,17 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <nav>
             <div class="nav-burger">
                 <ul class="nav-menu">
-                    <li class="nav-item">
-                        <img src="../img/icone_agraille.png">
+                <li class="nav-item">
+                       <a href="./index.php"><img src="img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Apéritifs</a>
+                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrées</a>
+                        <a class="nav-link" href="../index?categorie=plats">Plats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Plats</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Desserts</a>
+                        <a class="nav-link" href="../index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">A propos</a>
@@ -119,7 +123,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img onclick="location.href='../index.php'"src="../img/logo_agraille.png">
+                    <img onclick="location.href='../index.php'"src="../img/logo_agraille.png" style="cursor:pointer;">
                 </div>
                 <div class="search-bar">
                     <form action="#" >
@@ -150,31 +154,78 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <li><?php echo $_SESSION["pseudo"];?></li>
             <li><a href="./profil.php">Voir profil</a></li>
             <li><a href="#">Créer une recette</a></li>
+            <?php
+            if (isset($_SESSION['mode']))
+                echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";
+            ?>
             <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
-        <?php if ($admin) echo '<form enctype="multipart/form-data" method="POST" action="./upload_recette.php">'; ?>
-        <?=if ($admin) echo '<input type="text" name="nom" value="'.$description['nom'].'>'; else echo "<h2>".$description['nom']."</h2>";?>
+        <?php 
+        if ($admin) 
+            echo '<form id="form" enctype="multipart/form-data" method="POST" action="./upload_recette.php" id="form_modif">
+            <input type="text" id="title" name="nom" value="'.$title.'">'; 
+        else 
+            echo "<h2>".$title."</h2>";?>
         <div id="wrapper">
         <section id="image_plat">
-            <img src="../img/tartine.jpg">
-            <?= if ($admin) echo '<input type="text" name="representation" value="'.$description["representation"].'">'; 
-            else 
-            echo '<p>'.$description['representation'].'</p>'; ?>
-            <div id="recette_info">
-                 <span><?=$description['temps_realisation']?></span>
-                 <span>3 étoiles</span>
-                 <span><?=$description['methode_cuisson'] ?></span>
-                 <span><?=$description['difficulte'] ?></span>
+            <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1) 
+            echo "<div id='modif_illu'>";
+
+            if ($recette['illustration'] == null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0) 
+                echo '<img src="../img/tartine.jpg">'; 
+            else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
+                echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
+            else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+                echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
+
+            
+            ?>
             </div>
+            <?php 
+            if ($admin) 
+                echo '<label>Description</label><textarea id="description" name="representation" form="form">'.$description.'</textarea>'; 
+            else 
+                echo '<p>'.$description.'</p><div id="recette_info">'; ?>
+            
+            <?php
+            if ($admin)
+                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
+                <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
+                <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
+                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['categorie']."'></br>
+                <input type='hidden' name='id' value='".$_GET['id']."'>";
+            else
+            {   
+                echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
+                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
+                <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
+                <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
+            }
+            ?>
+
+        </div>
         </section>
         <section id="ingredient">
+            <h2>Ingredients</h2>
+            <?php
+            if ($admin)
+                echo "<textarea id='ingredients' name='ingredients' form='form'>".$recette['ingredients']."</textarea>";
+            else 
+                echo $recette['ingredients'];
+            ?>
         </section>
         <section id="etape">
             <h2>Etapes</h2>
+            <?php
+            if ($admin)
+                echo "<textarea id='etapes' name='etape' form='form'>".$recette['etape']."</textarea>";
+            else
+                echo $recette['etape'];
+            ?>
         </section>
-        <?php if ($valider['valider'] == 1)
+        <?php if ($valider['valider'] == 1 && isset($_SESSION['idCompte']))
         echo '<section id="espace_commentaire">
             <h2>Commentaires</h2>
             <div class="stars">
@@ -184,22 +235,43 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                <i class="lar la-star" data-value="4"></i>
                <i class="lar la-star" data-value="5"></i>
             </div>
-            <script src="../js/scriptIndex.js"></script>
-            <script src="../js/scriptNote.js"></script>
-            <form method="POST" action="recette.php?id=<?=$getid;?>">
+            <form method="POST" action="recette.php?id='.$getid.'">
                 <input type="hidden" name="note" id="note" value="0">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="valider" name="submit_commentaire">
+                <script src="../js/scriptNote.js"></script>
             </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
-            <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></b>
+            <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></br>
             <?php }} ?>
             <?php
-            if ($admin) echo "<input type='submit' name='valider' value='Valider'>";
+            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
             ?>
-            </form>
+            <script src="../js/scriptIndex.js"></script>
+            <?php 
+            if (isset($_GET['err']))
+                echo $_GET['err'];
+            ?>
+
         </div>
     </main>
+    <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+    echo '<script>
+            document.getElementById(\'file\').onchange = function (e){
+                var file = e.target.files[0];
+
+                var reader = new FileReader();
+                reader.onloadend = function(){
+                    document.getElementById(\'modif_illu\').style.backgroundImage = "url(" + reader.result + ")";
+                }
+                if(file){
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>'; 
+        
+        
+        ?>
 </body>
 </html>

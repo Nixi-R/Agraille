@@ -1,0 +1,74 @@
+#title{
+    font-size: 30px;
+}
+
+#description{
+    width: 50%; 
+    background-color: #b90000;
+    color:white;
+    text-align: center;
+    border:none;
+    outline: none;
+    resize:both;
+}
+
+#ingredients{
+    background-color: #b90000;
+    color:white;
+    border:none;
+    outline: none;
+    width:100%;
+    resize:both;
+}
+
+#etapes{
+    background-color: #b90000;
+    color:white;
+    border:none;
+    width:100%;
+    resize:both;
+}
+
+#modif_illu{
+    background-image: url("../img/tartine.jpg");
+    position: relative;
+    border: white dashed 2px; 
+    width: 300%;
+    height: 300px;
+    background-size: cover;
+}
+
+#file{
+    opacity: 0;
+    position: absolute;
+    cursor:pointer;
+    width:100%;
+    height:100%;
+}
+
+#form{
+    display:flex;
+    align-content:space-between;
+    flex-direction: column;
+    align-items: center;
+    resize:both;
+    gap:2px;
+}
+#form input[type=text]{
+        outline: none;
+        background-color: #b90000;
+        color:white;
+        text-align: center;
+        border:none;
+        letter-spacing: 1px;
+        font-weight: bold;
+}
+
+#form input[type=submit]{
+    padding: 1%;
+    outline: none;
+    background-color: #b90000;
+    color:white;
+    border-width:thin;
+    border-color: black;
+}

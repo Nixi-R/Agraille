@@ -7,7 +7,7 @@ h2 {
 }
 
 #image_plat img {
-    width: 50%;
+    width: 75%;
 }
 
 #image_plat p {
@@ -19,16 +19,23 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap:13px;
+    width: 100%;
 }
 
 #recette_info {
-    border-bottom: solid;
     width: 50%;
+    display: flex;
+    align-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    gap:25px;
 }
 
 #ingredient {
     border-bottom: solid;
     width: 50%;
+    text-align: center;
 }
 
 #wrapper{
@@ -41,12 +48,73 @@ h2 {
 #etape {
     border-bottom: solid;
     width: 50%;
+    text-align: center;
 }
 
 #espace_commentaire form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+#tps_realisation{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-bottom: solid;
+    width: 100%;
+    font-size: 20px;
+}
+#tps_realisation label{
+    font-size: calc(1.325rem + .9vw);
+}
+
+#note{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-bottom: solid;
+    width: 100%;
+    font-size: 20px;
+}
+
+#note1{
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-bottom: solid;
+    width: 100%;
+}
+
+#note1 label{
+    font-size:calc(1.325rem + .9vw);
+}
+
+#methode_cuisson{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-bottom: solid;
+    width: 100%;
+    font-size: 20px;
+}
+
+#methode_cuisson label{
+    font-size: calc(1.325rem + .9vw);
+}
+
+#difficulte{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-bottom: solid;
+    width: 100%;
+    font-size: 20px;
+}
+
+#difficulte label{
+    font-size: calc(1.325rem + .9vw);
 }
 
 .stars {

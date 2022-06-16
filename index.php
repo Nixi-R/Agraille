@@ -27,12 +27,27 @@ catch (Exception $e)
         else
             $_SESSION['mode'] = 1;
 
-    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
-    else 
-        $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1){
+        if(isset($_GET['categorie']) AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE (categorie = ?) AND (valider = 0)');
+            $recette->execute(array($getcategorie));
+        }else{
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
+            $recette->execute();
+        }
+    }else{ 
+        if(isset($_GET['categorie']) AND !empty($_GET['categorie'])){
+            $getcategorie = htmlspecialchars($_GET['categorie']);
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE (categorie= ?) AND (valider = 1)');
+            $recette->execute(array($getcategorie));
+        }else{
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+            $recette->execute();
+        }
+    }
 
-    $recette->execute();
+
     
 ?>
 <!DOCTYPE html>
@@ -56,19 +71,16 @@ catch (Exception $e)
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <img src="img/icone_agraille.png">
+                       <a href="./index.php"><img src="img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" >Apéritifs</a>
+                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Entrées</a>
+                        <a class="nav-link" href="index?categorie=plats">Plats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Plats</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Desserts</a>
+                        <a class="nav-link" href="index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">A propos</a>
@@ -82,7 +94,7 @@ catch (Exception $e)
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img src="./img/logo_agraille.png">
+                <a href="./index.php"><img src="./img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
                     <form action="#" >
@@ -91,6 +103,7 @@ catch (Exception $e)
                         </input>
                     </form>
                 </div>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img src="./img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
@@ -121,13 +134,14 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
+        <div class='container my-2'>
             <?php while($r = $recette->fetch()){
                 $auteur = $r['auteur'];
                 $nom = $r['nom'];
                 $id = $r['id'];
                 $button = `<button onclick="location.href='./source/recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
 
-                echo("<div class='container my-2'>
+                echo("
                    <div class='card-deck'>
                         <div class='card'>
                             <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
@@ -140,8 +154,9 @@ catch (Exception $e)
                             </div>
                         </div>
                    </div>
-               </div>");
-        };?>   
+               ");
+        };?>
+        </div>   
     </main>
     <script src="./js/scriptIndex.js"></script>
 </body>
