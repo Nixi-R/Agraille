@@ -67,8 +67,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 
                 $nb_note = $compteur + 1;
                 $moy = ($compteur * $old_note + $note) / $nb_note;
-                print($moy);
-                print(floor($moy));
+                
                 if (is_int($moy) == false) {
                     if ($moy - floor($moy) < 0.5) {
                         $moy = floor($moy);
