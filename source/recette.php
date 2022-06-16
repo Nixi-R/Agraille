@@ -76,7 +76,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                     }
                 }
 
-                print("nombre de notes: $nb_note");
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
                 $ins->execute(array($id,$pseudo, $commentaire, $getid));
 
