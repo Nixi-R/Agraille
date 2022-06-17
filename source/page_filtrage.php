@@ -155,7 +155,7 @@ catch (Exception $e)
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
                             <option name="facile">Facile</option>
-                            <option name="intermediaire">Intermédiaire</option>
+                            <option name="intermédiaire">Intermédiaire</option>
                             <option name="difficile">Difficile</option>
                         </select>
                     </div>
@@ -192,13 +192,13 @@ catch (Exception $e)
                     $type = $_POST['types'];
                 }
                 if ($_POST['difficulte'] != null ){
-                    $date = $_POST['difficulte'];
+                    $difficulte = $_POST['difficulte'];
                 }
                 if ($_POST['ingredients'] != null ){
                     $ingredients = $_POST['ingredients'];
                 }
 
-/////////////////////////////////////////////////////
+
                 $SQL = "SELECT * FROM recette WHERE ";
                 
                 if (isset($temps) && $temps != null){
@@ -218,54 +218,54 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (nom LIKE " . $nom . ")";
+                        $SQL = $SQL . " AND (nom = '" . $nom . "')";
                     } else {
-                        $SQL = $SQL . "(nom LIKE " . $nom . ")";
+                        $SQL = $SQL . "(nom = '" . $nom . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (methode LIKE " . $methode . ")";
+                        $SQL = $SQL . " AND (methode = '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "(methode LIKE " . $methode . ")";
+                        $SQL = $SQL . "(methode = '" . $methode . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($auteur) && $auteur != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (auteur LIKE " . $auteur . ")";
+                        $SQL = $SQL . " AND (auteur = '" . $auteur . "')";
                     } else {
-                        $SQL = $SQL . "(auteur LIKE " . $auteur . ")";
+                        $SQL = $SQL . "(auteur = '" . $auteur . "')";
                     }
                     $test = 1;
                 }
                 
                 if (isset($type) && $type != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (categorie LIKE " . $type . ")";
+                        $SQL = $SQL . " AND (categorie = '" . $type . "')";
                     } else {
-                        $SQL = $SQL . "(categorie LIKE " . $type . ")";
+                        $SQL = $SQL . "(categorie = '" . $type . "')";
                     }
                     $test = 1;
                 }
                 
-                if (isset($date) && $date != null){
+                if (isset($difficulte) && $difficulte != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (date_publication LIKE " . $date . ")";
+                        $SQL = $SQL . " AND (difficulte = '" . $difficulte . "')";
                     } else {
-                        $SQL = $SQL . "(date_publication LIKE " . $date . ")";
+                        $SQL = $SQL . "(difficulte = '" . $difficulte . "')";
                     }
                     $test = 1;
                 }
 
-                if (isset($difficulte) && $difficulte != null){
+                if (isset($date) && $date != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (difficulte LIKE " . $difficulte . ")";
+                        $SQL = $SQL . " AND (date_publication = '" . $date . "')";
                     } else {
-                        $SQL = $SQL . "(difficulte LIKE " . $difficulte . ")";
+                        $SQL = $SQL . "(date_publication = '" . $date . "')";
                     }
                     $test = 1;
                 }
@@ -278,18 +278,20 @@ catch (Exception $e)
                     }
                 }
 
-                echo $SQL;
-
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
-                    $SQL = $SQL . " AND valider = 0 ORDER BY id DESC";
+                    $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
+                    echo $SQL;
                     $SQL = $bdd->prepare($SQL);
                 }
                 else
                 {
-                    $SQL = $SQL . " AND valider = 1 ORDER BY id DESC";
+                    $SQL = $SQL . " AND (valider = 1) ORDER BY id DESC";
+                    echo $SQL;
                     $SQL = $bdd->prepare($SQL);
                 }
+                
+                
                 $SQL->execute();
                 $SQL = $SQL->fetchAll();
 

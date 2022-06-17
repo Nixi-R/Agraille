@@ -12,7 +12,7 @@ catch (Exception $e)
             die('Erreur : ' . $e->getMessage());
     }
 
-    $_POST['pseudo'] = strtoupper($_POST['pseudo']);
+    $_POST['pseudo'] = strtolower($_POST['pseudo']);
     
     $recipeS = $conn->prepare('SELECT pseudo,adresse_mail FROM compte');
     $recipeS -> execute();
