@@ -7,6 +7,8 @@
             'root',
             '',
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+
+            
         );
         }
     catch (Exception $e)
@@ -14,13 +16,19 @@
                 die('Erreur : ' . $e->getMessage());
         }
 
-    if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["methode_cuisson"]) < 1 || strlen($_POST["type"]) < 1 || strlen($_POST["difficulte"]) < 1)
+    if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["methode_cuisson"]) < 1 || strlen($_POST["type"]) < 1 || strlen($_POST["difficulte"]) < 1 || isset($_FILES['photo']['tmp_name']))
+    {
         header('Location: ./recette.php?id='. $_POST["id"]. '&err=Il manque des éléments');
+        exit();
+    }
 
-
-    else{
+    else
+    {
         if (!(isset($_SESSION['mode'])))
-        header('Location: ../');
+        {
+            header('Location: ../');
+            exit();
+        }
 
         if (isset($_POST['valider']))
         {    $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",

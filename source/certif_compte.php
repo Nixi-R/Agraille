@@ -1,19 +1,31 @@
 <?php
 
 if ($_POST['verif_password'] != $_POST['password'])
+{
     header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
+    exit();
+}
 
 if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 30 || iconv_strlen($_POST['pseudo']) < 4 || iconv_strlen($_POST['pseudo']) > 30 )
+{
     header("Location: ./inscription.php?erreur=erreur de saisie&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+    exit();
+}
 
 if (strlen($_FILES['photo']['tmp_name']) > 0)
 {
     if (filesize($_FILES['photo']['tmp_name']) > 16000)
+    {
         header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+        exit();
+    }
 }
 
 if (!(preg_match("/@/i", $_POST['email'])) || !(preg_match("/\./i", stristr($_POST['email'], "@"))))
+{
     header("Location: ./inscription.php?erreur=email non valide&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+    exit();
+}
 
 try{
 $conn = new PDO(
@@ -47,6 +59,7 @@ if (isset($recipeStatement[0]['pseudo']))
             if ($pseudo == $recipeStatement[$i]['pseudo'])
             {
                 header('Location: ./inscription.php?erreur=pseudo deja éxistant&email='.$_POST['email'].'&password='.$_POST['password']);
+                exit();
             }
             else
             {
@@ -72,6 +85,7 @@ if (isset($recipeStatement[0]['adresse_mail']))
             if ($pseudo == $recipeStatement[$i]['adresse_mail'])
             {
                 header('Location: ./inscription.php?erreur=adresse mail déjà éxistante&email='.$_POST['email'].'&password='.$_POST['password']);
+                exit();
             }
             else
             {
