@@ -252,20 +252,20 @@ catch (Exception $e)
                     $test = 1;
                 }
                 
+                if (isset($difficulte) && $difficulte != null){
+                    if ($test == 1){
+                        $SQL = $SQL . " AND ('difficulte' LIKE '" . $difficulte . "')";
+                    } else {
+                        $SQL = $SQL . "('difficulte' LIKE '" . $difficulte . "')";
+                    }
+                    $test = 1;
+                }
+
                 if (isset($date) && $date != null){
                     if ($test == 1){
                         $SQL = $SQL . " AND ('date_publication' LIKE '" . $date . "')";
                     } else {
                         $SQL = $SQL . "('date_publication' LIKE '" . $date . "')";
-                    }
-                    $test = 1;
-                }
-
-                if (isset($difficulte) && $difficulte != null){
-                    if ($test == 1){
-                        $SQL = $SQL . " AND ('difficulte' LIKE '" . $difficulte . "')";
-                    } else {
-                        $SQL = $SQL . "(difficulte LIKE '" . $difficulte . "')";
                     }
                     $test = 1;
                 }
