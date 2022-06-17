@@ -67,14 +67,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 
                 $nb_note = $compteur + 1;
                 $moy = ($compteur * $old_note + $note) / $nb_note;
-                
-                if (is_int($moy) == false) {
-                    if ($moy - floor($moy) < 0.5) {
-                        $moy = floor($moy);
-                    } else if ($moy - floor($moy) >= 0.5) {
-                        $moy = ceil($moy);
-                    }
-                }
 
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
                 $ins->execute(array($id,$pseudo, $commentaire, $getid));
