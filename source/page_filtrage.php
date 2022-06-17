@@ -198,7 +198,7 @@ catch (Exception $e)
                     $ingredients = $_POST['ingredients'];
                 }
 
-
+/////////////////////////////////////////////////////
                 $SQL = "SELECT * FROM recette WHERE ";
                 
                 if (isset($temps) && $temps != null){
@@ -278,6 +278,7 @@ catch (Exception $e)
                     }
                 }
 
+                echo $SQL;
 
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
