@@ -12,6 +12,9 @@ if (strlen($_FILES['photo']['tmp_name']) > 0)
         header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 }
 
+if (!(preg_match("/@/i", $_POST['email'])) || !(preg_match("/\./i", stristr($_POST['email'], "@"))))
+    header("Location: ./inscription.php?erreur=email non valide&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+
 try{
 $conn = new PDO(
     'mysql:host=localhost;dbname=agrailledb;charset=utf8',
@@ -35,7 +38,7 @@ $recipeStatement -> execute();
     
 $recipeStatement = $recipeStatement -> fetchAll();
 
-$pseudo = strtoupper($_POST['pseudo']);
+$pseudo = strtolower($_POST['pseudo']);
 
 if (isset($recipeStatement[0]['pseudo']))
     {
@@ -115,7 +118,7 @@ $sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de
 $insertRecipe = $conn->prepare($sqlQuery);
 
 $insertRecipe -> bindValue(1, $id, PDO::PARAM_STR);
-$insertRecipe -> bindValue(2, strtoupper($_POST['pseudo']), PDO::PARAM_STR);
+$insertRecipe -> bindValue(2, strtolower($_POST['pseudo']), PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(4, $hash, PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
