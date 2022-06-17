@@ -192,7 +192,7 @@ catch (Exception $e)
                     $type = $_POST['types'];
                 }
                 if ($_POST['difficulte'] != null ){
-                    $date = $_POST['difficulte'];
+                    $difficulte = $_POST['difficulte'];
                 }
                 if ($_POST['ingredients'] != null ){
                     $ingredients = $_POST['ingredients'];
