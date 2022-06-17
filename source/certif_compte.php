@@ -12,6 +12,9 @@ if (strlen($_FILES['photo']['tmp_name']) > 0)
         header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
 }
 
+if (!(preg_match("/@/i", $_POST['email'])) || !(preg_match("/\./i", stristr($_POST['email'], "@"))))
+    header("Location: ./inscription.php?erreur=email non valide&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+
 try{
 $conn = new PDO(
     'mysql:host=localhost;dbname=agrailledb;charset=utf8',
