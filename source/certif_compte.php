@@ -154,7 +154,7 @@ if (strlen($_FILES['photo']['tmp_name']) > 0){
         </div>
         <div id="squareSign">
             <p id="main">INSCRIPTION</p>
-            <p onclick="location.href='../'" id="certif">Vous avez fini votre inscription !</br>
+            <p onclick="location.href='./connexion'" id="certif">Vous avez fini votre inscription !</br>
             Vous pouvez maintenant vous connecter en cliquant sur ce message</p>
         </div>
     </body>
