@@ -86,7 +86,7 @@ $insertP = $insertP->fetchAll();
         <ul>
             <li><?php echo $_SESSION["pseudo"] ?></li>
             <li><a href="profil.php">Voir profil</a></li>
-            <li><a href="./redaction_recette.php">Créer une recette</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>

@@ -78,6 +78,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $add_nb->execute();
                 
                 $c_error = "Votre commentaire a bien été posté";
+                header("Location: recette?id=$getid");
+                exit();
             }else {
                 $c_error = "Tous les champs doivent être complétés";
             }
@@ -165,7 +167,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <ul>
             <li><?php echo $_SESSION["pseudo"];?></li>
             <li><a href="./profil.php">Voir profil</a></li>
-            <li><a href="./redaction_recette.php">Créer une recette</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";

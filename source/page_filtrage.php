@@ -103,7 +103,7 @@ catch (Exception $e)
         <ul>
             <li><?php echo $_SESSION["pseudo"]; ?></li>
             <li><a href="./profil.php">Voir profil</a></li>
-            <li><a href="./redaction_recette.php">Créer une recette</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='./page_filtrage?mode=change'>Changement de mode</a></li>";

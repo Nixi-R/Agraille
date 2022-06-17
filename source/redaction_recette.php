@@ -24,25 +24,6 @@ catch (Exception $e)
     $ingredient = $conn->prepare('SELECT * FROM ingredient');
     $ingredient->execute();
 
-    function eventClick(){
-        $conn = new PDO(
-            'mysql:host=localhost;dbname=agrailledb;charset=utf8',
-            'root',
-            '',
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte'] );
-        $insertP -> execute();
-        $insertP = $insertP->fetchAll();
-        $ingredient = $conn->prepare('SELECT * FROM ingredient');
-        $ingredient->execute();
-        echo "<select>";
-        while($i = $ingredient->fetch()){
-            echo "<option>".$i["ingredient"]."</option>";
-        }
-        echo "</select>";
-    }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -126,37 +107,56 @@ catch (Exception $e)
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
-                <input id="titre_input" type="text" name ="title"></input> 
+                <input require id="titre_input" type="text" name ="title"></input> 
             </section>
             <section id="description" name ="description">
                 <h6>Faites nous une description de la recette !<h6>
-                <textarea type="text" id="desc_input" name="description"></textarea>
+                <textarea require type="text" id="desc_input" name="description"></textarea>
             </section>
             <section id="ingredient_container">
                 <h6>Les ingredients<h6>
                 <div id="ingredient_info_1">
                 <div class="tag-container">
                     <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
-                    <select name="ingredient_1">
                         <?php 
-                            while($i = $ingredient->fetch()){
-                                echo "<option>".$i["ingredient"]."</option>";
+                            if(isset($_REQUEST["ingredient_nombre"])){
+                                $n = $_REQUEST["ingredient_nombre"];
+                                for($i = 0; $i<$n; $i++){
+                                echo "<select name='mesure_$i'>
+                                <option>Aucune</option>
+                                <option>centilitres</option>
+                                <option>litres</option>
+                                <option>grammes</option>
+                                <option>kilos</option>
+                                <option>grammes</option>
+                                <option>cuil à soupe</option>
+                                <option>cuil à café</option>
+                                </select>
+                                <input name='quantite_$i' type='number'> 
+                                <select name='ingredient_$i'>";
+                                while($j = $ingredient->fetch()){
+                                    echo "<option>".$j["ingredient"]."</option>";
+                                }
+                                echo"</select><br>";
+                                }
+                            }else{
+                                header("Location: ./confirmation_ingredient");
                             }
+                            
                         ?>
                     </select>
-                    <button id="button_input" onclick="return false;">
                 </div>
             </section>
             <section id="etape">
                 <h6>Décrivez les étapes !</h6>
-                <input type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
+                <input require type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
                 <div id="etapes"></div>
                 <span id="etape_button" class="btn btn-primary" value="+" >+</span>
             </section>
             <section id="recette_info">
                 <h6>D'autres informations concernant la recette...</h6>
                 <p>Methode de cuisson.<p>
-                <select id="methode_cuisson" name="methode_cuisson">
+                <select require id="methode_cuisson" name="methode_cuisson">
                     <option>Aucune</option>
                     <option>Marinade</option>
                     <option>Bouillir</option>
@@ -167,17 +167,17 @@ catch (Exception $e)
                 </select>
                 <span class="span"></span>
                 <p>Entrez le temps de réalisation de la recette.<p>
-                <input id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation"><span>min</span>
+                <input require id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation"><span>min</span>
                 <span class="span"></span>
                 <p>Selectionnez la difficulté de la recette.<p>
-                <select id="difficulte" name="difficulte">
+                <select require id="difficulte" name="difficulte">
                     <option>Facile</option>
                     <option>Intermédiaire</option>
                     <option>Difficile</option>
                 </select>
                 <span class="span"></span>
                 <p>Selectionnez la catégorie de la recette.<p>
-                <select id="type_recette" name="type_recette">
+                <select require id="type_recette" name="type_recette">
                     <option>Plat</option>
                     <option>Cocktail</option>
                     <option>Dessert</option>
@@ -186,11 +186,9 @@ catch (Exception $e)
                 <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
             </section>
             <input type="submit" onclick="document.recette_envoi.submit()"></input>
-            <script src="../js/scriptTag.js"></script>
         </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
-    <script src="../js/script"></script>
     <script>
         window.onload = function(){
             let button = document.getElementById('etape_button');

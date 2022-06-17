@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES latin1 COLLATE latin1_general_ci",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
     // switch (null) {
     //     case $_POST["title"]:
@@ -50,11 +50,12 @@
     
 
     for($i = 0; isset($_POST["ingredient_$i"]); $i++){
-        if($_POST["mesure_$i"] == "Aucune"){
-            $_POST["mesure_$i"] = "";
-        }
         $ingredient[$i] = $_POST["quantite_$i"]  ." " .$_POST["mesure_$i"] ." de " .$_POST["ingredient_$i"];
+        print_r($_POST["quantite_$i"]);
+        print_r($_POST["ingredient_$i"]);
+        print_r($_POST["mesure_$i"]); 
     }
+
     $ingredient = implode(". ", $ingredient);
 
     // for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
@@ -75,7 +76,6 @@
     $insert_sql = $bdd->prepare($sql);
     $insert_sql->execute();
 
-    print_r($idRecette);
     print_r($ingredient);
     print("Nous avons reçu votre recette !");
 
