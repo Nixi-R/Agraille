@@ -155,7 +155,7 @@ catch (Exception $e)
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
                             <option name="facile">Facile</option>
-                            <option name="intermediaire">Intermédiaire</option>
+                            <option name="intermediaire">Intermediaire</option>
                             <option name="difficile">Difficile</option>
                         </select>
                     </div>
