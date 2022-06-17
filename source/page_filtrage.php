@@ -144,9 +144,9 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🍹</p>
                     <div class="filtreTexte flexCentre"><label for="types">Par type</label>
                         <select name="types" id="types">
-                            <option name="facile">plats</option>
-                            <option name="inter">Cocktail</option>
-                            <option name="diff">Dessert</option>
+                            <option name="plat">Plat</option>
+                            <option name="cocktail">Cocktail</option>
+                            <option name="dessert">Dessert</option>
                         </select>
                     </div>
                 </div>
@@ -155,8 +155,8 @@ catch (Exception $e)
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
                             <option name="facile">Facile</option>
-                            <option name="inter">Intermédiaire</option>
-                            <option name="diff">Difficile</option>
+                            <option name="intermediaire">Intermédiaire</option>
+                            <option name="difficile">Difficile</option>
                         </select>
                     </div>
                 </div>
@@ -254,9 +254,9 @@ catch (Exception $e)
                 
                 if (isset($date) && $date != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (date LIKE " . $date . ")";
+                        $SQL = $SQL . " AND (date_publication LIKE " . $date . ")";
                     } else {
-                        $SQL = $SQL . "(date LIKE " . $date . ")";
+                        $SQL = $SQL . "(date_publication LIKE " . $date . ")";
                     }
                     $test = 1;
                 }
