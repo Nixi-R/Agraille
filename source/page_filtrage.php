@@ -144,6 +144,7 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🍹</p>
                     <div class="filtreTexte flexCentre"><label for="types">Par type</label>
                         <select name="types" id="types">
+                            <option>Aucun</option>
                             <option name="plat">Plat</option>
                             <option name="cocktail">Cocktail</option>
                             <option name="dessert">Dessert</option>
@@ -154,6 +155,7 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🌡️</p>
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
+                            <option>Aucun</option>
                             <option name="facile">Facile</option>
                             <option name="intermédiaire">Intermédiaire</option>
                             <option name="difficile">Difficile</option>
@@ -245,18 +247,34 @@ catch (Exception $e)
                 
                 if (isset($type) && $type != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (categorie = '" . $type . "')";
+                        if ($type == 'Aucun'){
+                            unset($type);
+                        } else {
+                            $SQL = $SQL . " AND (categorie = '" . $type . "')";
+                        }
                     } else {
-                        $SQL = $SQL . "(categorie = '" . $type . "')";
+                        if ($type == 'Aucun'){
+                            unset($type);
+                        } else {
+                            $SQL = $SQL . "(categorie = '" . $type . "')";
+                        }
                     }
                     $test = 1;
                 }
                 
                 if (isset($difficulte) && $difficulte != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (difficulte = '" . $difficulte . "')";
+                        if ($difficulte == 'Aucun'){
+                            unset($difficulte);
+                        } else {
+                            $SQL = $SQL . " AND (difficulte = '" . $difficulte . "')";
+                        }
                     } else {
-                        $SQL = $SQL . "(difficulte = '" . $difficulte . "')";
+                        if ($difficulte == 'Aucun'){
+                            unset($difficulte);
+                        } else {
+                            $SQL = $SQL . "(difficulte = '" . $difficulte . "')";
+                        }
                     }
                     $test = 1;
                 }
