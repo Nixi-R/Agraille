@@ -198,19 +198,19 @@ catch (Exception $e)
                     $ingredients = $_POST['ingredients'];
                 }
 
-/////////////////////////////////////////////////////
+
                 $SQL = "SELECT * FROM recette WHERE ";
                 
                 if (isset($temps) && $temps != null){
-                    $SQL = $SQL . "(temps_realisation <= " . $temps . ")";
+                    $SQL = $SQL . "('temps_realisation' <= '" . $temps . "')";
                     $test = 1;
                 }
 
                 if (isset($note) && $note != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (note = " . $note . ")";
+                        $SQL = $SQL . " AND ('note' = '" . $note . "')";
                     } else {
-                        $SQL = $SQL . "(note = " . $note . ")";
+                        $SQL = $SQL . "('note' = '" . $note . "')";
                     }
                     $test = 1;
                     
@@ -218,63 +218,63 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (nom LIKE " . $nom . ")";
+                        $SQL = $SQL . " AND ('nom' LIKE '" . $nom . "')";
                     } else {
-                        $SQL = $SQL . "(nom LIKE " . $nom . ")";
+                        $SQL = $SQL . "('nom' LIKE '" . $nom . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (methode LIKE " . $methode . ")";
+                        $SQL = $SQL . " AND ('methode' LIKE '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "(methode LIKE " . $methode . ")";
+                        $SQL = $SQL . "('methode' LIKE '" . $methode . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($auteur) && $auteur != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (auteur LIKE " . $auteur . ")";
+                        $SQL = $SQL . " AND ('auteur' LIKE '" . $auteur . "')";
                     } else {
-                        $SQL = $SQL . "(auteur LIKE " . $auteur . ")";
+                        $SQL = $SQL . "('auteur' LIKE '" . $auteur . "')";
                     }
                     $test = 1;
                 }
                 
                 if (isset($type) && $type != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (categorie LIKE " . $type . ")";
+                        $SQL = $SQL . " AND ('categorie' LIKE '" . $type . "')";
                     } else {
-                        $SQL = $SQL . "(categorie LIKE " . $type . ")";
+                        $SQL = $SQL . "('categorie' LIKE '" . $type . "')";
                     }
                     $test = 1;
                 }
                 
                 if (isset($date) && $date != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (date_publication LIKE " . $date . ")";
+                        $SQL = $SQL . " AND ('date_publication' LIKE '" . $date . "')";
                     } else {
-                        $SQL = $SQL . "(date_publication LIKE " . $date . ")";
+                        $SQL = $SQL . "('date_publication' LIKE '" . $date . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($difficulte) && $difficulte != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (difficulte LIKE " . $difficulte . ")";
+                        $SQL = $SQL . " AND ('difficulte' LIKE '" . $difficulte . "')";
                     } else {
-                        $SQL = $SQL . "(difficulte LIKE " . $difficulte . ")";
+                        $SQL = $SQL . "(difficulte LIKE '" . $difficulte . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($ingredients) && $ingredients != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . " AND 'ingredients' IN '" . $ingredients . "' AND *";
                     } else {
-                        $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . "'ingredients' IN '" . $ingredients . "' AND *";
                     }
                 }
 
