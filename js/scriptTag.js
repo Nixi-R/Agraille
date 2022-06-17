@@ -3,7 +3,7 @@ const select = document.querySelector('.tag-container select');
 const buttonTag = document.querySelector('#button_input');
 let i = 0;
 let tags = [];
-let option = ["centilitres","litres","grammes","kilos","cuil à soupe"];
+let option = ["Aucune","centilitres","litres","grammes","kilos","cuil à soupe","cuil à café"];
 
 function createTag(label) {
     const div = document.createElement('div');

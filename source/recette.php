@@ -173,7 +173,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <ul>
             <li><?php echo $_SESSION["pseudo"];?></li>
             <li><a href="./profil.php">Voir profil</a></li>
-            <li><a href="#">Créer une recette</a></li>
+            <li><a href="./redaction_recette.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";

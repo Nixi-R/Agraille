@@ -25,7 +25,7 @@
         if (isset($_POST['valider']))
         {    $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
             date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
-            ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, type = "'.$_POST["type"].'",
+            ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["type"].'",
             difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
 
             $insertRecipe = $conn->prepare($insertRecipe);
