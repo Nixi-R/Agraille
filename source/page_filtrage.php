@@ -290,9 +290,9 @@ catch (Exception $e)
 
                 if (isset($ingredients) && $ingredients != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . " AND (ingredients = '" . $ingredients . "')";
                     } else {
-                        $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                     }
                 }
 
