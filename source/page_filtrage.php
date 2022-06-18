@@ -299,13 +299,13 @@ catch (Exception $e)
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
                     $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
-                    echo $SQL;
+                    //echo $SQL;
                     $SQL = $bdd->prepare($SQL);
                 }
                 else
                 {
                     $SQL = $SQL . " AND (valider = 1) ORDER BY id DESC";
-                    echo $SQL;
+                    //echo $SQL;
                     $SQL = $bdd->prepare($SQL);
                 }
                 
