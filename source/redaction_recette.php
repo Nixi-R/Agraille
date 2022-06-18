@@ -119,9 +119,15 @@ catch (Exception $e)
                 <div class="tag-container">
                     <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
                         <?php 
-                            if(isset($_REQUEST["ingredient_nombre"])){
-                                $n = $_REQUEST["ingredient_nombre"];
-                                for($i = 0; $i<$n; $i++){
+                        $var = array();
+                        $x = 0;
+                        while($j = $ingredient->fetch()){
+                            $var[$x] = "<option>".$j["ingredient"]."</option>";
+                            $x++;
+                        }
+                        if(isset($_REQUEST["ingredient_nombre"])){
+                            $n = $_REQUEST["ingredient_nombre"];
+                            for($i = 0; $i<$n; $i++){
                                 echo "<select name='mesure_$i'>
                                 <option>Aucune</option>
                                 <option>centilitres</option>
@@ -132,16 +138,19 @@ catch (Exception $e)
                                 <option>cuil à soupe</option>
                                 <option>cuil à café</option>
                                 </select>
-                                <input name='quantite_$i' type='number'> 
+                                <input name='quantite_$i' type='number' min='0' max='100'> 
                                 <select name='ingredient_$i'>";
-                                while($j = $ingredient->fetch()){
-                                    echo "<option>".$j["ingredient"]."</option>";
+                                for($z = 0; $z<count($var); $z++){
+                                    echo $var[$z];
                                 }
-                                echo"</select><br>";
-                                }
-                            }else{
+                                // echo $var[0];
+                                // echo $var[1];
+                                echo "</select><br>";
+                            }
+                        }else{
                                 header("Location: ./confirmation_ingredient");
                             }
+
                             
                         ?>
                     </select>
@@ -198,7 +207,7 @@ catch (Exception $e)
             button.addEventListener('click', function(event){
                 i++
                 if (button.textContent === '+'){
-                    let newInput = document.createElement('input')
+                    let newInput = document.createElement('input require')
                         newInput.type = 'text'
                         newInput.placeholder = i + " - Décrivez l'étape";
                         newInput.id = 'step_'+i;
