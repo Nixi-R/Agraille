@@ -68,8 +68,14 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $nb_note = $compteur + 1;
                 $moy = ($compteur * $old_note + $note) / $nb_note;
 
-                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
-                $ins->execute(array($id,$pseudo, $commentaire, $getid));
+                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette, note) VALUES (?,?,?,NOW(),?,?)');
+                $ins->execute(array($id,$pseudo, $commentaire, $getid, $note));///
+
+                // $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire  WHERE (id_recette = $getid) AND (note > 0)");///
+                // $compteur->execute(); ///
+
+                // $verif = $bdd->prepare("SELECT note FROM commentaire WHERE (id_recette = $getid) AND (pseudo = $pseudo)");
+                // $verif-execute();
 
                 $add = $bdd->prepare("UPDATE recette SET note = '$moy' WHERE id = '$getid'");
                 $add->execute();
@@ -89,6 +95,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_recette = ? ORDER BY id_recette DESC');
         $commentaires->execute(array($getid));
     }
+
+    // echo $verif;
 }
 ?>
 <!DOCTYPE html>

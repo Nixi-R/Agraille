@@ -26,6 +26,9 @@ catch (Exception $e)
             $_SESSION['mode'] = 0;
         else
             $_SESSION['mode'] = 1;
+
+            $ingredient = $bdd->prepare('SELECT * FROM ingredient');
+            $ingredient->execute();
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +167,15 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍒</p>
-                    <div class="filtreTexte flexCentre">Par ingrédient<input type="text" name="ingredients"></div>
+                    <div class="filtreTexte flexCentre">Par ingrédient
+                        <select name="ingredients">
+                        <?php
+                            while($j = $ingredient->fetch()){
+                              echo "<option>".$j["ingredient"]."</option>";
+                            }
+                        ?>
+                        </select>
+                    </div>
                 </div>
                 <div class="bouton flexCentre"><input type="submit" value="Chercher🔎"></div>
             </form>

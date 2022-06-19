@@ -51,11 +51,8 @@
 
     for($i = 0; isset($_POST["ingredient_$i"]); $i++){
         $ingredient[$i] = $_POST["quantite_$i"]  ." " .$_POST["mesure_$i"] ." de " .$_POST["ingredient_$i"];
-        print_r($_POST["quantite_$i"]);
-        print_r($_POST["ingredient_$i"]);
-        print_r($_POST["mesure_$i"]); 
-    }
 
+    }
     $ingredient = implode(". ", $ingredient);
 
     // for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
