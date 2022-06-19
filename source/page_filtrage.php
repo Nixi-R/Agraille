@@ -165,18 +165,13 @@ catch (Exception $e)
                         </select>
                     </div>
                 </div>
-                <div class="flexBetween filtreTexteIcons">
+                <!-- <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍒</p>
                     <div class="filtreTexte flexCentre">Par ingrédient
-                        <select name="ingredients">
-                        <?php
-                            while($j = $ingredient->fetch()){
-                              echo "<option value=".$j["id"] .">".$j["ingredient"]."</option>";
-                            }
-                        ?>
-                        </select>
-                    </div>
-                </div>
+                         <select type='hidden'name="ingredients">
+                        </select> -->
+                    <!-- </div> -->
+                <!-- </div>  -->
                 <div class="bouton flexCentre"><input type="submit" value="Chercher🔎"></div>
             </form>
             </div>
@@ -207,9 +202,9 @@ catch (Exception $e)
                 if ($_POST['difficulte'] != null ){
                     $difficulte = $_POST['difficulte'];
                 }
-                if ($_POST['ingredients'] != null ){
-                    $ingredients = $_POST['ingredients'];
-                }
+                // if ($_POST['ingredients'] != null ){
+                //     $ingredients = $_POST['ingredients'];
+                // }
 
 
                 $SQL = "SELECT * FROM recette WHERE ";
@@ -299,13 +294,13 @@ catch (Exception $e)
                     $test = 1;
                 }
 
-                if (isset($ingredients) && $ingredients != null){
-                    if ($test == 1){
-                        $SQL = $SQL . " AND (ingredients = '" . $ingredients . "')";
-                    } else {
-                        $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
-                    }
-                }
+                // if (isset($ingredients) && $ingredients != null){
+                //     if ($test == 1){
+                //         $SQL = $SQL . " AND (ingredients = '" . $ingredients . "')";
+                //     } else {
+                //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
+                //     }
+                // }
 
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
