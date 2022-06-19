@@ -37,7 +37,8 @@
     $temps_realisation = $_POST["temps_realisation"];
     $difficulte = $_POST["difficulte"];
     $type_recette = $_POST["type_recette"];
-    $recette_image = $_POST["recette_image"];
+    $recette_image = fopen($_FILES["recette_image"]['tmp_name'], 'rb');
+    $img_mime = $_FILES['recette_image']['type'];
     $date = date("Y-m-d");
     $auteur = $_SESSION["pseudo"];
     $idRecette = random_int(0, 2147483647);
@@ -68,8 +69,9 @@
     }
     $str_etape = implode(". ", $etape);
 
-    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, auteur, categorie, difficulte, ingredients, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation  min','$recette_image','$methode_cuisson','$auteur','$type_recette','$difficulte','$ingredient', 0);";
+    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, mime, methode_cuisson, auteur, categorie, difficulte, ingredients, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation  min',?,'$img_mime','$methode_cuisson','$auteur','$type_recette','$difficulte','$ingredient', 0);";
     $insert_sql = $bdd->prepare($sql);
+    $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
     $insert_sql->execute();
 
     print_r($ingredient);
