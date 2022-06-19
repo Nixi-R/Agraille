@@ -67,17 +67,15 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 
                 $nb_note = $compteur + 1;
                 $moy = ($compteur * $old_note + $note) / $nb_note;
-                
-                if (is_int($moy) == false) {
-                    if ($moy - floor($moy) < 0.5) {
-                        $moy = floor($moy);
-                    } else if ($moy - floor($moy) >= 0.5) {
-                        $moy = ceil($moy);
-                    }
-                }
 
-                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette) VALUES (?,?,?,NOW(),?)');
-                $ins->execute(array($id,$pseudo, $commentaire, $getid));
+                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette, note) VALUES (?,?,?,NOW(),?,?)');
+                $ins->execute(array($id,$pseudo, $commentaire, $getid, $note));///
+
+                // $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire  WHERE (id_recette = $getid) AND (note > 0)");///
+                // $compteur->execute(); ///
+
+                // $verif = $bdd->prepare("SELECT note FROM commentaire WHERE (id_recette = $getid) AND (pseudo = $pseudo)");
+                // $verif-execute();
 
                 $add = $bdd->prepare("UPDATE recette SET note = '$moy' WHERE id = '$getid'");
                 $add->execute();
@@ -86,6 +84,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $add_nb->execute();
                 
                 $c_error = "Votre commentaire a bien été posté";
+                header("Location: recette?id=$getid");
+                exit();
             }else {
                 $c_error = "Tous les champs doivent être complétés";
             }
@@ -95,6 +95,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_recette = ? ORDER BY id_recette DESC');
         $commentaires->execute(array($getid));
     }
+
+    // echo $verif;
 }
 ?>
 <!DOCTYPE html>
@@ -173,7 +175,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <ul>
             <li><?php echo $_SESSION["pseudo"];?></li>
             <li><a href="./profil.php">Voir profil</a></li>
-            <li><a href="#">Créer une recette</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";
@@ -199,8 +201,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
-
-            
             ?>
             </div>
             <?php 
@@ -219,7 +219,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else
             {   
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span></div>
+                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span><div>".$recette['nb_note']." personnes ont noté cette recette.</div></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
                 <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }

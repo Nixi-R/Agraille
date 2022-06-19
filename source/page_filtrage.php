@@ -26,6 +26,9 @@ catch (Exception $e)
             $_SESSION['mode'] = 0;
         else
             $_SESSION['mode'] = 1;
+
+            $ingredient = $bdd->prepare('SELECT * FROM ingredient');
+            $ingredient->execute();
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +106,7 @@ catch (Exception $e)
         <ul>
             <li><?php echo $_SESSION["pseudo"]; ?></li>
             <li><a href="./profil.php">Voir profil</a></li>
-            <li><a href="./redaction_recette.php">Créer une recette</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='./page_filtrage?mode=change'>Changement de mode</a></li>";
@@ -144,9 +147,10 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🍹</p>
                     <div class="filtreTexte flexCentre"><label for="types">Par type</label>
                         <select name="types" id="types">
-                            <option name="facile">plats</option>
-                            <option name="inter">Cocktail</option>
-                            <option name="diff">Dessert</option>
+                            <option>Aucun</option>
+                            <option name="plat">Plat</option>
+                            <option name="cocktail">Cocktail</option>
+                            <option name="dessert">Dessert</option>
                         </select>
                     </div>
                 </div>
@@ -154,49 +158,53 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🌡️</p>
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
+                            <option>Aucun</option>
                             <option name="facile">Facile</option>
-                            <option name="inter">Intermédiaire</option>
-                            <option name="diff">Difficile</option>
+                            <option name="intermédiaire">Intermédiaire</option>
+                            <option name="difficile">Difficile</option>
                         </select>
                     </div>
                 </div>
-                <div class="flexBetween filtreTexteIcons">
+                <!-- <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍒</p>
-                    <div class="filtreTexte flexCentre">Par ingrédient<input type="text" name="ingredients"></div>
-                </div>
+                    <div class="filtreTexte flexCentre">Par ingrédient
+                         <select type='hidden'name="ingredients">
+                        </select> -->
+                    <!-- </div> -->
+                <!-- </div>  -->
                 <div class="bouton flexCentre"><input type="submit" value="Chercher🔎"></div>
             </form>
             </div>
             <script src="../js/scriptIndex.js"></script>
             <?php
                 $test = 0;
-                if ($_POST['nom'] != null ){
+                if (isset($_POST['nom'])){
                     $nom = $_POST['nom'];
                 }
-                if ($_POST['dates'] != null ){
+                if (isset($_POST['dates'])){
                     $date = $_POST['dates'];
                 }
-                if ($_POST['temps'] != null ){
+                if (isset($_POST['temps'])){
                     $temps = $_POST['temps'];
                 }
-                if ($_POST['methode'] != null ){
+                if (isset($_POST['methode']) ){
                     $methode = $_POST['methode'];
                 }
-                if ($_POST['auteur'] != null ){
+                if (isset($_POST['auteur']) ){
                     $auteur = $_POST['auteur'];
                 }
-                if ($_POST['note'] != null ){
+                if (isset($_POST['note']) ){
                     $note = $_POST['note'];
                 }
-                if ($_POST['types'] != null ){
+                if (isset($_POST['types']) ){
                     $type = $_POST['types'];
                 }
-                if ($_POST['difficulte'] != null ){
-                    $date = $_POST['difficulte'];
+                if (isset($_POST['difficulte']) ){
+                    $difficulte = $_POST['difficulte'];
                 }
-                if ($_POST['ingredients'] != null ){
-                    $ingredients = $_POST['ingredients'];
-                }
+                // if ($_POST['ingredients'] != null ){
+                //     $ingredients = $_POST['ingredients'];
+                // }
 
 
                 $SQL = "SELECT * FROM recette WHERE ";
@@ -218,79 +226,101 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (nom LIKE " . $nom . ")";
+                        $SQL = $SQL . " AND (nom = '" . $nom . "')";
                     } else {
-                        $SQL = $SQL . "(nom LIKE " . $nom . ")";
+                        $SQL = $SQL . "(nom = '" . $nom . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (methode LIKE " . $methode . ")";
+                        $SQL = $SQL . " AND (methode = '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "(methode LIKE " . $methode . ")";
+                        $SQL = $SQL . "(methode = '" . $methode . "')";
                     }
                     $test = 1;
                 }
 
                 if (isset($auteur) && $auteur != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (auteur LIKE " . $auteur . ")";
+                        $SQL = $SQL . " AND (auteur = '" . $auteur . "')";
                     } else {
-                        $SQL = $SQL . "(auteur LIKE " . $auteur . ")";
+                        $SQL = $SQL . "(auteur = '" . $auteur . "')";
                     }
                     $test = 1;
                 }
                 
                 if (isset($type) && $type != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (categorie LIKE " . $type . ")";
+                        if ($type == 'Aucun'){
+                            unset($type);
+                        } else {
+                            $SQL = $SQL . " AND (categorie = '" . $type . "')";
+                        }
                     } else {
-                        $SQL = $SQL . "(categorie LIKE " . $type . ")";
+                        if ($type == 'Aucun'){
+                            unset($type);
+                        } else {
+                            $SQL = $SQL . "(categorie = '" . $type . "')";
+                        }
                     }
                     $test = 1;
                 }
                 
-                if (isset($date) && $date != null){
-                    if ($test == 1){
-                        $SQL = $SQL . " AND (date LIKE " . $date . ")";
-                    } else {
-                        $SQL = $SQL . "(date LIKE " . $date . ")";
-                    }
-                    $test = 1;
-                }
-
                 if (isset($difficulte) && $difficulte != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (difficulte LIKE " . $difficulte . ")";
+                        if ($difficulte == 'Aucun'){
+                            unset($difficulte);
+                        } else {
+                            $SQL = $SQL . " AND (difficulte = '" . $difficulte . "')";
+                        }
                     } else {
-                        $SQL = $SQL . "(difficulte LIKE " . $difficulte . ")";
+                        if ($difficulte == 'Aucun'){
+                            unset($difficulte);
+                        } else {
+                            $SQL = $SQL . "(difficulte = '" . $difficulte . "')";
+                        }
                     }
                     $test = 1;
                 }
 
-                if (isset($ingredients) && $ingredients != null){
+                if (isset($date) && $date != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . " AND (date_publication = '" . $date . "')";
                     } else {
-                        $SQL = $SQL . "ingredients IN " . $ingredients . " AND *";
+                        $SQL = $SQL . "(date_publication = '" . $date . "')";
                     }
+                    $test = 1;
                 }
 
+                // if (isset($ingredients) && $ingredients != null){
+                //     if ($test == 1){
+                //         $SQL = $SQL . " AND (ingredients = '" . $ingredients . "')";
+                //     } else {
+                //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
+                //     }
+                // }
 
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
-                    $SQL = $SQL . " AND valider = 0 ORDER BY id DESC";
+                    $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
+                    //echo $SQL;
                     $SQL = $bdd->prepare($SQL);
+                    $SQL->execute();
+                    $SQL = $SQL->fetchAll();
                 }
                 else
                 {
-                    $SQL = $SQL . " AND valider = 1 ORDER BY id DESC";
+                    $SQL = $SQL . " AND (valider = 1) ORDER BY id DESC";
+                    //echo $SQL;
                     $SQL = $bdd->prepare($SQL);
+                    $SQL->execute();
+                    $SQL = $SQL->fetchAll();
                 }
-                $SQL->execute();
-                $SQL = $SQL->fetchAll();
+                
+                
+
 
                 for($i=0; $i<count($SQL); $i++){
                     $auteur = $SQL[$i]['auteur'];

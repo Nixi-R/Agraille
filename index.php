@@ -125,7 +125,7 @@ catch (Exception $e)
         <ul>
             <li><?php echo $_SESSION["pseudo"]; ?></li>
             <li><a href="./source/profil.php">Voir profil</a></li>
-            <li><a href="./source/redaction_recette.php">Créer une recette</a></li>
+            <li><a href="./source/confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='./index?mode=change'>Changement de mode</a></li>";

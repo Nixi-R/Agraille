@@ -26,13 +26,14 @@
     }
                             
     if(isset($_REQUEST['password_form'])){
-        $password = $_REQUEST['password_form'];
-            if(empty($password)){
-                $req = $bdd->prepare("SELECT mot_de_passe FROM compte WHERE id=$id");
-            }else{
-                $req = $bdd->prepare("UPDATE compte SET mot_de_passe = '$password' WHERE id=$id");
+        // $password = $_REQUEST['password_form'];
+            if(!empty($_REQUEST['password_form'])){
+                $hash = password_hash($_REQUEST['password_form'], PASSWORD_DEFAULT);
+                $req = $bdd->prepare("UPDATE compte SET mot_de_passe = ? WHERE id=$id");
+                $req -> bindValue(1,$hash, PDO::PARAM_STR);
+                $req->execute();
             }
-            $req->execute();
+
     }
 
      if(isset($_FILES['profil_pic'])){

@@ -1,15 +1,30 @@
 <?php
 
 if ($_POST['verif_password'] != $_POST['password'])
+{
     header('Location: ./inscription.php?erreur=les mots de passe ne correspondent pas&pseudo='.$_POST['pseudo'].'&email='.$_POST['email'].'&password='.$_POST['password']);
+    exit();
+}
 
 if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 30 || iconv_strlen($_POST['pseudo']) < 4 || iconv_strlen($_POST['pseudo']) > 30 )
+{
     header("Location: ./inscription.php?erreur=erreur de saisie&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+    exit();
+}
 
 if (strlen($_FILES['photo']['tmp_name']) > 0)
 {
     if (filesize($_FILES['photo']['tmp_name']) > 16000)
+    {
         header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+        exit();
+    }
+}
+
+if (!(preg_match("/@/i", $_POST['email'])) || !(preg_match("/\./i", stristr($_POST['email'], "@"))))
+{
+    header("Location: ./inscription.php?erreur=email non valide&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
+    exit();
 }
 
 try{
@@ -35,7 +50,7 @@ $recipeStatement -> execute();
     
 $recipeStatement = $recipeStatement -> fetchAll();
 
-$pseudo = strtoupper($_POST['pseudo']);
+$pseudo = strtolower($_POST['pseudo']);
 
 if (isset($recipeStatement[0]['pseudo']))
     {
@@ -44,6 +59,7 @@ if (isset($recipeStatement[0]['pseudo']))
             if ($pseudo == $recipeStatement[$i]['pseudo'])
             {
                 header('Location: ./inscription.php?erreur=pseudo deja éxistant&email='.$_POST['email'].'&password='.$_POST['password']);
+                exit();
             }
             else
             {
@@ -69,6 +85,7 @@ if (isset($recipeStatement[0]['adresse_mail']))
             if ($pseudo == $recipeStatement[$i]['adresse_mail'])
             {
                 header('Location: ./inscription.php?erreur=adresse mail déjà éxistante&email='.$_POST['email'].'&password='.$_POST['password']);
+                exit();
             }
             else
             {
@@ -115,7 +132,7 @@ $sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de
 $insertRecipe = $conn->prepare($sqlQuery);
 
 $insertRecipe -> bindValue(1, $id, PDO::PARAM_STR);
-$insertRecipe -> bindValue(2, strtoupper($_POST['pseudo']), PDO::PARAM_STR);
+$insertRecipe -> bindValue(2, strtolower($_POST['pseudo']), PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(4, $hash, PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
@@ -151,7 +168,7 @@ if (strlen($_FILES['photo']['tmp_name']) > 0){
         </div>
         <div id="squareSign">
             <p id="main">INSCRIPTION</p>
-            <p onclick="location.href='../'" id="certif">Vous avez fini votre inscription !</br>
+            <p onclick="location.href='./connexion'" id="certif">Vous avez fini votre inscription !</br>
             Vous pouvez maintenant vous connecter en cliquant sur ce message</p>
         </div>
     </body>
