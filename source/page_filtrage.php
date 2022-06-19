@@ -178,28 +178,28 @@ catch (Exception $e)
             <script src="../js/scriptIndex.js"></script>
             <?php
                 $test = 0;
-                if ($_POST['nom'] != null ){
+                if (isset($_POST['nom'])){
                     $nom = $_POST['nom'];
                 }
-                if ($_POST['dates'] != null ){
+                if (isset($_POST['dates'])){
                     $date = $_POST['dates'];
                 }
-                if ($_POST['temps'] != null ){
+                if (isset($_POST['temps'])){
                     $temps = $_POST['temps'];
                 }
-                if ($_POST['methode'] != null ){
+                if (isset($_POST['methode']) ){
                     $methode = $_POST['methode'];
                 }
-                if ($_POST['auteur'] != null ){
+                if (isset($_POST['auteur']) ){
                     $auteur = $_POST['auteur'];
                 }
-                if ($_POST['note'] != null ){
+                if (isset($_POST['note']) ){
                     $note = $_POST['note'];
                 }
-                if ($_POST['types'] != null ){
+                if (isset($_POST['types']) ){
                     $type = $_POST['types'];
                 }
-                if ($_POST['difficulte'] != null ){
+                if (isset($_POST['difficulte']) ){
                     $difficulte = $_POST['difficulte'];
                 }
                 // if ($_POST['ingredients'] != null ){
@@ -307,17 +307,20 @@ catch (Exception $e)
                     $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
                     //echo $SQL;
                     $SQL = $bdd->prepare($SQL);
+                    $SQL->execute();
+                    $SQL = $SQL->fetchAll();
                 }
                 else
                 {
                     $SQL = $SQL . " AND (valider = 1) ORDER BY id DESC";
                     //echo $SQL;
                     $SQL = $bdd->prepare($SQL);
+                    $SQL->execute();
+                    $SQL = $SQL->fetchAll();
                 }
                 
                 
-                $SQL->execute();
-                $SQL = $SQL->fetchAll();
+
 
                 for($i=0; $i<count($SQL); $i++){
                     $auteur = $SQL[$i]['auteur'];
