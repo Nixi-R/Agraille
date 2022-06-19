@@ -171,7 +171,7 @@ catch (Exception $e)
                         <select name="ingredients">
                         <?php
                             while($j = $ingredient->fetch()){
-                              echo "<option>".$j["ingredient"]."</option>";
+                              echo "<option value=".$j["id"] .">".$j["ingredient"]."</option>";
                             }
                         ?>
                         </select>
