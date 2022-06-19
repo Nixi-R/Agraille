@@ -207,7 +207,7 @@ catch (Exception $e)
             button.addEventListener('click', function(event){
                 i++
                 if (button.textContent === '+'){
-                    let newInput = document.createElement('input require')
+                    let newInput = document.createElement('input')
                         newInput.type = 'text'
                         newInput.placeholder = i + " - Décrivez l'étape";
                         newInput.id = 'step_'+i;
