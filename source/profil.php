@@ -33,7 +33,7 @@ $insertP = $insertP->fetchAll();
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                       <a href="../index.php"><img src="img/icone_agraille.png"></a>
+                       <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index?categorie=cocktail" >Cocktail</a>
@@ -56,15 +56,16 @@ $insertP = $insertP->fetchAll();
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <a href="../index.php"><img src="../img/logo_agraille.png"></a>
+                <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
-                    <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                    <form action="./page_filtrage" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat...">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
                 </div>
+                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
@@ -74,8 +75,8 @@ $insertP = $insertP->fetchAll();
                                     <span class='arrow'></span>
                                  </div>";
                         }else{
-                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
-                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                            echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
                         }
                      ?>
                 </div>

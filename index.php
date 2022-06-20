@@ -97,8 +97,8 @@ catch (Exception $e)
                 <a href="./index.php"><img src="./img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
-                    <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                    <form action="./source/page_filtrage" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat ou un ingrédient...">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
