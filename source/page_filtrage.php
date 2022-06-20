@@ -55,7 +55,7 @@ catch (Exception $e)
                        <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktail</a>
+                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktails</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index?categorie=plats">Plats</a>

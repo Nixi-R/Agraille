@@ -74,10 +74,10 @@ catch (Exception $e)
                        <a href="./index.php"><img src="img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
+                        <a class="nav-link" href="index?categorie=cocktail" >Cocktails</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index?categorie=plats">Plats</a>
+                        <a class="nav-link" href="index?categorie=plat">Plats</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index?categorie=dessert">Desserts</a>
@@ -135,6 +135,7 @@ catch (Exception $e)
     </div>
     <main>
         <div class='container my-2'>
+        <div class='card-deck'>
             <?php while($r = $recette->fetch()){
                 $auteur = $r['auteur'];
                 $nom = $r['nom'];
@@ -142,7 +143,7 @@ catch (Exception $e)
                 $button = `<button onclick="location.href='./source/recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
 
                 echo("
-                   <div class='card-deck'>
+                   
                         <div class='card'>
                             <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
                             <div class='card-body'>
@@ -153,9 +154,9 @@ catch (Exception $e)
                            <a href='./source/recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
                             </div>
                         </div>
-                   </div>
                ");
         };?>
+        </div>
         </div>   
     </main>
     <script src="./js/scriptIndex.js"></script>
