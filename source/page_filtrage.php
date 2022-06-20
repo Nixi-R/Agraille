@@ -79,7 +79,7 @@ catch (Exception $e)
                 </div>
                 <div class="search-bar">
                     <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer le nom d'un plat">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>

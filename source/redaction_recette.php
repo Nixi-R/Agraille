@@ -138,7 +138,7 @@ catch (Exception $e)
                                 <option>cuil à soupe</option>
                                 <option>cuil à café</option>
                                 </select>
-                                <input name='quantite_$i' type='number' min='0' max='100'> 
+                                <input name='quantite_$i' type='number' min='1' max='100'> 
                                 <select name='ingredient_$i'>";
                                 for($z = 0; $z<count($var); $z++){
                                     echo $var[$z];
@@ -158,7 +158,7 @@ catch (Exception $e)
             </section>
             <section id="etape">
                 <h6>Décrivez les étapes !</h6>
-                <input require type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
+                <input required type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1" required></input>
                 <div id="etapes"></div>
                 <span id="etape_button" class="btn btn-primary" value="+" >+</span>
             </section>
@@ -176,7 +176,7 @@ catch (Exception $e)
                 </select>
                 <span class="span"></span>
                 <p>Entrez le temps de réalisation de la recette.<p>
-                <input require id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation"><span>min</span>
+                <input require id="temps_realisation" type ="number" min="5" max="180" name="temps_realisation" required><span>min</span>
                 <span class="span"></span>
                 <p>Selectionnez la difficulté de la recette.<p>
                 <select require id="difficulte" name="difficulte">
@@ -192,9 +192,9 @@ catch (Exception $e)
                     <option>Dessert</option>
                 </select>
                 <h6>Choisissez une illustration pour votre recette !</h6>
-                <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
+                <input id="recette_image" name="recette_image" type="file" accept="image/*" required></input>
             </section>
-            <input type="submit" onclick="document.recette_envoi.submit()"></input>
+            <input type="submit"></input>
         </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
