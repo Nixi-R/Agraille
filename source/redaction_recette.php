@@ -103,7 +103,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form action="./envoi_recette.php" method="post" name="myForm" onsubmit>
+        <form action="./envoi_recette.php" enctype="multipart/form-data" method="post" name="myForm" onsubmit>
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
@@ -192,9 +192,9 @@ catch (Exception $e)
                     <option>Dessert</option>
                 </select>
                 <h6>Choisissez une illustration pour votre recette !</h6>
-                <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
+                <input id="recette_image" name="recette_image" type="file" accept="image/*">
             </section>
-            <input type="submit" onclick="document.recette_envoi.submit()"></input>
+            <input type="submit">
         </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
