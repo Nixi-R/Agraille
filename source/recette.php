@@ -201,7 +201,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
                 echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-                echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
+                echo "<input id='file' type='file' name='photo' accept='image/*' >"; 
             ?>
             </div>
             <?php 
