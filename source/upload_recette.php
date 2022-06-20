@@ -24,32 +24,35 @@
 
     if (isset($_POST['valider']))
     {
-        if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["methode_cuisson"]) < 1 || strlen($_POST["categorie"]) < 1 || strlen($_POST["difficulte"]) < 1 || !(isset($_FILES['photo']['tmp_name'])) || strlen($_FILES['photo']['tmp_name']) < 1)
+        if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["categorie"]) < 1 || strlen($_POST["difficulte"]) < 1 || !(isset($_FILES['photo']['tmp_name'])) || strlen($_FILES['photo']['tmp_name']) < 1)
         {
-            header('Location: ./recette.php?id='. $_POST["id"]. '&err=Il manque des éléments');
-            exit();
+            if($_POST['categorie'] == 'plat' || $_POST['categorie'] == 'dessert')
+            {
+                header('Location: ./recette.php?id='. $_POST["id"]. '&err=Il manque des éléments');
+                exit();
+            }
+
         }
 
-        else
-        {
-            $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
-            date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
-            ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["categorie"].'",
-            difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
+        
+        $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
+        date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
+        ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["categorie"].'",
+        difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
 
+        $insertRecipe = $conn->prepare($insertRecipe);
+    
+        $insertRecipe->execute();
+    
+        if (count($_FILES) > 0)
+        {
+            $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
+            $insertRecipe = "UPDATE recette SET illustration = ?,
+            mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
             $insertRecipe = $conn->prepare($insertRecipe);
-    
+            $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
             $insertRecipe->execute();
-    
-            if (count($_FILES) > 0)
-            {
-                $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
-                $insertRecipe = "UPDATE recette SET illustration = ?,
-                mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
-                $insertRecipe = $conn->prepare($insertRecipe);
-                $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
-                $insertRecipe->execute();
-            }
+        }
     
                 echo "<!DOCTYPE html>
                 <html>
@@ -69,17 +72,16 @@
                         </div>
                     </body>
                 </html>";
-            }
+    }
 
             
-        }
-        else if (isset($_POST['refuser']))
-        {
-            $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
-            $insertRecipe = $conn->prepare($insertRecipe);
-            $insertRecipe->execute();
+    else if (isset($_POST['refuser']))
+    {
+        $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
+        $insertRecipe = $conn->prepare($insertRecipe);
+        $insertRecipe->execute();
 
-            echo "<!DOCTYPE html>
+        echo "<!DOCTYPE html>
             <html>
                 <head>
                     <link rel=\"stylesheet\" href=\"../css/certif_compte.css\">
@@ -97,7 +99,7 @@
                     </div>
                 </body>
             </html>";
-        }
+    }
     ?>
     
     
