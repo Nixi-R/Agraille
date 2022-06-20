@@ -15,67 +15,73 @@
         {
                 die('Erreur : ' . $e->getMessage());
         }
-
-    if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["methode_cuisson"]) < 1 || strlen($_POST["type"]) < 1 || strlen($_POST["difficulte"]) < 1 || isset($_FILES['photo']['tmp_name']))
+    
+    if (!(isset($_SESSION['mode'])))
     {
-        header('Location: ./recette.php?id='. $_POST["id"]. '&err=Il manque des éléments');
+        header('Location: ../');
         exit();
     }
 
-    else
+    if (isset($_POST['valider']))
     {
-        if (!(isset($_SESSION['mode'])))
+        if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["categorie"]) < 1 || strlen($_POST["difficulte"]) < 1 || !(isset($_FILES['photo']['tmp_name'])) || strlen($_FILES['photo']['tmp_name']) < 1)
         {
-            header('Location: ../');
-            exit();
-        }
-
-        if (isset($_POST['valider']))
-        {    $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
-            date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
-            ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["type"].'",
-            difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
-
-            $insertRecipe = $conn->prepare($insertRecipe);
-
-            $insertRecipe->execute();
-
-            if (count($_FILES) > 0)
+            if($_POST['categorie'] == 'plat' || $_POST['categorie'] == 'dessert')
             {
-                $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
-                $insertRecipe = "UPDATE recette SET illustration = ?,
-                mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
-                $insertRecipe = $conn->prepare($insertRecipe);
-                $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
-                $insertRecipe->execute();
+                header('Location: ./recette.php?id='. $_POST["id"]. '&err=Il manque des éléments');
+                exit();
             }
 
-            echo "<!DOCTYPE html>
-            <html>
-                <head>
-                    <link rel=\"stylesheet\" href=\"../css/certif_compte.css\">
-                    <title>Agraille Validation</title>
-                    <link rel=\"icon\" href=\"../img/icone_agraille.png\" sizes=\"any\">
-                </head>
-                <body>
-                    <div id=\"upside\">
-                        <img onclick=\"location.href='../'\" id=\"agrailleImg\" src=\"../img/logo_agraille.png\">
-                    </div>
-                    <div id=\"squareSign\">
-                        <p id=\"main\">".$_POST['nom']."</p>
-                        <p onclick=\"location.href='../'\" id=\"certif\">La recette est maintenant validée</br>
-                        Vous pouvez retourner à l'index en cliquant sur ce texte</p>
-                    </div>
-                </body>
-            </html>";
         }
-        else if (isset($_POST['refuser']))
-        {
-            $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
-            $insertRecipe = $conn->prepare($insertRecipe);
-            $insertRecipe->execute();
 
-            echo "<!DOCTYPE html>
+        
+        $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
+        date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
+        ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["categorie"].'",
+        difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
+
+        $insertRecipe = $conn->prepare($insertRecipe);
+    
+        $insertRecipe->execute();
+    
+        if (count($_FILES) > 0)
+        {
+            $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
+            $insertRecipe = "UPDATE recette SET illustration = ?,
+            mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
+            $insertRecipe = $conn->prepare($insertRecipe);
+            $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
+            $insertRecipe->execute();
+        }
+    
+                echo "<!DOCTYPE html>
+                <html>
+                    <head>
+                        <link rel=\"stylesheet\" href=\"../css/certif_compte.css\">
+                        <title>Agraille Validation</title>
+                        <link rel=\"icon\" href=\"../img/icone_agraille.png\" sizes=\"any\">
+                    </head>
+                    <body>
+                        <div id=\"upside\">
+                            <img onclick=\"location.href='../'\" id=\"agrailleImg\" src=\"../img/logo_agraille.png\">
+                        </div>
+                        <div id=\"squareSign\">
+                            <p id=\"main\">".$_POST['nom']."</p>
+                            <p onclick=\"location.href='../'\" id=\"certif\">La recette est maintenant validée</br>
+                            Vous pouvez retourner à l'index en cliquant sur ce texte</p>
+                        </div>
+                    </body>
+                </html>";
+    }
+
+            
+    else if (isset($_POST['refuser']))
+    {
+        $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
+        $insertRecipe = $conn->prepare($insertRecipe);
+        $insertRecipe->execute();
+
+        echo "<!DOCTYPE html>
             <html>
                 <head>
                     <link rel=\"stylesheet\" href=\"../css/certif_compte.css\">
@@ -93,7 +99,7 @@
                     </div>
                 </body>
             </html>";
-        }
-    }?>
+    }
+    ?>
     
     

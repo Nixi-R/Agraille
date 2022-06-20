@@ -215,7 +215,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
                 <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
                 <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
-                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['categorie']."'></br>
+                <label>Type de recette</label></br><input type='text' name='categorie' value='".$recette['categorie']."'></br>
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
@@ -267,7 +267,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></br>
             <?php }} ?>
             <?php
-            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
+            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form id='form' action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input type='hidden' name='nom' value='".$title."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
             ?>
             <script src="../js/scriptIndex.js"></script>
             <?php 
