@@ -226,9 +226,9 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (nom = '" . $nom . "')";
+                        $SQL = $SQL . " AND (nom LIKE '" . $nom . "%')";
                     } else {
-                        $SQL = $SQL . "(nom = '" . $nom . "')";
+                        $SQL = $SQL . "(nom LIKE '" . $nom . "%')";
                     }
                     $test = 1;
                 }
@@ -301,7 +301,6 @@ catch (Exception $e)
                 //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                 //     }
                 // }
-
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
                     $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
@@ -319,7 +318,7 @@ catch (Exception $e)
                     $SQL = $SQL->fetchAll();
                 }
                 
-                
+            
 
 
                 for($i=0; $i<count($SQL); $i++){
