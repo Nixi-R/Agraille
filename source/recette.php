@@ -117,15 +117,15 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     <title>Agraille</title>
 </head>
 <body>
-    <header>
+<header>
         <nav>
             <div class="nav-burger">
                 <ul class="nav-menu">
-                <li class="nav-item">
-                       <a href="./index.php"><img src="img/icone_agraille.png"></a>
+                    <li class="nav-item">
+                       <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
+                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktail</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index?categorie=plats">Plats</a>
@@ -145,15 +145,16 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img onclick="location.href='../index.php'"src="../img/logo_agraille.png" style="cursor:pointer;">
+                <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
-                    <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                    <form action="./page_filtrage" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat...">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
                 </div>
+                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){

@@ -9,7 +9,8 @@
 <body>
     <h2>Combien d'ingredient y'a t'il dans votre recette</h2>
     <form action="./redaction_recette" method="GET">
-        <input name="ingredient_nombre" type="number" min="1" max="15"require />
+        <input name="ingredient_nombre" type="number" min="1" max="15"required/>
+        <input type="submit" placeholder="valider">
     </form>
 
     <a href="../index">retour</a>
