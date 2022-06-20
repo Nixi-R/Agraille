@@ -235,9 +235,9 @@ catch (Exception $e)
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (methode = '" . $methode . "')";
+                        $SQL = $SQL . " AND (methode_cuisson = '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "(methode = '" . $methode . "')";
+                        $SQL = $SQL . "(methode_cuisson = '" . $methode . "')";
                     }
                     $test = 1;
                 }
