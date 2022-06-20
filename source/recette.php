@@ -266,7 +266,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></br>
             <?php }} ?>
             <?php
-            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
+            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
             ?>
             <script src="../js/scriptIndex.js"></script>
             <?php 
