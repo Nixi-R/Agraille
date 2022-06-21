@@ -74,10 +74,10 @@ catch (Exception $e)
                        <a href="./index.php"><img src="img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index?categorie=cocktail" >Cocktails</a>
+                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index?categorie=plat">Plats</a>
+                        <a class="nav-link" href="index?categorie=plats">Plats</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index?categorie=dessert">Desserts</a>
@@ -156,7 +156,6 @@ catch (Exception $e)
                         </div>
                ");
         };?>
-        </div>
         </div>   
     </main>
     <script src="./js/scriptIndex.js"></script>

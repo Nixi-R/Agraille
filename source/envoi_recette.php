@@ -55,7 +55,7 @@
     $ingredient = implode(". ", $ingredient);
 
 
-    echo $recette_image;
+    // echo $recette_image;
     // for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
     //     $ingredient_prop = $_POST["ingredient_prop_$i"];
     //     $idIngredient = random_int(0, 2147483647);

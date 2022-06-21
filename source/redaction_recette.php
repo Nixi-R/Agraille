@@ -154,8 +154,10 @@ catch (Exception $e)
 
                             
                         ?>
-                    </select>
                 </div>
+                <h6> Proposez nous vos ingrédients</h6>
+                <div id="ingredient_prop_container"></div>
+                <span id="ingredient_prop" class="btn btn-primary">+</span>
             </section>
             <section id="etape">
                 <h6>Décrivez les étapes !</h6>
@@ -208,7 +210,7 @@ catch (Exception $e)
             button.addEventListener('click', function(event){
                 i++
                 if (button.textContent === '+'){
-                    let newInput = document.createElement('input')
+                    const newInput = document.createElement('input')
                         newInput.type = 'text'
                         newInput.placeholder = i + " - Décrivez l'étape";
                         newInput.id = 'step_'+i;
@@ -217,6 +219,40 @@ catch (Exception $e)
                 }
             })
           }
+    </script>
+    <script>
+            let buttonIngredient = document.getElementById('ingredient_prop');
+            let ingredientContainer = document.getElementById('ingredient_prop_container');
+            let option = ["Aucune","centilitres","litres","grammes","kilos","cuil à soupe","cuil à café"];
+            let i = 0;
+            buttonIngredient.addEventListener('click', function(e){
+                const inputIngredient = document.createElement('input');
+                const selectMesure = document.createElement('select');
+                const inputQuantite = document.createElement('input');
+                const br = document.createElement('br');
+
+                i++;                
+                selectMesure.name = "ingredient_prop_select_" + i;
+                for(let j = 0; j<option.length; j++){
+                    let optionMesure= document.createElement("option");
+                    optionMesure.value = option[j];
+                    optionMesure.text = option[j];
+                    selectMesure.appendChild(optionMesure);
+                } 
+                inputQuantite.name = "ingredient_prop_quantite_" + i;
+                inputQuantite.type = "number";
+                inputQuantite.max = "100";
+                inputQuantite.min = "1";
+                inputIngredient.type = 'text';
+                inputIngredient.placeholder = i + " - Nom ingredient";
+                inputIngredient.id = 'ingredient_prop_'+i;
+                inputIngredient.name = "ingredient_prop_" + i;
+
+                ingredientContainer.appendChild(inputQuantite);
+                ingredientContainer.appendChild(selectMesure);
+                ingredientContainer.appendChild(inputIngredient);
+                ingredientContainer.appendChild(br);
+            })
     </script>
 </body>
 </html>
