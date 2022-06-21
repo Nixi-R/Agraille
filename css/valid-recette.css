@@ -30,7 +30,7 @@
 }
 
 #modif_illu{
-    background-image: url("../img/tartine.jpg");
+    background-color: #b90000;
     position: relative;
     border: white dashed 2px; 
     width: 300%;

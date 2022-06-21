@@ -200,8 +200,13 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo '<img src="../img/tartine.jpg">'; 
             else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
                 echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
+<<<<<<< HEAD
             // else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 // echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
+=======
+            else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+                echo "<input id='file' type='file' name='photo' accept='image/*' >"; 
+>>>>>>> 15f4bddbc05fcf711feec55afe10acbec11f2123
             ?>
             </div>
             <?php 
@@ -220,7 +225,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else
             {   
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span><div>".$recette['nb_note']." personnes ont noté cette recette.</div></div>
+                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span><div>Nombre de personnes ayant noté la recette: ".$recette['nb_note'].".</div></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
                 <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }

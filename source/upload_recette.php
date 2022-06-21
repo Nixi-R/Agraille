@@ -44,7 +44,7 @@
     
         $insertRecipe->execute();
     
-        if (count($_FILES) > 0)
+        if (strlen($_FILES['photo']['tmp_name']) > 0)
         {
             $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
             $insertRecipe = "UPDATE recette SET illustration = ?,
