@@ -195,7 +195,7 @@ catch (Exception $e)
                     <option>Dessert</option>
                 </select>
                 <h6>Choisissez une illustration pour votre recette !</h6>
-                <input id="recette_image" name="recette_image" type="file" accept="image/*" required>
+                <input id="recette_image" name="recette_image" type="file" accept="image/jpeg, image/png, image/gif, image/jpg" required>
             </section>
             <input type="submit">
         </form>

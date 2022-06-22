@@ -11,6 +11,15 @@
     $type_recette = $_POST["type_recette"];
     $recette_image = fopen($_FILES["recette_image"]['tmp_name'], 'rb');
     $img_mime = $_FILES['recette_image']['type'];
+
+    if ($img_mime != "image/png" && $img_mime != "image/jpg" && $img_mime != "image/jpeg" && $img_mime != "image/gif")
+    {
+        header("Location: ./redaction_recette.php");
+        exit();
+    }
+
+    $pos = strpos($mime, "/") + 1;
+    $recette_image = $recette_image.$img_mime[$pos];
     $date = date("Y-m-d");
     $auteur = $_SESSION["pseudo"];
     $idRecette = random_int(0, 2147483647);
@@ -42,7 +51,7 @@
     }
     $str_etape = implode(". ", $etape);
 
-    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, mime, methode_cuisson, auteur, categorie, difficulte, ingredients, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation  min',?,'$img_mime','$methode_cuisson','$auteur','$type_recette','$difficulte','$ingredient', 0);";
+    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, mime, methode_cuisson, auteur, categorie, difficulte, ingredients, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation  min',?,'$methode_cuisson','$auteur','$type_recette','$difficulte','$ingredient', 0);";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
     $insert_sql->execute();

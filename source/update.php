@@ -36,8 +36,18 @@
 
     }
 
-     if(isset($_FILES['profil_pic'])){
+     if(isset($_FILES['profil_pic']['tmp_name'])){
+    {
+        $img_mime = $_FILES['profil_pic']['type'];
+        if ($img_mime != "image/png" && $img_mime != "image/jpg" && $img_mime != "image/jpeg" && $img_mime != "image/gif")
+        {
+            header("Location: ./profil.php");
+            exit();
+        }
+    }
         $fp = fopen($_FILES['profil_pic']['tmp_name'], 'rb');
+        $pos = strpos($img_mime, "/") + 1;
+        $fp = $fp . $img_mime[$pos];
         $pic = "UPDATE compte SET photo_de_profil = ?, mime = ? WHERE id=$id"; 
         $req = $bdd->prepare($pic);
         $req -> bindValue(1, $fp, PDO::PARAM_LOB);

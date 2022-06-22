@@ -42,8 +42,17 @@ catch (Exception $e)
 }
 
 $fp = fopen("../img/Logoutilisateur.png", "rb");
-$mime = "image/png";
+$fp = $fp . "p";
 
+if (isset($_FILES['photo_de_profil']['type']))
+{
+    $img_mime = $_FILES['photo_de_profil']['type'];
+    if ($img_mime != "image/png" && $img_mime != "image/jpg" && $img_mime != "image/jpeg" && $img_mime != "image/gif")
+    {
+        header("Location: ./redaction_recette.php");
+        exit();
+    }
+}
 
 $recipeStatement = $conn->prepare('SELECT id FROM compte');
 $recipeStatement -> execute();
@@ -127,7 +136,7 @@ if (isset($recipeStatement[0]['id']))
 
 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-$sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de_profil, mime, droit) VALUES (?,?,?,?,?,?,1)';
+$sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de_profil, droit) VALUES (?,?,?,?,?,1)';
 
 $insertRecipe = $conn->prepare($sqlQuery);
 
@@ -136,7 +145,6 @@ $insertRecipe -> bindValue(2, strtolower($_POST['pseudo']), PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(4, $hash, PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
-$insertRecipe -> bindValue(6, $mime, PDO::PARAM_STR);
 
 $insertRecipe->execute();
 
@@ -144,11 +152,12 @@ $insertRecipe->execute();
 if (strlen($_FILES['photo']['tmp_name']) > 0){
     $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
     $mime = $_FILES['photo']['type'];
+    $pos = strpos($mime, "/") + 1;
+    $fp = $fp . $mime[$pos];
 
-    $sqlQuery = 'UPDATE compte SET photo_de_profil = ?, mime = ? WHERE id = '.$id;
+    $sqlQuery = 'UPDATE compte SET photo_de_profil = ? WHERE id = '.$id;
     $insertRecipe = $conn->prepare($sqlQuery);
     $insertRecipe -> bindValue(1, $fp, PDO::PARAM_LOB);
-    $insertRecipe -> bindValue(2, $mime, PDO::PARAM_STR);
     $insertRecipe->execute();
 }
 
