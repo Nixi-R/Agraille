@@ -232,7 +232,7 @@ catch (Exception $e)
                 const br = document.createElement('br');
 
                 i++;                
-                selectMesure.name = "ingredient_prop_select_" + i;
+                selectMesure.name = "ingredient_prop_mesure_" + i;
                 for(let j = 0; j<option.length; j++){
                     let optionMesure= document.createElement("option");
                     optionMesure.value = option[j];

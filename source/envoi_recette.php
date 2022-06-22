@@ -2,34 +2,6 @@
     session_start();
     $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-
-    // switch (null) {
-    //     case $_POST["title"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré de titre pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["description"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré de description pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["methode_cuisson"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré de méthode de cuisson pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["step_1"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré d'étapes pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["temps_realisation"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré de temps de réalisation pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["difficulte"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré de difficulté pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["type_recette"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré de type de recette pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    //     case $_POST["recette_image"]:
-    //         echo "<h5>Erreur: Vous n'avez pas entré d'illustration pour votre recette.</h5><a href = http://localhost/Agraille/source/redaction_recette.php>Retourner à la page de création</a>";
-    //         break;
-    // }
-
     $title = $_POST["title"];
     $description = $_POST["description"];
     $methode_cuisson = $_POST["methode_cuisson"];
@@ -43,6 +15,7 @@
     $auteur = $_SESSION["pseudo"];
     $idRecette = random_int(0, 2147483647);
     $ingredient = array();
+    $ingredient_prop = array();
 
     if($_POST["methode_cuisson"] == "Aucune"){
         $methode_cuisson = "";
@@ -52,19 +25,18 @@
         $ingredient[$i] = $_POST["quantite_$i"]  ." " .$_POST["mesure_$i"] ." de " .$_POST["ingredient_$i"];
     }
 
+
+/////
+    for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
+        $ingredient_prop[$i] = $_POST["ingredient_prop_$i"];
+        $idIngredient = random_int(0, 2147483647);
+        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
+        $ingredient = array_push($_POST["ingredient_prop_quantite_$i"] ." "  .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop);
+    }
+    $ingredient_sql->execute();
     $ingredient = implode(". ", $ingredient);
 
-
-    // echo $recette_image;
-    // for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
-    //     $ingredient_prop = $_POST["ingredient_prop_$i"];
-    //     $idIngredient = random_int(0, 2147483647);
-    //     $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
-    //     $ingredient_sql->execute();
-    // }
-
-    // $str_ingredient = implode(". ", $ingredient_prop);
-
+////
     for ($i = 1; isset($_POST["step_$i"]); $i++) {
         array_push($etape, $_POST["step_$i"]);
     }

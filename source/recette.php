@@ -61,28 +61,21 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $id = random_int(0, 2147483647);
                 $pseudo = htmlspecialchars($_SESSION['pseudo']);
                 $commentaire = htmlspecialchars($_POST['commentaire']);
-                $note = $_POST['note'];
-                $old_note = $recette['note'];
-                $compteur = $recette['nb_note'];
-                
-                $nb_note = $compteur + 1;
-                $moy = ($compteur * $old_note + $note) / $nb_note;
+                $note = ;
+                $compteur = ;
 
-                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, pseudo_commentaire, text_commentaire, date_commentaire, id_recette, note) VALUES (?,?,?,NOW(),?,?)');
-                $ins->execute(array($id,$pseudo, $commentaire, $getid, $note));///
+                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note) VALUES (?,?,NOW(),?)');
+                $ins->execute(array($id, $commentaire, $getid, $note));///
 
-                // $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire  WHERE (id_recette = $getid) AND (note > 0)");///
-                // $compteur->execute(); ///
+                $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire  WHERE (id_recette = $getid) AND (note > 0)");///
+                $compteur->execute(); 
 
-                // $verif = $bdd->prepare("SELECT note FROM commentaire WHERE (id_recette = $getid) AND (pseudo = $pseudo)");
-                // $verif-execute();
+                $verif = $bdd->prepare("SELECT note FROM commentaire WHERE (id_recette = $getid) AND (pseudo = $pseudo)");
+                $verif-execute();
 
-                $add = $bdd->prepare("UPDATE recette SET note = '$moy' WHERE id = '$getid'");
+                $add = $bdd->prepare("UPDATE commentaire SET note = '$moy' WHERE id = '$getid'");
                 $add->execute();
 
-                $add_nb = $bdd->prepare("UPDATE recette SET nb_note = '$nb_note' WHERE id = '$getid'");
-                $add_nb->execute();
-                
                 $c_error = "Votre commentaire a bien été posté";
                 header("Location: recette?id=$getid");
                 exit();
@@ -200,13 +193,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo '<img src="../img/tartine.jpg">'; 
             else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
                 echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
-<<<<<<< HEAD
-            // else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-                // echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
-=======
             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 echo "<input id='file' type='file' name='photo' accept='image/*' >"; 
->>>>>>> 15f4bddbc05fcf711feec55afe10acbec11f2123
             ?>
             </div>
             <?php 
