@@ -151,9 +151,6 @@ $insertRecipe->execute();
 
 if (strlen($_FILES['photo']['tmp_name']) > 0){
     $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
-    $mime = $_FILES['photo']['type'];
-    $pos = strpos($mime, "/") + 1;
-    $fp = $fp . $mime[$pos];
 
     $sqlQuery = 'UPDATE compte SET photo_de_profil = ? WHERE id = '.$id;
     $insertRecipe = $conn->prepare($sqlQuery);

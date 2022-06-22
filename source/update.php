@@ -46,12 +46,9 @@
         }
     }
         $fp = fopen($_FILES['profil_pic']['tmp_name'], 'rb');
-        $pos = strpos($img_mime, "/") + 1;
-        $fp = $fp . $img_mime[$pos];
-        $pic = "UPDATE compte SET photo_de_profil = ?, mime = ? WHERE id=$id"; 
+        $pic = "UPDATE compte SET photo_de_profil = ? WHERE id=$id"; 
         $req = $bdd->prepare($pic);
         $req -> bindValue(1, $fp, PDO::PARAM_LOB);
-        $req -> bindValue(2, $_FILES['profil_pic']['type'], PDO::PARAM_STR);
         $req->execute();
         }
 

@@ -17,9 +17,7 @@
         header("Location: ./redaction_recette.php");
         exit();
     }
-
-    $pos = strpos($mime, "/") + 1;
-    $recette_image = $recette_image.$img_mime[$pos];
+    
     $date = date("Y-m-d");
     $auteur = $_SESSION["pseudo"];
     $idRecette = random_int(0, 2147483647);
