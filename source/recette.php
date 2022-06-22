@@ -61,8 +61,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $id = random_int(0, 2147483647);
                 $pseudo = htmlspecialchars($_SESSION['pseudo']);
                 $commentaire = htmlspecialchars($_POST['commentaire']);
-                $note;
-                $compteur;
 
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note) VALUES (?,?,NOW(),?)');
                 $ins->execute(array($id, $commentaire,$note));///
@@ -85,8 +83,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         }
     
 
-        // $commentaires = $bdd->prepare('SELECT * FROM commentaire WHERE id_recette = ? ORDER BY id_recette DESC');
-        // $commentaires->execute(array($getid));
+        $commentaires = $bdd->prepare('SELECT * FROM commentaire INNER JOIN commentaire.id_compte_as_recette = compte_as_recette.id_compte_as_recette WHERE compte_as_recette.id_recette = ? ORDER BY commentaire.id_commentaire DESC');
+        $commentaires->execute(array($getid));
     }
 
     // echo $verif;
