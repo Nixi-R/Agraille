@@ -54,7 +54,7 @@ if (isset($_FILES['photo_de_profil']['type']))
     }
 }
 
-$recipeStatement = $conn->prepare('SELECT id FROM compte');
+$recipeStatement = $conn->prepare('SELECT id_compte FROM compte');
 $recipeStatement -> execute();
     
 $recipeStatement = $recipeStatement -> fetchAll();
@@ -108,7 +108,7 @@ $verify = true;
 
 $id = random_int(0, 2147483647);
 
-$recipeStatement = $conn->prepare('SELECT id FROM compte');
+$recipeStatement = $conn->prepare('SELECT id_compte FROM compte');
 $recipeStatement -> execute();
 
 $recipeStatement = $recipeStatement -> fetchAll();
@@ -136,7 +136,7 @@ if (isset($recipeStatement[0]['id']))
 
 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-$sqlQuery = 'INSERT INTO compte(id, pseudo, adresse_mail, mot_de_passe, photo_de_profil, droit) VALUES (?,?,?,?,?,1)';
+$sqlQuery = 'INSERT INTO compte(id_compte, pseudo, adresse_mail, mot_de_passe, photo_de_profil, droit) VALUES (?,?,?,?,?,1)';
 
 $insertRecipe = $conn->prepare($sqlQuery);
 

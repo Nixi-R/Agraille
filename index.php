@@ -16,7 +16,7 @@ catch (Exception $e)
 
     if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id ='. $_SESSION['idCompte'] );
+        $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
@@ -42,7 +42,7 @@ catch (Exception $e)
             $recette = $bdd->prepare('SELECT * FROM recette WHERE (categorie= ?) AND (valider = 1)');
             $recette->execute(array($getcategorie));
         }else{
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id DESC');
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 1 ORDER BY id_recette DESC');
             $recette->execute();
         }
     }
@@ -142,9 +142,13 @@ catch (Exception $e)
         <div class='container my-2'>
         <div class='card-deck'>
             <?php while($r = $recette->fetch()){
-                $auteur = $r['auteur'];
+                $req = "SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
+                $auteure = $bdd->prepare($req);
+                $auteure->execute();
+                $auteur = $auteure->fetchAll();
+
                 $nom = $r['nom'];
-                $id = $r['id'];
+                $id = $r['id_recette'];
                 $button = `<button onclick="location.href='./source/recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
 
                 echo("
@@ -153,7 +157,7 @@ catch (Exception $e)
                             <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
                             <div class='card-body'>
                                 <h5 class='card-title'>$nom</h5>
-                                <p class='card-text'>Rédigé par $auteur</p>
+                                <p class='card-text'>Rédigé par " .$auteur[0]["pseudo"] ."</p>
                             </div>
                             <div class='card-footer text-center'>
                            <a href='./source/recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>

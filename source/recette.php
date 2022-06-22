@@ -14,7 +14,7 @@ catch (Exception $e)
             die('Erreur : ' . $e->getMessage());
     }
 
-    $valider = $bdd->prepare('SELECT valider FROM recette where id = '.$_GET["id"]);
+    $valider = $bdd->prepare('SELECT valider FROM recette where id_recette = '.$_GET["id"]);
     $valider -> execute();
     $valider = $valider->fetch();
 
@@ -46,7 +46,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
 
     $getid = htmlspecialchars($_GET['id']);
 
-    $recette = $bdd->prepare('SELECT * FROM recette WHERE id= ?');
+    $recette = $bdd->prepare('SELECT * FROM recette WHERE id_recette= ?');
     $recette->execute(array($getid));
     $recette = $recette->fetch(PDO::FETCH_ASSOC);
 
@@ -61,8 +61,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $id = random_int(0, 2147483647);
                 $pseudo = htmlspecialchars($_SESSION['pseudo']);
                 $commentaire = htmlspecialchars($_POST['commentaire']);
-                $note = ;
-                $compteur = ;
+                $note;
+                $compteur;
 
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note) VALUES (?,?,NOW(),?)');
                 $ins->execute(array($id, $commentaire,$note));///
