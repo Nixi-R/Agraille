@@ -41,7 +41,7 @@ catch (Exception $e)
                 $recipeS = $recipeS -> fetchAll();
         
                 session_start();
-                $_SESSION['idCompte'] = $recipeS[0]['id'];
+                $_SESSION['idCompte'] = $recipeS[0]['id_compte'];
                 $_SESSION['pseudo'] = $recipeS[0]['pseudo'];
                 $_SESSION['adresse_mail'] = $recipeS[0]['adresse_mail'];
                 $_SESSION['mot_de_passe'] = $recipeS[0]['mot_de_passe'];

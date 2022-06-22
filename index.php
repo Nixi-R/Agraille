@@ -19,6 +19,8 @@ catch (Exception $e)
         $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
+    }else{
+        echo"ya rien";
     }
 
     if (isset($_SESSION['mode']) && isset($_GET['mode']))
@@ -57,10 +59,10 @@ catch (Exception $e)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/navbar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="icon" href="./img/icone_agraille2.png" sizes="any">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title>Agraille|<?php if (isset($_SESSION['mode'])  && $_SESSION['mode'] == 1) echo "Validation"; else echo "Accueil";?></title>
@@ -108,11 +110,11 @@ catch (Exception $e)
                     <?php
                         if(isset($_SESSION['idCompte'])){        
                             if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
-                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                            echo "<div class='container_arrow'>
                                     <span class='arrow'></span>
                                     <span class='arrow'></span>
@@ -141,30 +143,30 @@ catch (Exception $e)
     <main>
         <div class='container my-2'>
         <div class='card-deck'>
-            <?php while($r = $recette->fetch()){
-                $req = "SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
-                $auteure = $bdd->prepare($req);
-                $auteure->execute();
-                $auteur = $auteure->fetchAll();
+            <?php 
+                $i = 0;
+                while($r = $recette->fetch()){
+                    if (preg_match('/JFIF/i',substr($r['illustration'], 0, 10))){
+                        $img = '<img id="img_card" class="card-img-top img-fluid" src="data:image/jpg;base64,' . base64_encode($r['illustration']) . '">';
+                    }else if (preg_match('/GIF/i',substr($r['illustration'], 0, 3))){
+                        $img = '<img id="img_card" class="card-img-top img-fluid" src="data:image/gif;base64,' . base64_encode($r['illustration']) . '">';
+                    }else if (preg_match('/PNG/i',substr($r['illustration'], 1, 3))){
+                        $img ='<img id="img_card" class="card-img-top img-fluid" src="data:image/png;base64,' . base64_encode($r['illustration']) . '">';
+                    } 
+                    $req = "SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
+                    $auteure = $bdd->prepare($req);
+                    $auteure->execute();
+                    $auteur = $auteure->fetch();
+                    $auteur = $auteur["pseudo"];
+                    $nom = $r['nom'];
+                    $id = $r['id_recette'];
 
-                $nom = $r['nom'];
-                $id = $r['id_recette'];
-                $button = `<button onclick="location.href='./source/recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
+                    echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5><p class='card-text'>Rédigé par $auteur</p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
+                    
 
-                echo("
-                   
-                        <div class='card'>
-                            <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
-                            <div class='card-body'>
-                                <h5 class='card-title'>$nom</h5>
-                                <p class='card-text'>Rédigé par " .$auteur[0]["pseudo"] ."</p>
-                            </div>
-                            <div class='card-footer text-center'>
-                           <a href='./source/recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
-                            </div>
-                        </div>
-               ");
-        };?>
+                };
+            ?>
+            </div>
         </div>   
     </main>
     <script src="./js/scriptIndex.js"></script>

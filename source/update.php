@@ -46,7 +46,7 @@
         }
     }
         $fp = fopen($_FILES['profil_pic']['tmp_name'], 'rb');
-        $pic = "UPDATE compte SET photo_de_profil = ? WHERE id=$id"; 
+        $pic = "UPDATE compte SET photo_de_profil = ? WHERE id_compte=$id"; 
         $req = $bdd->prepare($pic);
         $req -> bindValue(1, $fp, PDO::PARAM_LOB);
         $req->execute();

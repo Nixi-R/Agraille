@@ -8,7 +8,7 @@ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
 
-$insertP = $bdd->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte']);
+$insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
 $insertP -> execute();
 $insertP = $insertP->fetchAll();
 ?>
@@ -68,15 +68,20 @@ $insertP = $insertP->fetchAll();
                 <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
-                        if(isset($_SESSION['idCompte'])){
-                           echo "<img id='img_profil_pics' src='data:". $insertP[0]['mime'] .";base64," . base64_encode($insertP[0]['photo_de_profil']) . "' alt='photo de profil'>";
+                        if(isset($_SESSION['idCompte'])){        
+                            if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
+                            else if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
+                            else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                            echo "<div class='container_arrow'>
                                     <span class='arrow'></span>
                                     <span class='arrow'></span>
                                  </div>";
                         }else{
-                            echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
-                            <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
                         }
                      ?>
                 </div>
@@ -94,17 +99,17 @@ $insertP = $insertP->fetchAll();
     <main>
         <div id="main">
             <h1>Profil</h1>
-            <form action="update.php" enctype="multipart/form-data" method="POST">
+            <form action="./update.php" enctype="multipart/form-data" method="POST">
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
                         <div id="profil_pic">
                             <?php
                             if (preg_match('/JFIF/i',substr($insertP[0][0], 0, 10)))
-                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             ?>
                         </div>
                         <div id="profil_pic_button">
@@ -112,9 +117,9 @@ $insertP = $insertP->fetchAll();
                             <input type="submit">
                         </div>
                 </div>
+                </form>
+            <form action="update.php" method="POST">
                 <h2>Informations</h2>
-            </form>
-                <form action="update.php" method="POST">
                 <div id="wrapper_information">
                     <div id="pseudo_container">
                         <label>Pseudo : </label>
@@ -134,14 +139,13 @@ $insertP = $insertP->fetchAll();
                     <div id="send_form_button">
                         <input type="submit" name="send" value="Envoyer">
                     </div>
-                 </div>
-                 </form>
-                 <form method="POST" action="./desinscription" name="form">
+                </div>
+            </form>
+            <form method="POST" action="./desinscription" name="form">
                      <div id="uninscription_button">
                         <input  type="submit" name="uninscription" value="Se désinscrire">
                     </div>
-                </form>
-            </div>
+            </form>
         </div>
     </main>
     <script>
