@@ -65,7 +65,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $compteur = ;
 
                 $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note) VALUES (?,?,NOW(),?)');
-                $ins->execute(array($id, $commentaire, $getid, $note));///
+                $ins->execute(array($id, $commentaire,$note));///
 
                 $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire  WHERE (id_recette = $getid) AND (note > 0)");///
                 $compteur->execute(); 
