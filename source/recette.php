@@ -192,9 +192,16 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             if ($recette['illustration'] == null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0) 
                 echo '<img src="../img/tartine.jpg">'; 
             else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
-                echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
+            {
+                if (preg_match('/JFIF/i',substr($recette['illustration'], 0, 10)))
+                    echo '<img src="data:image/jpg;base64,' . base64_encode($recette['illustration']) . '"';
+                else if (preg_match('/GIF/i',substr($recette['illustration'], 0, 3)))
+                    echo '<img src="data:image/gif;base64,' . base64_encode($recette['illustration']) . '"';
+                else if (preg_match('/PNG/i',substr($recette['illustration'], 1, 3)))
+                    echo '<img src="data:image/png;base64,' . base64_encode($recette['illustration']) . '"';
+            }
             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-                echo "<input id='file' type='file' name='photo' accept='image/*' >"; 
+                echo "<input id='file' type='file' name='photo' accept='image/png, image/jpeg, image/gif, image/jpg' >"; 
             ?>
             </div>
             <?php 

@@ -16,7 +16,7 @@ catch (Exception $e)
 
     if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $conn->prepare('SELECT photo_de_profil, mime FROM compte WHERE id ='. $_SESSION['idCompte'] );
+        $insertP = $conn->prepare('SELECT photo_de_profil FROM compte WHERE id ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
@@ -81,11 +81,17 @@ catch (Exception $e)
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
-                           echo "<img id='img_profil_pics' src='data:". $insertP[0]['mime'] .";base64," . base64_encode($insertP[0]['photo_de_profil']) . "' alt='photo de profil'>";
-                           echo "<div class='container_arrow'>
-                                    <span class='arrow'></span>
-                                    <span class='arrow'></span>
-                                 </div>";
+                           
+                            if (preg_match('/JFIF/i',substr($insertP[0][0], 0, 10)))
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '"';
+                            else if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '"';
+                            else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '"';
+                            echo "<div class='container_arrow'>
+                                <span class='arrow'></span>
+                                <span class='arrow'></span>
+                                </div>";
                         }else{
                             echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
                             <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
@@ -195,7 +201,7 @@ catch (Exception $e)
                     <option>Dessert</option>
                 </select>
                 <h6>Choisissez une illustration pour votre recette !</h6>
-                <input id="recette_image" name="recette_image" type="file" accept="image/*" required>
+                <input id="recette_image" name="recette_image" type="file" accept="image/jpeg, image/png, image/gif, image/jpg" required>
             </section>
             <input type="submit">
         </form>

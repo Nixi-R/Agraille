@@ -21,6 +21,16 @@
         header('Location: ../');
         exit();
     }
+    
+    if (isset($_FILES['photo']['type']))
+    {
+        $img_mime = $_FILES['photo']['type'];
+        if ($img_mime != "image/png" && $img_mime != "image/jpg" && $img_mime != "image/jpeg" && $img_mime != "image/gif")
+        {
+            header("Location: ./recette.php?id=".$_POST['id']);
+            exit();
+        }
+    }
 
     if (isset($_POST['valider']))
     {
@@ -47,8 +57,8 @@
         if (strlen($_FILES['photo']['tmp_name']) > 0)
         {
             $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
-            $insertRecipe = "UPDATE recette SET illustration = ?,
-            mime = '".$_FILES['photo']['type']."'  WHERE id = '".$_POST['id']."'";
+            $insertRecipe = "UPDATE recette SET illustration = ?
+            WHERE id = '".$_POST['id']."'";
             $insertRecipe = $conn->prepare($insertRecipe);
             $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
             $insertRecipe->execute();

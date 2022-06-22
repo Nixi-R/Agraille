@@ -98,7 +98,14 @@ $insertP = $insertP->fetchAll();
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
                         <div id="profil_pic">
-                            <img id="img_profil_pics" src="<?php echo 'data:'. $insertP[0]['mime'] .';base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';?>" alt="photo de profil">
+                            <?php
+                            if (preg_match('/JFIF/i',substr($insertP[0][0], 0, 10)))
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                            else if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                            else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '"';
+                            ?>
                         </div>
                         <div id="profil_pic_button">
                             <input id="file_button" type="file" name="profil_pic" accept="image/*">

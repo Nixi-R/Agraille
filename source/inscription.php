@@ -23,7 +23,7 @@ if (isset($_SESSION['idCompte']))
                 <div id="pngD">
                     <h3 id="labelPP">Photo de Profil</h3>
                     <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-                    <input id="pngI" type="file" name="photo" accept="image/*">
+                    <input id="pngI" type="file" name="photo" accept="image/jpg, image/jpeg, image/png, image/gif">
                 </div>
                 <label id="labelPseudo">Pseudo :</label></br>
                 <input id="pseudo" type="text" name="pseudo" value="<?php if (isset($_GET['pseudo'])) echo $_GET['pseudo']; ?>" minlength=4 maxlength=30 required></br>
