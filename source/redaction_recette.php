@@ -44,11 +44,11 @@ catch (Exception $e)
         <nav>
             <div class="nav-burger">
                 <ul class="nav-menu">
-                <li class="nav-item">
-                       <a href="./index.php"><img src="../img/icone_agraille.png"></a>
+                    <li class="nav-item">
+                       <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktail</a>
+                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktails</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index?categorie=plats">Plats</a>
@@ -68,15 +68,16 @@ catch (Exception $e)
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <a href="../index.php"><img src="../img/logo_agraille.png"></a>
+                <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
-                    <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                    <form action="./page_filtrage" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat...">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
                 </div>
+                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
@@ -86,8 +87,8 @@ catch (Exception $e)
                                     <span class='arrow'></span>
                                  </div>";
                         }else{
-                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
-                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                            echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
                         }
                      ?>
                 </div>
@@ -103,7 +104,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <form action="./envoi_recette.php" method="post" name="myForm" onsubmit>
+        <form action="./envoi_recette.php" enctype="multipart/form-data" method="post" name="myForm" onsubmit>
             <h1>Rédigez votre propre recette !</h1>
             <section id="titre">
                 <h6>Nommez la recette !<h6>
@@ -138,7 +139,7 @@ catch (Exception $e)
                                 <option>cuil à soupe</option>
                                 <option>cuil à café</option>
                                 </select>
-                                <input name='quantite_$i' type='number' min='0' max='100'> 
+                                <input name='quantite_$i' type='number' min='1' max='100'> 
                                 <select name='ingredient_$i'>";
                                 for($z = 0; $z<count($var); $z++){
                                     echo $var[$z];
@@ -153,12 +154,14 @@ catch (Exception $e)
 
                             
                         ?>
-                    </select>
                 </div>
+                <h6> Proposez nous vos ingrédients</h6>
+                <div id="ingredient_prop_container"></div>
+                <span id="ingredient_prop" class="btn btn-primary">+</span>
             </section>
             <section id="etape">
                 <h6>Décrivez les étapes !</h6>
-                <input require type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1"></input>
+                <input required type="text" id="step_1" placeholder="1 - Décrivez l'étape" name="step_1" required></input>
                 <div id="etapes"></div>
                 <span id="etape_button" class="btn btn-primary" value="+" >+</span>
             </section>
@@ -176,7 +179,7 @@ catch (Exception $e)
                 </select>
                 <span class="span"></span>
                 <p>Entrez le temps de réalisation de la recette.<p>
-                <input require id="temps_realisation" type ="number" min="10" max="180" name="temps_realisation"><span>min</span>
+                <input require id="temps_realisation" type ="number" min="5" max="180" name="temps_realisation" required><span>min</span>
                 <span class="span"></span>
                 <p>Selectionnez la difficulté de la recette.<p>
                 <select require id="difficulte" name="difficulte">
@@ -192,9 +195,9 @@ catch (Exception $e)
                     <option>Dessert</option>
                 </select>
                 <h6>Choisissez une illustration pour votre recette !</h6>
-                <input id="recette_image" name="recette_image" type="file" accept="image/*"></input>
+                <input id="recette_image" name="recette_image" type="file" accept="image/*" required>
             </section>
-            <input type="submit" onclick="document.recette_envoi.submit()"></input>
+            <input type="submit">
         </form>
     </main>
     <script src="../js/scriptIndex.js"></script>
@@ -207,7 +210,7 @@ catch (Exception $e)
             button.addEventListener('click', function(event){
                 i++
                 if (button.textContent === '+'){
-                    let newInput = document.createElement('input')
+                    const newInput = document.createElement('input')
                         newInput.type = 'text'
                         newInput.placeholder = i + " - Décrivez l'étape";
                         newInput.id = 'step_'+i;
@@ -216,6 +219,40 @@ catch (Exception $e)
                 }
             })
           }
+    </script>
+    <script>
+            let buttonIngredient = document.getElementById('ingredient_prop');
+            let ingredientContainer = document.getElementById('ingredient_prop_container');
+            let option = ["Aucune","centilitres","litres","grammes","kilos","cuil à soupe","cuil à café"];
+            let i = 0;
+            buttonIngredient.addEventListener('click', function(e){
+                const inputIngredient = document.createElement('input');
+                const selectMesure = document.createElement('select');
+                const inputQuantite = document.createElement('input');
+                const br = document.createElement('br');
+
+                i++;                
+                selectMesure.name = "ingredient_prop_select_" + i;
+                for(let j = 0; j<option.length; j++){
+                    let optionMesure= document.createElement("option");
+                    optionMesure.value = option[j];
+                    optionMesure.text = option[j];
+                    selectMesure.appendChild(optionMesure);
+                } 
+                inputQuantite.name = "ingredient_prop_quantite_" + i;
+                inputQuantite.type = "number";
+                inputQuantite.max = "100";
+                inputQuantite.min = "1";
+                inputIngredient.type = 'text';
+                inputIngredient.placeholder = i + " - Nom ingredient";
+                inputIngredient.id = 'ingredient_prop_'+i;
+                inputIngredient.name = "ingredient_prop_" + i;
+
+                ingredientContainer.appendChild(inputQuantite);
+                ingredientContainer.appendChild(selectMesure);
+                ingredientContainer.appendChild(inputIngredient);
+                ingredientContainer.appendChild(br);
+            })
     </script>
 </body>
 </html>

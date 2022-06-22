@@ -55,13 +55,13 @@ catch (Exception $e)
                        <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./index?categorie=cocktail" >Cocktail</a>
+                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktails</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./index?categorie=plats">Plats</a>
+                        <a class="nav-link" href="../index?categorie=plats">Plats</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./index?categorie=dessert">Desserts</a>
+                        <a class="nav-link" href="../index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">A propos</a>
@@ -78,8 +78,8 @@ catch (Exception $e)
                 <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
-                    <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                    <form action="#" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat...">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
@@ -226,18 +226,18 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (nom = '" . $nom . "')";
+                        $SQL = $SQL . " AND (nom LIKE '" . $nom . "%')";
                     } else {
-                        $SQL = $SQL . "(nom = '" . $nom . "')";
+                        $SQL = $SQL . "(nom LIKE '" . $nom . "%')";
                     }
                     $test = 1;
                 }
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (methode = '" . $methode . "')";
+                        $SQL = $SQL . " AND (methode_cuisson = '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "(methode = '" . $methode . "')";
+                        $SQL = $SQL . "(methode_cuisson = '" . $methode . "')";
                     }
                     $test = 1;
                 }
@@ -301,7 +301,6 @@ catch (Exception $e)
                 //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                 //     }
                 // }
-
                 if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 {
                     $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
@@ -319,7 +318,7 @@ catch (Exception $e)
                     $SQL = $SQL->fetchAll();
                 }
                 
-                
+            
 
 
                 for($i=0; $i<count($SQL); $i++){

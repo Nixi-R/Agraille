@@ -29,7 +29,7 @@ main {
 }
 
 .card-deck {
-  gap: 5%;
+  gap: 43px;
   display: flex;
   flex-wrap: wrap;
 }

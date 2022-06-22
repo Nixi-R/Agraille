@@ -55,6 +55,7 @@
     $ingredient = implode(". ", $ingredient);
 
 
+    // echo $recette_image;
     // for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
     //     $ingredient_prop = $_POST["ingredient_prop_$i"];
     //     $idIngredient = random_int(0, 2147483647);
@@ -74,7 +75,8 @@
     $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
     $insert_sql->execute();
 
-    print_r($ingredient);
+    // print_r($ingredient);
     print("Nous avons reçu votre recette !");
+    echo "<a href='../index'>retour à l'acceuil</a>"
 
 ?>

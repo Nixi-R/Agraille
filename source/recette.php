@@ -117,15 +117,15 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     <title>Agraille</title>
 </head>
 <body>
-    <header>
+<header>
         <nav>
             <div class="nav-burger">
                 <ul class="nav-menu">
-                <li class="nav-item">
-                       <a href="./index.php"><img src="img/icone_agraille.png"></a>
+                    <li class="nav-item">
+                       <a href="../index.php"><img src="../img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
+                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktails</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index?categorie=plats">Plats</a>
@@ -145,15 +145,16 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <div class="nav-container">
                 <div class="nav-logo">
-                    <img onclick="location.href='../index.php'"src="../img/logo_agraille.png" style="cursor:pointer;">
+                <a href="../index.php"><img src="../img/logo_agraille.png"></a>
                 </div>
                 <div class="search-bar">
-                    <form action="#" >
-                        <input class="search-input" type="text" name="filtrage" placeholder="Entrer un plat ou un ingrédient...">
+                    <form action="./page_filtrage" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat...">
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
                 </div>
+                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
@@ -199,8 +200,13 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo '<img src="../img/tartine.jpg">'; 
             else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
                 echo '<img src="data:'. $recette['mime'] .';base64,' . base64_encode($recette['illustration']) . '"';
+<<<<<<< HEAD
+            // else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+                // echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
+=======
             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-                echo "<input id='file' type='file' name='photo' accept='image/*'>"; 
+                echo "<input id='file' type='file' name='photo' accept='image/*' >"; 
+>>>>>>> 15f4bddbc05fcf711feec55afe10acbec11f2123
             ?>
             </div>
             <?php 
@@ -214,12 +220,12 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
                 <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
                 <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
-                <label>Type de recette</label></br><input type='text' name='type' value='".$recette['categorie']."'></br>
+                <label>Type de recette</label></br><input type='text' name='categorie' value='".$recette['categorie']."'></br>
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span><div>".$recette['nb_note']." personnes ont noté cette recette.</div></div>
+                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span><div>Nombre de personnes ayant noté la recette: ".$recette['nb_note'].".</div></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
                 <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }
@@ -266,7 +272,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></br>
             <?php }} ?>
             <?php
-            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
+            if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form id='form' action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input type='hidden' name='nom' value='".$title."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
             ?>
             <script src="../js/scriptIndex.js"></script>
             <?php 
