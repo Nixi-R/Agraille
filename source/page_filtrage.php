@@ -16,7 +16,7 @@ catch (Exception $e)
 
     if (isset($_SESSION['idCompte']))
     {  
-        $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id ='. $_SESSION['idCompte'] );
+        $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
     }
@@ -292,7 +292,9 @@ catch (Exception $e)
                 //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                 //     }
                 // }
-                if(!(empty($_POST)) && (strlen($_POST['nom']) + strlen($_POST['date']) + strlen($_POST['temps']) + strlen($_POST['methode']) + strlen($_POST['auteur']) + strlen($_POST['note']) + strlen($_POST['type'])) != 0)
+                var_dump($_POST);
+
+                if (!(empty($_POST)) && count($_POST) == 1 && strlen($_POST['nom']) > 0)
                 {
                     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                     {
@@ -308,8 +310,30 @@ catch (Exception $e)
                         $SQL->execute();
                         $SQL = $SQL->fetchAll();
                     }
-            
+                    $o = " "; 
+                }
 
+                if(!(empty($_POST)) && (strlen($_POST['nom']) + strlen($_POST['date']) + strlen($_POST['temps']) + strlen($_POST['methode']) + strlen($_POST['auteur']) + strlen($_POST['note']) + strlen($_POST['type'])) > 0)
+                {
+                    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+                    {
+                        $SQL = $SQL . " AND valider = 0 ORDER BY id_recette DESC";
+                        $SQL = $bdd->prepare($SQL);
+                        $SQL->execute();
+                        $SQL = $SQL->fetchAll();
+                    }
+                    else
+                    {
+                        $SQL = $SQL . " AND valider = 1 ORDER BY id_recette DESC";
+                        $SQL = $bdd->prepare($SQL);
+                        $SQL->execute();
+                        $SQL = $SQL->fetchAll();
+                    }
+                    $o = " "; 
+                }
+            
+                if (isset($o))
+                {
                     for($i=0; $i<count($SQL); $i++){
                         $id = $SQL[$i]['id_recette'];
 
