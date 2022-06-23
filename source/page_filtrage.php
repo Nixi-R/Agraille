@@ -130,7 +130,7 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📆</p>
-                    <div class="filtreTexte flexCentre">Par date de publication<input type="date" name="dates"></div>
+                    <div class="filtreTexte flexCentre">Par date de publication<input type="date" name="date"></div>
                 </div>   
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">⏱️</p>
@@ -150,9 +150,9 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">🍹</p>
-                    <div class="filtreTexte flexCentre"><label for="types">Par type</label>
-                        <select name="types" id="types">
-                            <option>Aucun</option>
+                    <div class="filtreTexte flexCentre"><label for="type">Par type</label>
+                        <select name="type" id="types">
+                            <option></option>
                             <option name="plat">Plat</option>
                             <option name="cocktail">Cocktail</option>
                             <option name="dessert">Dessert</option>
@@ -163,7 +163,7 @@ catch (Exception $e)
                     <p class="filtreIcons flexCentre">🌡️</p>
                     <div class="filtreTexte flexCentre"><label for="difficulte">Par difficulté</label>
                         <select name="difficulte" id="difficulte">
-                            <option>Aucun</option>
+                            <option></option>
                             <option name="facile">Facile</option>
                             <option name="intermédiaire">Intermédiaire</option>
                             <option name="difficile">Difficile</option>
@@ -186,8 +186,8 @@ catch (Exception $e)
                 if (isset($_POST['nom'])){
                     $nom = $_POST['nom'];
                 }
-                if (isset($_POST['dates'])){
-                    $date = $_POST['dates'];
+                if (isset($_POST['date'])){
+                    $date = $_POST['date'];
                 }
                 if (isset($_POST['temps'])){
                     $temps = $_POST['temps'];
@@ -201,8 +201,8 @@ catch (Exception $e)
                 if (isset($_POST['note']) ){
                     $note = $_POST['note'];
                 }
-                if (isset($_POST['types']) ){
-                    $type = $_POST['types'];
+                if (isset($_POST['type']) ){
+                    $type = $_POST['type'];
                 }
                 if (isset($_POST['difficulte']) ){
                     $difficulte = $_POST['difficulte'];
@@ -213,9 +213,18 @@ catch (Exception $e)
 
 
                 $SQL = "SELECT * FROM recette WHERE ";
-                
+
+                if (isset($auteur) && $auteur != null){
+                        $SQL = $SQL . " AND INNER JOIN compte_as_recette ON $auteur = compte_as_recette.id_compte";
+                    $test = 1;
+                }
+
                 if (isset($temps) && $temps != null){
-                    $SQL = $SQL . "(temps_realisation <= " . $temps . ")";
+                    if ($test == 1){
+                        $SQL = $SQL . "AND (temps_realisation <= " . $temps . ")";
+                    }else {
+                        $SQL = $SQL . "(temps_realisation <= " . $temps . ")";
+                    }
                     $test = 1;
                 }
 
@@ -246,46 +255,23 @@ catch (Exception $e)
                     }
                     $test = 1;
                 }
-
-                if (isset($auteur) && $auteur != null){
-                    if ($test == 1){
-                        $SQL = $SQL . " AND (auteur = '" . $auteur . "')";
-                    } else {
-                        $SQL = $SQL . "(auteur = '" . $auteur . "')";
-                    }
-                    $test = 1;
-                }
                 
-                if (isset($type) && $type != null){
+                if (isset($type) && !(empty($type))){
                     if ($test == 1){
-                        if ($type == 'Aucun'){
-                            unset($type);
-                        } else {
                             $SQL = $SQL . " AND (categorie = '" . $type . "')";
-                        }
-                    } else {
-                        if ($type == 'Aucun'){
-                            unset($type);
-                        } else {
+                    }
+                    else {
                             $SQL = $SQL . "(categorie = '" . $type . "')";
-                        }
                     }
                     $test = 1;
                 }
                 
-                if (isset($difficulte) && $difficulte != null){
+                if (isset($difficulte) && !(empty($type))){
                     if ($test == 1){
-                        if ($difficulte == 'Aucun'){
-                            unset($difficulte);
-                        } else {
                             $SQL = $SQL . " AND (difficulte = '" . $difficulte . "')";
                         }
-                    } else {
-                        if ($difficulte == 'Aucun'){
-                            unset($difficulte);
-                        } else {
+                    else {
                             $SQL = $SQL . "(difficulte = '" . $difficulte . "')";
-                        }
                     }
                     $test = 1;
                 }
@@ -306,47 +292,51 @@ catch (Exception $e)
                 //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                 //     }
                 // }
-                if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+                if(!(empty($_POST)) && (strlen($_POST['nom']) + strlen($_POST['date']) + strlen($_POST['temps']) + strlen($_POST['methode']) + strlen($_POST['auteur']) + strlen($_POST['note']) + strlen($_POST['type'])) != 0)
                 {
-                    $SQL = $SQL . " AND (valider = 0) ORDER BY id DESC";
-                    //echo $SQL;
-                    $SQL = $bdd->prepare($SQL);
-                    $SQL->execute();
-                    $SQL = $SQL->fetchAll();
-                }
-                else
-                {
-                    $SQL = $SQL . " AND (valider = 1) ORDER BY id DESC";
-                    //echo $SQL;
-                    $SQL = $bdd->prepare($SQL);
-                    $SQL->execute();
-                    $SQL = $SQL->fetchAll();
-                }
-                
+                    if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+                    {
+                        $SQL = $SQL . " AND valider = 0 ORDER BY id_recette DESC";
+                        $SQL = $bdd->prepare($SQL);
+                        $SQL->execute();
+                        $SQL = $SQL->fetchAll();
+                    }
+                    else
+                    {
+                        $SQL = $SQL . " AND valider = 1 ORDER BY id_recette DESC";
+                        $SQL = $bdd->prepare($SQL);
+                        $SQL->execute();
+                        $SQL = $SQL->fetchAll();
+                    }
             
 
+                    for($i=0; $i<count($SQL); $i++){
+                        $id = $SQL[$i]['id_recette'];
 
-                for($i=0; $i<count($SQL); $i++){
-                    $auteur = $SQL[$i]['auteur'];
-                    $nom = $SQL[$i]['nom'];
-                    $id = $SQL[$i]['id'];
-                    $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
-    
-                    echo("<div class='container my-2'>
-                       <div class='card-deck'>
-                            <div class='card'>
-                                <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
-                                <div class='card-body'>
-                                    <h5 class='card-title'>$nom</h5>
-                                    <p class='card-text'>Rédigé par $auteur</p>
+                        $req = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON $id = compte_as_recette.id_recette");
+                        $req->execute();
+                        $req = $req->fetchAll();
+
+                        $auteur = $req[$i]['pseudo'];
+                        $nom = $SQL[$i]['nom'];
+                        $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
+        
+                        echo("<div class='container my-2'>
+                        <div class='card-deck'>
+                                <div class='card'>
+                                    <img class='card-img-top img-fluid' src='https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.thailandveo.com%2Fwp-content%2Fuploads%2Fsites%2F3%2F2019%2F04%2FAdobeStock_207701012-min.jpeg&f=1&nofb=1' alt='#'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title'>$nom</h5>
+                                        <p class='card-text'>Rédigé par $auteur</p>
+                                    </div>
+                                    <div class='card-footer text-center'>
+                                <a href='./recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
+                                    </div>
                                 </div>
-                                <div class='card-footer text-center'>
-                               <a href='./recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
-                                </div>
-                            </div>
-                       </div>
-                   </div>");
-                }; 
+                        </div>
+                    </div>");
+                    }; 
+                }
             ?>
         </div>
     </main>
