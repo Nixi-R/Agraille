@@ -287,7 +287,6 @@ catch (Exception $e)
                     }
                     $test = 1;
                 }
-
                 // if (isset($ingredients) && $ingredients != null){
                 //     if ($test == 1){
                 //         $SQL = $SQL . " AND (ingredients = '" . $ingredients . "')";
@@ -315,7 +314,7 @@ catch (Exception $e)
                     $o = " "; 
                 }
 
-                else if(!(empty($_POST)) && count($_POST) > 1 && (strlen($_POST['nom']) + strlen($_POST['date']) + strlen($_POST['temps']) + strlen($_POST['methode']) + strlen($_POST['auteur']) + strlen($_POST['note']) + strlen($_POST['type'])) > 0)
+                else if(!(empty($_POST)) && count($_POST) > 1 && (strlen($_POST['nom']) + strlen($_POST['date']) + strlen($_POST['temps']) + strlen($_POST['methode']) + strlen($_POST['auteur']) + strlen($_POST['note']) + strlen($_POST['type']) + strlen($_POST['difficulte'])) > 0)
                 {
                     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                     {
@@ -333,7 +332,7 @@ catch (Exception $e)
                     }
                     $o = " "; 
                 }
-            
+
                 if (isset($o))
                 {
                     for($i=0; $i<count($SQL); $i++){
