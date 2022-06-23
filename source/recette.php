@@ -63,6 +63,10 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $note->execute(array($getid));
     $note = $note->fetch(PDO::FETCH_ASSOC);
 
+    $req = "SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
+    $auteure = $bdd->prepare($req);
+    $auteure->execute();
+    $auteur = $auteure->fetch();
 
     $title = $recette['nom'];
     $description = $recette['representation'];
@@ -203,19 +207,21 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1) 
             echo "<div id='modif_illu'>";
 
-            if ($recette['illustration'] == null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0) 
-                echo '<img src="../img/tartine.jpg">'; 
-            else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
-            {
+            // if ($recette['illustration'] == null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0) 
+            //     echo '<img src="../img/tartine.jpg">'; 
+            // else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
+            // {
                 if (preg_match('/JFIF/i',substr($recette['illustration'], 0, 10)))
                     echo '<img src="data:image/jpg;base64,' . base64_encode($recette['illustration']) . '"';
                 else if (preg_match('/GIF/i',substr($recette['illustration'], 0, 3)))
                     echo '<img src="data:image/gif;base64,' . base64_encode($recette['illustration']) . '"';
                 else if (preg_match('/PNG/i',substr($recette['illustration'], 1, 3)))
                     echo '<img src="data:image/png;base64,' . base64_encode($recette['illustration']) . '"';
-            }
-            else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-                echo "<input id='file' type='file' name='photo' accept='image/png, image/jpeg, image/gif, image/jpg' >"; 
+
+                    echo "<p>auteur : " .$auteur["pseudo"] ."</p>";
+            // }
+            // else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+            //     echo "<input id='file' type='file' name='photo' accept='image/png, image/jpeg, image/gif, image/jpg' >"; 
             ?>
             </div>
             <?php 
