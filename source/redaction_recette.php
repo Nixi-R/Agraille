@@ -82,12 +82,12 @@ catch (Exception $e)
                     <?php
                         if(isset($_SESSION['idCompte'])){
                            
-                            if (preg_match('/JFIF/i',substr($insertP[0][0], 0, 10)))
-                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '"';
-                            else if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
+                            if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '"';
                             else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '"';
+                            else
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '"';
                             echo "<div class='container_arrow'>
                                 <span class='arrow'></span>
                                 <span class='arrow'></span>
