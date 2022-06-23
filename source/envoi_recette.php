@@ -59,9 +59,29 @@
     $insert_sql->execute();
 
     $idCompte = $_SESSION["idCompte"];
-    $liaison = "INSERT INTO compte_as_recette (id_compte_as_recette, id_recette, id_compte) VALUES ($idRecette, $idCompte, $idRecette);";
-    $insert_liaison = $bdd->prepare($liaison);
-    $insert_liaison->execute();
+    $link = "INSERT INTO compte_as_recette (id_compte_as_recette, id_recette, id_compte) VALUES ($idRecette, $idRecette, $idCompte);";
+    $insert_link = $bdd->prepare($link);
+    $insert_link->execute();
+
+    $id_ingredient = $bdd->query('SELECT * FROM ingredient;');
+    $id_ingredient -> execute();
+    $id_ingredient = $id_ingredient -> fetchAll();
+
+    print_r($id_ingredient);
+    print("<br>");
+    for ($y = 0; isset($_POST["ingredient_$y"]); $y++) {
+        for ($x = 0; $x < count($id_ingredient); $x++) {
+            if ($id_ingredient[$x][1] == $_POST["ingredient_$y"]) {
+                $id_recette_as_ingredient = random_int(0, 2147483647);
+                $ingredient_id = $id_ingredient[$x][0];
+                $query_ingredient = "INSERT INTO recette_as_ingredient (id_recette_as_ingredient, id_ingredient, id_recette) VALUES ($id_recette_as_ingredient, $ingredient_id, $idRecette);";
+                $insert_ingredient = $bdd->prepare($query_ingredient);
+                $insert_ingredient->execute();
+            } else {
+                print("<br>t'es nul $x<br>");
+            }
+        }
+    }
 
     print("Nous avons reçu votre recette !");
     echo "<a href='../index'>retour à l'acceuil</a>"
