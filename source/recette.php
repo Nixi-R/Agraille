@@ -50,6 +50,20 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $recette->execute(array($getid));
     $recette = $recette->fetch(PDO::FETCH_ASSOC);
 
+    $compteasrecette = $bdd->prepare('SELECT id_compte_as_recette FROM compte_as_recette WHERE id_recette = ?');
+    $compteasrecette->execute(array($getid));
+    $compteasrecette = $compteasrecette->fetch(PDO::FETCH_ASSOC);
+
+    
+    $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire WHERE (id_compte_as_recette = ?)");
+    $compteur->execute(array($getid)); 
+    $compteur = $compteur->fetch(PDO::FETCH_ASSOC);
+
+    $note = $bdd->prepare("SELECT AVG(note) FROM commentaire WHERE (id_compte_as_recette = ?)");
+    $note->execute(array($getid));
+    $note = $note->fetch(PDO::FETCH_ASSOC);
+
+
     $title = $recette['nom'];
     $description = $recette['representation'];
 
@@ -62,17 +76,15 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $pseudo = htmlspecialchars($_SESSION['pseudo']);
                 $commentaire = htmlspecialchars($_POST['commentaire']);
 
-                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note) VALUES (?,?,NOW(),?)');
-                $ins->execute(array($id, $commentaire,$note));///
+                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note, id_comte_as_recette) VALUES (?,?,NOW(),?,?)');
+                $ins->execute(array($id, $commentaire,$note,$id));
 
-                $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire  WHERE (id_recette = $getid) AND (note > 0)");///
-                $compteur->execute(); 
+                $req = $bdd->prepare('INSERT INTO compte_as_recette (id_compte_as_recette,id_compte,id_recette) VALUES(?,?,?)');
+                $req->execute(array($id,$_SESSION["idCompte"],$getid));
+
 
                 $verif = $bdd->prepare("SELECT note FROM commentaire WHERE (id_recette = $getid) AND (pseudo = $pseudo)");
                 $verif-execute();
-
-                $add = $bdd->prepare("UPDATE commentaire SET note = '$moy' WHERE id = '$getid'");
-                $add->execute();
 
                 $c_error = "Votre commentaire a bien été posté";
                 header("Location: recette?id=$getid");
@@ -81,14 +93,13 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 $c_error = "Tous les champs doivent être complétés";
             }
         }
-    
+        
 
-        $commentaires = $bdd->prepare('SELECT * FROM commentaire INNER JOIN commentaire.id_compte_as_recette = compte_as_recette.id_compte_as_recette WHERE compte_as_recette.id_recette = ? ORDER BY commentaire.id_commentaire DESC');
+        $commentaires = $bdd->prepare('SELECT * FROM commentaire INNER JOIN compte_as_recette ON commentaire.id_compte_as_recette = compte_as_recette.id_compte_as_recette WHERE compte_as_recette.id_recette = ? ORDER BY commentaire.id_commentaire DESC');
         $commentaires->execute(array($getid));
     }
-
-    // echo $verif;
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -223,7 +234,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             else
             {   
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note1'><label>Note de la recette : </label><span>".$recette['note']."</span><div>Nombre de personnes ayant noté la recette: ".$recette['nb_note'].".</div></div>
+                <div id='note1'><label>Note de la recette : </label><span>" .$note['AVG(note)'] ."</span><div>Nombre de personnes ayant noté la recette: " .$compteur['COUNT(note)'] .".</div></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
                 <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
             }
@@ -237,7 +248,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             if ($admin)
                 echo "<textarea id='ingredients' name='ingredients' form='form'>".$recette['ingredients']."</textarea>";
             else 
-                echo $recette['ingredients'];
+                echo $recette['ingredient'];
             ?>
         </section>
         <section id="etape">
@@ -267,7 +278,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
-            <b><?= $c['pseudo_commentaire']?>:</b> <?= $c['text_commentaire']; ?></br>
+            <b><!--pseudo--></b> <?= $c['texte_commentaire']; ?></br>
             <?php }} ?>
             <?php
             if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form id='form' action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input type='hidden' name='nom' value='".$title."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
