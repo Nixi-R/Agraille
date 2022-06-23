@@ -18,8 +18,7 @@
         exit();
     }
     
-    $date = date("Y-m-d");
-    $auteur = $_SESSION["pseudo"];
+    $date = date("Y-m-d H:i:s");
     $idRecette = random_int(0, 2147483647);
     $ingredient = array();
     $ingredient_prop = array();
@@ -33,28 +32,37 @@
     }
 
 
-/////
+///// 
     for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
         $ingredient_prop[$i] = $_POST["ingredient_prop_$i"];
         $idIngredient = random_int(0, 2147483647);
-        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
-        $ingredient = array_push($_POST["ingredient_prop_quantite_$i"] ." "  .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop);
+        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id_ingredient,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
+        $ingredient_sql->execute();
+
+        $tempo = $_POST["ingredient_prop_quantite_$i"] ." " .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop;
+
+        $ingredient = array_push($tempo);
     }
-    $ingredient_sql->execute();
+
     $ingredient = implode(". ", $ingredient);
 
 ////
     for ($i = 1; isset($_POST["step_$i"]); $i++) {
         array_push($etape, $_POST["step_$i"]);
     }
-    $str_etape = implode(". ", $etape);
 
-    $sql = "INSERT INTO recette (id, nom, representation, date_publication, etape, temps_realisation, illustration, mime, methode_cuisson, auteur, categorie, difficulte, ingredients, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation  min',?,'$methode_cuisson','$auteur','$type_recette','$difficulte','$ingredient', 0);";
+    $str_etape = implode(". ", $etape);
+    $temps_realisation = "00:".$temps_realisation.":00";
+    $sql = "INSERT INTO recette (id_recette, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, categorie, difficulte, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation',?,'$methode_cuisson','$type_recette','$difficulte', 0);";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
     $insert_sql->execute();
 
-    // print_r($ingredient);
+    $idCompte = $_SESSION["idCompte"];
+    $liaison = "INSERT INTO compte_as_recette (id_compte_as_recette, id_recette, id_compte) VALUES ($idRecette, $idCompte, $idRecette);";
+    $insert_liaison = $bdd->prepare($liaison);
+    $insert_liaison->execute();
+
     print("Nous avons reçu votre recette !");
     echo "<a href='../index'>retour à l'acceuil</a>"
 
