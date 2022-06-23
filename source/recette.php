@@ -192,8 +192,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                                     <span class='arrow'></span>
                                  </div>";
                         }else{
-                            echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
-                            <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                            echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
                         }
                      ?>
                 </div>
