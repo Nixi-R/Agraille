@@ -19,8 +19,6 @@ catch (Exception $e)
         $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte'] );
         $insertP -> execute();
         $insertP = $insertP->fetchAll();
-    }else{
-        echo"ya rien";
     }
 
     if (isset($_SESSION['mode']) && isset($_GET['mode']))
@@ -35,7 +33,7 @@ catch (Exception $e)
             $recette = $bdd->prepare('SELECT * FROM recette WHERE (categorie = ?) AND (valider = 0)');
             $recette->execute(array($getcategorie));
         }else{
-            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id DESC');
+            $recette = $bdd->prepare('SELECT * FROM recette WHERE valider = 0 ORDER BY id_recette DESC');
             $recette->execute();
         }
     }else{ 

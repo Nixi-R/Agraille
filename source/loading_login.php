@@ -47,7 +47,7 @@ catch (Exception $e)
                 $_SESSION['mot_de_passe'] = $recipeS[0]['mot_de_passe'];
                 $_SESSION['droit'] = $recipeS[0]['droit'];
 
-                if ($_SESSION['droit'] > 1)
+                if ($_SESSION['droit'] == 'admin')
                     $_SESSION['mode'] = 1;
 
                 header('Location: ../');
@@ -70,13 +70,13 @@ catch (Exception $e)
                 $recipeS = $recipeS -> fetchAll();
         
                 session_start();
-                $_SESSION['idCompte'] = $recipeS[0]['id'];
+                $_SESSION['idCompte'] = $recipeS[0]['id_compte'];
                 $_SESSION['pseudo'] = $recipeS[0]['pseudo'];
                 $_SESSION['adresse_mail'] = $recipeS[0]['adresse_mail'];
                 $_SESSION['mot_de_passe'] = $recipeS[0]['mot_de_passe'];
                 $_SESSION['droit'] = $recipeS[0]['droit'];
 
-                if ($_SESSION['droit'] > 1)
+                if ($_SESSION['droit'] == 'admin')
                     $_SESSION['mode'] = 1;
 
                 header('Location: ../');

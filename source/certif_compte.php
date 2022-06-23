@@ -14,7 +14,7 @@ if (iconv_strlen($_POST['password']) < 4 || iconv_strlen($_POST['password']) > 3
 
 if (strlen($_FILES['photo']['tmp_name']) > 0)
 {
-    if (filesize($_FILES['photo']['tmp_name']) > 16000)
+    if (filesize($_FILES['photo']['tmp_name']) > 16000000)
     {
         header("Location: ./inscription.php?erreur=photo de profil > 16 Mo&pseudo=".$_POST['pseudo']."&email=".$_POST['email']."&password=".$_POST['password']);
         exit();
@@ -49,7 +49,7 @@ if (isset($_FILES['photo_de_profil']['type']))
     $img_mime = $_FILES['photo_de_profil']['type'];
     if ($img_mime != "image/png" && $img_mime != "image/jpg" && $img_mime != "image/jpeg" && $img_mime != "image/gif")
     {
-        header("Location: ./redaction_recette.php");
+        header("Location: ./inscription.php");
         exit();
     }
 }
@@ -113,14 +113,14 @@ $recipeStatement -> execute();
 
 $recipeStatement = $recipeStatement -> fetchAll();
 
-if (isset($recipeStatement[0]['id']))
+if (isset($recipeStatement[0]['id_compte']))
 {
     while($verify)
     {
         $id = random_int(0, 2147483647);
         for ($i = 0; $i < count($recipeStatement); $i++)
         {
-            if ($id == $recipeStatement[$i]['id'])
+            if ($id == $recipeStatement[$i]['id_compte'])
             {
                 $verify = true;
                 break;
@@ -136,7 +136,7 @@ if (isset($recipeStatement[0]['id']))
 
 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-$sqlQuery = 'INSERT INTO compte(id_compte, pseudo, adresse_mail, mot_de_passe, photo_de_profil, droit) VALUES (?,?,?,?,?,1)';
+$sqlQuery = 'INSERT INTO compte(id_compte, pseudo, adresse_mail, mot_de_passe, photo_de_profil) VALUES (?,?,?,?,?)';
 
 $insertRecipe = $conn->prepare($sqlQuery);
 
@@ -152,7 +152,7 @@ $insertRecipe->execute();
 if (strlen($_FILES['photo']['tmp_name']) > 0){
     $fp = fopen($_FILES['photo']['tmp_name'], 'rb');
 
-    $sqlQuery = 'UPDATE compte SET photo_de_profil = ? WHERE id = '.$id;
+    $sqlQuery = 'UPDATE compte SET photo_de_profil = ? WHERE id_compte = '.$id;
     $insertRecipe = $conn->prepare($sqlQuery);
     $insertRecipe -> bindValue(1, $fp, PDO::PARAM_LOB);
     $insertRecipe->execute();
