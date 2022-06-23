@@ -55,11 +55,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $compteasrecette = $compteasrecette->fetch(PDO::FETCH_ASSOC);
 
     
-    $compteur = $bdd->prepare("SELECT COUNT(note) FROM commentaire WHERE (id_compte_as_recette = ?)");
+    $compteur = $bdd->prepare("SELECT COUNT(note) FROM note WHERE (id_recette = ?)");
     $compteur->execute(array($getid)); 
     $compteur = $compteur->fetch(PDO::FETCH_ASSOC);
 
-    $note = $bdd->prepare("SELECT AVG(note) FROM commentaire WHERE (id_compte_as_recette = ?)");
+    $note = $bdd->prepare("SELECT AVG(note) FROM note WHERE (id_recette = ?)");
     $note->execute(array($getid));
     $note = $note->fetch(PDO::FETCH_ASSOC);
 
@@ -71,24 +71,41 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $title = $recette['nom'];
     $description = $recette['representation'];
 
-
     if ($valider['valider'] == 1)
     {
+        if(isset($_POST['submit_note'])){
+            if(isset($_POST['note']) AND !empty($_POST['note'])){
+                $id = random_int(0, 2147483647);
+                $pseudo = htmlspecialchars($_SESSION['pseudo']);
+
+                $note_verif =$bdd->prepare("SELECT note FROM note WHERE (id_compte = ?) AND (id_recette = ?)");
+                $note_verif->execute(array($_SESSION["idCompte"],$getid,));
+                $resulte = $note_verif->fetch(PDO::FETCH_ASSOC);
+            
+                if(empty($resulte)){
+                    $note_req = $bdd->prepare('INSERT INTO note (id_note, id_recette, id_compte,note) VALUES (?,?,?,?)');
+                    $note_req->execute(array($id,$getid,$_SESSION["idCompte"],$_POST["note"]));
+                    header("Location: recette?id=$getid");
+                    exit();
+                }else{
+                    $note_req = $bdd->prepare('UPDATE note SET note = ? WHERE id_compte = ? AND id_recette = ?');
+                    $note_req->execute(array($_POST["note"],$_SESSION["idCompte"],$getid));
+                }
+            }
+        }
+
         if(isset($_POST['submit_commentaire'])) {
-            if(isset($_POST['note'],$_POST['commentaire']) AND !empty($_POST['note']) AND !empty($_POST['commentaire'])){
+            if(isset($_POST['commentaire'])  AND !empty($_POST['commentaire'])){
                 $id = random_int(0, 2147483647);
                 $pseudo = htmlspecialchars($_SESSION['pseudo']);
                 $commentaire = htmlspecialchars($_POST['commentaire']);
 
-                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, text_commentaire, date_commentaire, note, id_comte_as_recette) VALUES (?,?,NOW(),?,?)');
-                $ins->execute(array($id, $commentaire,$note,$id));
 
+                $ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, texte_commentaire, date_commentaire, id_compte_as_recette,id_compte) VALUES (?,?,NOW(),?,?)');
+                $ins->execute(array($id, $commentaire,$getid,$_SESSION["idCompte"]));
+                
                 $req = $bdd->prepare('INSERT INTO compte_as_recette (id_compte_as_recette,id_compte,id_recette) VALUES(?,?,?)');
                 $req->execute(array($id,$_SESSION["idCompte"],$getid));
-
-
-                $verif = $bdd->prepare("SELECT note FROM commentaire WHERE (id_recette = $getid) AND (pseudo = $pseudo)");
-                $verif-execute();
 
                 $c_error = "Votre commentaire a bien été posté";
                 header("Location: recette?id=$getid");
@@ -268,7 +285,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         </section>
         <?php if ($valider['valider'] == 1 && isset($_SESSION['idCompte']))
         echo '<section id="espace_commentaire">
-            <h2>Commentaires</h2>
+            <h2>Note</h2>
             <div class="stars">
                <i class="lar la-star" data-value="1"></i>
                <i class="lar la-star" data-value="2"></i>
@@ -278,10 +295,15 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <form method="POST" action="recette.php?id='.$getid.'">
                 <input type="hidden" name="note" id="note" value="0">
+                <input type="submit" name="submit_note" />
+            </form>
+            <h2>Commentaires</h2>
+            <form method="POST" action="recette.php?id='.$getid.'">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
                 <input type="submit" value="valider" name="submit_commentaire">
                 <script src="../js/scriptNote.js"></script>
-            </form>'; ?>
+            </form>';
+          ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
             <b><?php
@@ -290,7 +312,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                     $req_com->execute();
                     $result = $req_com->fetch(PDO::FETCH_ASSOC);
                 ?>
-                <b><?=$result["pseudo"]?>: </b> <?= $c['texte_commentaire']; ?></br>
+                <div id="comment_container"><b><?=$result["pseudo"]?>: </b> <?= $c['texte_commentaire']; ?></div></br>
             <?php }} ?>
             <?php
             if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form id='form' action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input type='hidden' name='nom' value='".$title."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
