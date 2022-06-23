@@ -181,12 +181,12 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){        
-                            if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
+                            if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
+                            else if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
-                            else
-                                    echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                            echo "<div class='container_arrow'>
                                     <span class='arrow'></span>
                                     <span class='arrow'></span>
@@ -224,9 +224,6 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1) 
             echo "<div id='modif_illu'>";
 
-<<<<<<< HEAD
-            
-=======
             // if ($recette['illustration'] == null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0) 
             //     echo '<img src="../img/tartine.jpg">'; 
             // else if ($recette['illustration'] != null && isset($_SESSION['mode']) && $_SESSION['mode'] == 0)
@@ -237,12 +234,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 echo '<img id="recette_image" src="data:image/png;base64,' . base64_encode($recette["illustration"]) . '"/>';
             else
                 echo '<img id="recette_image" src="data:image/jpg;base64,' . base64_encode($recette["illustration"]) . '"/>';
->>>>>>> 52678660cbbaec96f4d3831b995dc1efcdff0d8a
 
                     echo "<p>auteur : " .$auteur["pseudo"] ."</p>";
-             }
-             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
-                 echo "<input id='file' type='file' name='photo' accept='image/png, image/jpeg, image/gif, image/jpg' >"; 
+            // }
+            // else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
+            //     echo "<input id='file' type='file' name='photo' accept='image/png, image/jpeg, image/gif, image/jpg' >"; 
             ?>
             </div>
             <?php 
