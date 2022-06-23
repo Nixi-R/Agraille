@@ -210,12 +210,15 @@ catch (Exception $e)
                 // if ($_POST['ingredients'] != null ){
                 //     $ingredients = $_POST['ingredients'];
                 // }
-
-
-                $SQL = "SELECT * FROM recette WHERE ";
+                $SQL = "SELECT * FROM recette ";
 
                 if (isset($auteur) && $auteur != null){
-                        $SQL = $SQL . " AND INNER JOIN compte_as_recette ON $auteur = compte_as_recette.id_compte";
+                    $req = $bdd->prepare("SELECT compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette WHERE pseudo = '". $auteur ."'" );
+                    $req->execute();
+                    $req = $req->fetchAll();
+
+                    $SQL = $SQL . " INNER JOIN compte_as_recette ON ". $req[0]['id_compte'] ." = compte_as_recette.id_compte AND compte_as_recette.id_recette = recette.id_recette ";
+        
                     $test = 1;
                 }
 
@@ -223,7 +226,7 @@ catch (Exception $e)
                     if ($test == 1){
                         $SQL = $SQL . "AND (temps_realisation <= " . $temps . ")";
                     }else {
-                        $SQL = $SQL . "(temps_realisation <= " . $temps . ")";
+                        $SQL = $SQL . "WHERE (temps_realisation <= " . $temps . ")";
                     }
                     $test = 1;
                 }
@@ -232,7 +235,7 @@ catch (Exception $e)
                     if ($test == 1){
                         $SQL = $SQL . " AND (note = " . $note . ")";
                     } else {
-                        $SQL = $SQL . "(note = " . $note . ")";
+                        $SQL = $SQL . "WHERE (note = " . $note . ")";
                     }
                     $test = 1;
                     
@@ -242,7 +245,7 @@ catch (Exception $e)
                     if ($test == 1){
                         $SQL = $SQL . " AND (nom LIKE '" . $nom . "%')";
                     } else {
-                        $SQL = $SQL . "(nom LIKE '" . $nom . "%')";
+                        $SQL = $SQL . "WHERE (nom LIKE '" . $nom . "%')";
                     }
                     $test = 1;
                 }
@@ -251,7 +254,7 @@ catch (Exception $e)
                     if ($test == 1){
                         $SQL = $SQL . " AND (methode_cuisson = '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "(methode_cuisson = '" . $methode . "')";
+                        $SQL = $SQL . "WHERE (methode_cuisson = '" . $methode . "')";
                     }
                     $test = 1;
                 }
@@ -261,17 +264,17 @@ catch (Exception $e)
                             $SQL = $SQL . " AND (categorie = '" . $type . "')";
                     }
                     else {
-                            $SQL = $SQL . "(categorie = '" . $type . "')";
+                            $SQL = $SQL . "WHERE (categorie = '" . $type . "')";
                     }
                     $test = 1;
                 }
                 
-                if (isset($difficulte) && !(empty($type))){
+                if (isset($difficulte) && !(empty($difficulte))){
                     if ($test == 1){
                             $SQL = $SQL . " AND (difficulte = '" . $difficulte . "')";
                         }
                     else {
-                            $SQL = $SQL . "(difficulte = '" . $difficulte . "')";
+                            $SQL = $SQL . "WHERE (difficulte = '" . $difficulte . "')";
                     }
                     $test = 1;
                 }
@@ -280,7 +283,7 @@ catch (Exception $e)
                     if ($test == 1){
                         $SQL = $SQL . " AND (date_publication = '" . $date . "')";
                     } else {
-                        $SQL = $SQL . "(date_publication = '" . $date . "')";
+                        $SQL = $SQL . "WHERE (date_publication = '" . $date . "')";
                     }
                     $test = 1;
                 }
@@ -292,6 +295,7 @@ catch (Exception $e)
                 //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                 //     }
                 // }
+
                 if (!(empty($_POST)) && count($_POST) == 1 && strlen($_POST['nom']) > 0)
                 {
                     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
@@ -315,14 +319,14 @@ catch (Exception $e)
                 {
                     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                     {
-                        $SQL = $SQL . " AND valider = 0 ORDER BY id_recette DESC";
+                        $SQL = $SQL . " AND valider = 0 ORDER BY recette.id_recette DESC";
                         $SQL = $bdd->prepare($SQL);
                         $SQL->execute();
                         $SQL = $SQL->fetchAll();
                     }
                     else
                     {
-                        $SQL = $SQL . " AND valider = 1 ORDER BY id_recette DESC";
+                        $SQL = $SQL . " AND valider = 1 ORDER BY recette.id_recette DESC";
                         $SQL = $bdd->prepare($SQL);
                         $SQL->execute();
                         $SQL = $SQL->fetchAll();
