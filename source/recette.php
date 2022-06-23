@@ -284,7 +284,13 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </form>'; ?>
             <?php if(isset($c_error)){echo $c_error;}?>
             <?php if ($valider['valider'] == 1) {while($c = $commentaires->fetch()){ ?>
-            <b><!--pseudo--></b> <?= $c['texte_commentaire']; ?></br>
+            <b><?php
+                    $req_com = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN commentaire ON compte.id_compte = commentaire.id_compte WHERE  commentaire.id_commentaire = ?");
+                    $req_com->bindValue(1, $c['id_commentaire']);
+                    $req_com->execute();
+                    $result = $req_com->fetch(PDO::FETCH_ASSOC);
+                ?>
+                <b><?=$result["pseudo"]?>: </b> <?= $c['texte_commentaire']; ?></br>
             <?php }} ?>
             <?php
             if ($admin) echo "<input id='valider' type='submit' name='valider' value='Valider'></form><form id='form' action='./upload_recette.php' method='post'><input type='hidden' name='id' value='".$_GET['id']."'><input type='hidden' name='nom' value='".$title."'><input id='refuser' type='submit' name='refuser' value='Refuser'></form>";
