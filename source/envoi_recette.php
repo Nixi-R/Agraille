@@ -53,7 +53,7 @@
 
     $str_etape = implode(". ", $etape);
     $temps_realisation = "00:".$temps_realisation.":00";
-    $sql = "INSERT INTO recette (id_recette, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, categorie, difficulte, valider) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation',?,'$methode_cuisson','$type_recette','$difficulte', 0);";
+    $sql = "INSERT INTO recette (id_recette, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, categorie, difficulte, valider,ingredient) VALUES ($idRecette,'$title','$description','$date','$str_etape','$temps_realisation',?,'$methode_cuisson','$type_recette','$difficulte', 0,'$ingredient');";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
     $insert_sql->execute();
