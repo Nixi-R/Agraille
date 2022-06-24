@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES latin1 COLLATE latin1_general_ci",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     $id = $_SESSION["idCompte"];
 
     if(isset($_REQUEST['email_form'])){
@@ -8,10 +8,15 @@
         if(empty($email)){
             $req = $bdd->prepare("SELECT adresse_mail FROM compte WHERE id_compte=$id");
         }else{
-            $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id_compte=$id");
-            $_SESSION["adresse_mail"] = $_REQUEST["email_form"];
+            if (!(preg_match("/@/i", $_POST['email_form'])) || !(preg_match("/./i", stristr($_POST['email_form'], "@")))){
+                header("Location: ./profil.php?erreur=email non valide"."&email_form=".$_POST['email_form']);
+                exit();
+            }else{
+                $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id_compte=$id");
+                $_SESSION["adresse_mail"] = $_REQUEST["email_form"];
+            }
         }
-            $req->execute();
+                $req->execute();
     }
 
     if(isset($_REQUEST['pseudo_form'])){

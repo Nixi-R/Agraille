@@ -148,6 +148,9 @@ $insertP = $insertP->fetchAll();
             </form>
         </div>
     </main>
+    <?php 
+
+    ?>
     <script>
             document.getElementById('file_button').onchange = function (e){
                 var file = e.target.files[0];
