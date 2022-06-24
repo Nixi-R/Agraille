@@ -89,11 +89,11 @@ catch (Exception $e)
                     <?php
                         if(isset($_SESSION['idCompte'])){  
                             if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '">';
                             else
-                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '">';
                             echo "<div class='container_arrow'>
                                 <span class='arrow'></span>
                                 <span class='arrow'></span>
@@ -138,7 +138,17 @@ catch (Exception $e)
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">♨️</p>
-                    <div class="filtreTexte flexCentre">Par méthode de cuisson<input type="text" name="methode"></div>
+                    <div class="filtreTexte flexCentre">Par méthode de cuisson
+                        <select require id="methode_cuisson" name="methode">
+                            <option>Aucune</option>
+                            <option>Marinade</option>
+                            <option>Bouillir</option>
+                            <option>Mijoter</option>
+                            <option>A la poêle</option>
+                            <option> A la marmite</option>
+                            <option>Au four</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📚</p>
