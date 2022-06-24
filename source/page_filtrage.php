@@ -134,11 +134,21 @@ catch (Exception $e)
                 </div>   
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">⏱️</p>
-                    <div class="filtreTexte flexCentre">Par temps de réalisation (en min)<input type="number" name="temps" min="0" max="180"></div>
+                    <div class="filtreTexte flexCentre">Par temps de réalisation (en min)<input type="time" name="temps" min="0" max="180"></div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">♨️</p>
-                    <div class="filtreTexte flexCentre">Par méthode de cuisson<input type="text" name="methode"></div>
+                    <div class="filtreTexte flexCentre">Par méthode de cuisson
+                        <select require id="methode_cuisson" name="methode">
+                            <option></option>
+                            <option>Marinade</option>
+                            <option>Bouillir</option>
+                            <option>Mijoter</option>
+                            <option>A la poêle</option>
+                            <option> A la marmite</option>
+                            <option>Au four</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flexBetween filtreTexteIcons">
                     <p class="filtreIcons flexCentre">📚</p>
@@ -224,9 +234,9 @@ catch (Exception $e)
 
                 if (isset($temps) && $temps != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND (temps_realisation <= " . $temps . ")";
+                        $SQL = $SQL . "AND (temps_realisation <= '" . $temps . "')";
                     }else {
-                        $SQL = $SQL . "WHERE (temps_realisation <= " . $temps . ")";
+                        $SQL = $SQL . "WHERE (temps_realisation <= '" . $temps . "')";
                     }
                     $test = 1;
                 }
@@ -294,6 +304,8 @@ catch (Exception $e)
                 //         $SQL = $SQL . "(ingredients = '" . $ingredients . "')";
                 //     }
                 // }
+
+                echo $SQL;
 
                 if (!(empty($_POST)) && count($_POST) == 1 && strlen($_POST['nom']) > 0)
                 {

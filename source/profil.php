@@ -69,14 +69,13 @@ $insertP = $insertP->fetchAll();
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){        
-
                             if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else
                                 echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
-                           echo "<div class='container_arrow'>
+                            echo "<div class='container_arrow'>
                                     <span class='arrow'></span>
                                     <span class='arrow'></span>
                                  </div>";
