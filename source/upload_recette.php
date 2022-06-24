@@ -47,8 +47,8 @@
         
         $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
         date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
-        ingredients = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["categorie"].'",
-        difficulte = "'.$_POST["difficulte"].'" WHERE id = "'.$_POST["id"].'"';
+        ingredient = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["categorie"].'",
+        difficulte = "'.$_POST["difficulte"].'" WHERE id_recette = "'.$_POST["id"].'"';
 
         $insertRecipe = $conn->prepare($insertRecipe);
     
@@ -58,7 +58,7 @@
         {
             $bin = fopen($_FILES['photo']['tmp_name'], 'rb');
             $insertRecipe = "UPDATE recette SET illustration = ?
-            WHERE id = '".$_POST['id']."'";
+            WHERE id_recette = '".$_POST['id']."'";
             $insertRecipe = $conn->prepare($insertRecipe);
             $insertRecipe -> bindValue(1, $bin, PDO::PARAM_LOB);
             $insertRecipe->execute();
@@ -87,7 +87,7 @@
             
     else if (isset($_POST['refuser']))
     {
-        $insertRecipe = 'DELETE FROM recette WHERE id = "'.$_POST['id'].'"';
+        $insertRecipe = 'DELETE FROM recette WHERE id_recette = "'.$_POST['id'].'"';
         $insertRecipe = $conn->prepare($insertRecipe);
         $insertRecipe->execute();
 
