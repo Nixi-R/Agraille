@@ -11,8 +11,6 @@ catch (Exception $e)
     {
             die('Erreur : ' . $e->getMessage());
     }
-
-    $_POST['pseudo'] = strtolower($_POST['pseudo']);
     
     $recipeS = $conn->prepare('SELECT pseudo,adresse_mail FROM compte');
     $recipeS -> execute();
@@ -20,9 +18,9 @@ catch (Exception $e)
 
     for ($i = 0; $i < count($recipeS); $i++)
     {
-        if ($_POST['pseudo'] == $recipeS[$i]['pseudo'])
+        if ($_POST['pseudo'] === $recipeS[$i]['pseudo'])
             $exist = true;
-        else if($_POST['pseudo'] == $recipeS[$i]['adresse_mail'])
+        else if($_POST['pseudo'] === $recipeS[$i]['adresse_mail'])
             $exist = false;
     }
 

@@ -8,6 +8,7 @@ if (isset($_SESSION['idCompte']))
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="stylesheet" href="../css/inscription.css">
         <title>Agraille Inscription</title>
         <link rel="icon" href="../img/icone_agraille.png" sizes="any">
@@ -19,7 +20,7 @@ if (isset($_SESSION['idCompte']))
         </div>
         <div id="squareSign">
             <p id="main">INSCRIPTION</p>
-            <form id="form" enctype="multipart/form-data" method="POST" action="./certif_compte">
+            <form id="form" enctype="multipart/form-data" method="POST" action="./certif_compte" accept-charset="UTF-8">
                 <div id="pngD">
                     <h3 id="labelPP">Photo de Profil</h3>
                     <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
