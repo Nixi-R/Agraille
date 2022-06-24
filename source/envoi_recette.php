@@ -67,8 +67,6 @@
     $id_ingredient -> execute();
     $id_ingredient = $id_ingredient -> fetchAll();
 
-    print_r($id_ingredient);
-    print("<br>");
     for ($y = 0; isset($_POST["ingredient_$y"]); $y++) {
         for ($x = 0; $x < count($id_ingredient); $x++) {
             if ($id_ingredient[$x][1] == $_POST["ingredient_$y"]) {
@@ -77,8 +75,6 @@
                 $query_ingredient = "INSERT INTO recette_as_ingredient (id_recette_as_ingredient, id_ingredient, id_recette) VALUES ($id_recette_as_ingredient, $ingredient_id, $idRecette);";
                 $insert_ingredient = $bdd->prepare($query_ingredient);
                 $insert_ingredient->execute();
-            } else {
-                print("<br>t'es nul $x<br>");
             }
         }
     }
