@@ -42,7 +42,6 @@ catch (Exception $e)
 }
 
 $fp = fopen("../img/Logoutilisateur.png", "rb");
-$fp = $fp . "p";
 
 if (isset($_FILES['photo_de_profil']['type']))
 {
@@ -59,13 +58,13 @@ $recipeStatement -> execute();
     
 $recipeStatement = $recipeStatement -> fetchAll();
 
-$pseudo = strtolower($_POST['pseudo']);
+$pseudo = $_POST['pseudo'];
 
 if (isset($recipeStatement[0]['pseudo']))
     {
         for ($i = 0; $i < count($recipeStatement); $i++)
         {
-            if ($pseudo == $recipeStatement[$i]['pseudo'])
+            if ($pseudo === $recipeStatement[$i]['pseudo'])
             {
                 header('Location: ./inscription.php?erreur=pseudo deja éxistant&email='.$_POST['email'].'&password='.$_POST['password']);
                 exit();
@@ -91,7 +90,7 @@ if (isset($recipeStatement[0]['adresse_mail']))
     {
         for ($i = 0; $i < count($recipeStatement); $i++)
         {
-            if ($pseudo == $recipeStatement[$i]['adresse_mail'])
+            if ($pseudo === $recipeStatement[$i]['adresse_mail'])
             {
                 header('Location: ./inscription.php?erreur=adresse mail déjà éxistante&email='.$_POST['email'].'&password='.$_POST['password']);
                 exit();
@@ -141,7 +140,7 @@ $sqlQuery = 'INSERT INTO compte(id_compte, pseudo, adresse_mail, mot_de_passe, p
 $insertRecipe = $conn->prepare($sqlQuery);
 
 $insertRecipe -> bindValue(1, $id, PDO::PARAM_STR);
-$insertRecipe -> bindValue(2, strtolower($_POST['pseudo']), PDO::PARAM_STR);
+$insertRecipe -> bindValue(2, $_POST['pseudo'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(3, $_POST['email'], PDO::PARAM_STR);
 $insertRecipe -> bindValue(4, $hash, PDO::PARAM_STR);
 $insertRecipe -> bindValue(5, $fp, PDO::PARAM_LOB);
