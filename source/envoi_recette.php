@@ -26,7 +26,13 @@
         $methode_cuisson = "";
     }
 
+
     for($i = 0; isset($_POST["ingredient_$i"]); $i++){
+       if($_POST["mesure_$i"] == "Aucune"){
+        $_POST["mesure_$i"] = "";
+
+       }
+
         $ingredient[$i] = $_POST["quantite_$i"]  ." " .$_POST["mesure_$i"] ." de " .$_POST["ingredient_$i"];
     }
 
