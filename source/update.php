@@ -5,40 +5,35 @@
 
     if(isset($_REQUEST['email_form'])){
         $email = $_REQUEST['email_form'];
-        if(empty($email)){
-            $req = $bdd->prepare("SELECT adresse_mail FROM compte WHERE id_compte=$id");
-        }else{
+        if(!empty($email)){
             if (!(preg_match("/@/i", $_POST['email_form'])) || !(preg_match("/./i", stristr($_POST['email_form'], "@")))){
-                header("Location: ./profil.php?erreur=email non valide"."&email_form=".$_POST['email_form']);
+                header("Location: ./profil.php");
                 exit();
             }else{
                 $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id_compte=$id");
                 $_SESSION["adresse_mail"] = $_REQUEST["email_form"];
-            }
-        }
                 $req->execute();
+            }
+        }             
     }
 
     if(isset($_REQUEST['pseudo_form'])){
         $pseudo = $_REQUEST['pseudo_form'];
-        if(empty($pseudo)){
+        if(!empty($pseudo)){
             $req = $bdd->prepare("SELECT pseudo FROM compte WHERE id_compte=$id");
-        }else{
             $req = $bdd->prepare("UPDATE compte SET pseudo='$pseudo' WHERE id_compte=$id");
             $_SESSION["pseudo"] = $pseudo;
+            $req->execute();
         }
-        $req->execute();
     }
                             
     if(isset($_REQUEST['password_form'])){
-        // $password = $_REQUEST['password_form'];
             if(!empty($_REQUEST['password_form'])){
                 $hash = password_hash($_REQUEST['password_form'], PASSWORD_DEFAULT);
-                $req = $bdd->prepare("UPDATE compte SET mot_de_passe = ? WHERE id_compte=$id");
+                $req = $bdd->prepare("UPDATE comp:te SET mot_de_passe = ? WHERE id_compte=$id");
                 $req -> bindValue(1,$hash, PDO::PARAM_STR);
                 $req->execute();
             }
-
     }
 
      if(isset($_FILES['profil_pic']['tmp_name'])){

@@ -37,12 +37,15 @@
     }
 
 
-///// 
+/////
+
+
+
     for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
         $ingredient_prop[$i] = $_POST["ingredient_prop_$i"];
         $idIngredient = random_int(0, 2147483647);
-        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id_ingredient,ingredient,valider) VALUES($idIngredient,$ingredient_prop,0)");
-        $ingredient_sql->execute();
+        $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id_ingredient,ingredient,valider) VALUES($idIngredient,?,0)");
+        $ingredient_sql->execute($ingredient_prop[$i]);
 
         $tempo = $_POST["ingredient_prop_quantite_$i"] ." " .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop;
 
@@ -52,6 +55,7 @@
     $ingredient = implode(". ", $ingredient);
 
 ////
+
     for ($i = 1; isset($_POST["step_$i"]); $i++) {
         array_push($etape, $_POST["step_$i"]);
     }

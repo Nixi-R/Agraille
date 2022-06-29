@@ -161,9 +161,9 @@ catch (Exception $e)
                             
                         ?>
                 </div>
-                <!-- <h6> Proposez nous vos ingrédients</h6>
+                <h6> Proposez nous vos ingrédients</h6>
                 <div id="ingredient_prop_container"></div>
-                <span id="ingredient_prop" class="btn btn-primary">+</span> -->
+                <span id="ingredient_prop" class="btn btn-primary">+</span>
             </section>
             <section id="etape">
                 <h6>Décrivez les étapes !</h6>
