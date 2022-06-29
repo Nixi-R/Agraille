@@ -93,24 +93,29 @@
     }
 
     print("Nous avons reçu votre recette !");
-    echo "<a href='../index'>retour à l'accueil</a>"
+    echo "<a href='../index'>retour à l'accueil</a>";
 
 
 function randomize (string $champs, string $table)
 {
+
+    $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+
     $id = random_int(0, 2147483647);
 
-    $recipeStatement = $conn->prepare('SELECT '. $champs .' FROM '. $table);
+    $recipeStatement = $bdd->prepare('SELECT '. $champs .' FROM '. $table);
     $recipeStatement -> execute();
 
     $recipeStatement = $recipeStatement -> fetchAll();
+
+    $verify =true;
 
     while($verify)
     {
         $id = random_int(0, 2147483647);
         for ($i = 0; $i < count($recipeStatement); $i++)
         {
-            if ($id == $recipeStatement[$i]['id_recette'])
+            if ($id == $recipeStatement[$i][$champs])
             {
                 $verify = true;
                 break;
