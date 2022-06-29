@@ -40,9 +40,10 @@
 /////
 
 
+
     for($i = 1; isset($_POST["ingredient_prop_$i"]); $i++){
         $ingredient_prop[$i] = $_POST["ingredient_prop_$i"];
-        $idIngredient = random_int(0, 2147483647);
+        $idIngredient = randomize("id_ingredient", "ingredient");
         $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id_ingredient,ingredient,valider) VALUES($idIngredient,?,0)");
         $ingredient_sql->execute(array($ingredient_prop[$i]));
 
@@ -82,7 +83,7 @@
     for ($y = 0; isset($_POST["ingredient_$y"]); $y++) {
         for ($x = 0; $x < count($id_ingredient); $x++) {
             if ($id_ingredient[$x][1] == $_POST["ingredient_$y"]) {
-                $id_recette_as_ingredient = random_int(0, 2147483647);
+                $id_recette_as_ingredient = randomize("id_recette_as_ingredient", "recette_as_ingredient");
                 $ingredient_id = $id_ingredient[$x][0];
                 $query_ingredient = "INSERT INTO recette_as_ingredient (id_recette_as_ingredient, id_ingredient, id_recette) VALUES ($id_recette_as_ingredient, $ingredient_id, $idRecette);";
                 $insert_ingredient = $bdd->prepare($query_ingredient);
@@ -92,6 +93,36 @@
     }
 
     print("Nous avons reçu votre recette !");
-    echo "<a href='../index'>retour à l'acceuil</a>"
+    echo "<a href='../index'>retour à l'accueil</a>"
+
+
+function randomize (string $champs, string $table)
+{
+    $id = random_int(0, 2147483647);
+
+    $recipeStatement = $conn->prepare('SELECT '. $champs .' FROM '. $table);
+    $recipeStatement -> execute();
+
+    $recipeStatement = $recipeStatement -> fetchAll();
+
+    while($verify)
+    {
+        $id = random_int(0, 2147483647);
+        for ($i = 0; $i < count($recipeStatement); $i++)
+        {
+            if ($id == $recipeStatement[$i]['id_recette'])
+            {
+                $verify = true;
+                break;
+            }
+            else
+            {
+                    $verify = false;
+            }
+                
+        }
+    }
+    return $id;
+}
 
 ?>
