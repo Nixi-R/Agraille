@@ -44,9 +44,9 @@
         $ingredient_prop[$i] = $_POST["ingredient_prop_$i"];
         $idIngredient = random_int(0, 2147483647);
         $ingredient_sql = $bdd->prepare("INSERT INTO ingredient (id_ingredient,ingredient,valider) VALUES($idIngredient,?,0)");
-        $ingredient_sql->execute(array($ingredient_prop));
+        $ingredient_sql->execute(array($ingredient_prop[$i]));
 
-        $tempo = $_POST["ingredient_prop_quantite_$i"] ." " .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop;
+        $tempo = $_POST["ingredient_prop_quantite_$i"] ." " .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop[$i];
 
         $ingredient = array_push($tempo);
     }
@@ -59,7 +59,12 @@
     }
 
     $str_etape = implode(". ", $etape);
-    $temps_realisation = "00:".$temps_realisation.":00";
+
+    if ($temps_realisation >= 60)
+        $temps_realisation = "0". floor($temps_realisation / 60).":". ($temps_realisation % 60) . ":00";
+    else
+        $temps_realisation = "00:".$temps_realisation.":00";
+    
     $sql = "INSERT INTO recette (id_recette, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, categorie, difficulte, valider,ingredient) VALUES ($idRecette,'$title','$description',NOW(),'$str_etape','$temps_realisation',?,'$methode_cuisson','$type_recette','$difficulte', 0,'$ingredient');";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
