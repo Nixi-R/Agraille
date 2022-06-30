@@ -68,6 +68,12 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $auteure->execute();
     $auteur = $auteure->fetch();
 
+    $req = $bdd->prepare("SELECT ingredient.ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient INNER JOIN recette ON recette.id_recette = recette_as_ingredient.id_recette WHERE recette.id_recette = ". $getid);
+    $req->execute();
+    $req = $req->fetch();
+
+    var_dump($req);
+
     $title = $recette['nom'];
     $description = $recette['representation'];
 
@@ -120,6 +126,8 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         $commentaires->execute(array($getid));
     }
 }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -278,8 +286,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         <section id="ingredient">
             <h2>Ingredients</h2>
             <?php
-            if ($admin)
-                echo "<textarea id='ingredients' name='ingredients' form='form'>".$recette['ingredients']."</textarea>";
+            if ($admin){
+                for ($o = 0; $o < (count($req) - 1); $o++ ){
+                echo "<input type='text' id='ingredients' name='ingredients' value='". $req[$o] ."'>";
+                }
+            }
             else 
                 echo $recette['ingredient'];
             ?>
