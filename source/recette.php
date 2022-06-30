@@ -68,7 +68,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $auteure->execute();
     $auteur = $auteure->fetch();
 
-    $req = $bdd->prepare("SELECT ingredient.ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient INNER JOIN recette ON recette.id_recette = recette_as_ingredient.id_recette WHERE recette.id_recette = ". $getid);
+    $req = $bdd->prepare("SELECT ingredient.ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient WHERE recette_as_ingredient.id_recette = ". $getid);
     $req->execute();
     $req = $req->fetch();
 
