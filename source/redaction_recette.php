@@ -21,7 +21,7 @@ catch (Exception $e)
         $insertP = $insertP->fetchAll();
     }
 
-    $ingredient = $conn->prepare('SELECT * FROM ingredient');
+    $ingredient = $conn->prepare('SELECT * FROM ingredient WHERE valider = 1');
     $ingredient->execute();
 
 ?>
