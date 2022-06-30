@@ -71,7 +71,7 @@ catch (Exception $e)
             <div class="nav-burger">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                       <a href="./index.php"><img src="img/icone_agraille.png"></a>
+                       <a href="./index.php"><img src="./img/icone_agraille.png"></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index?categorie=cocktail" >Cocktail</a>
@@ -83,7 +83,7 @@ catch (Exception $e)
                         <a class="nav-link" href="index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">A propos</a>
+                        <a class="nav-link" href="./source/a_propos">A propos</a>
                     </li>
                 </ul>
                 <div class="hamburger">

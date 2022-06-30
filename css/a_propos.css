@@ -1,0 +1,25 @@
+  .texte {
+    display: block;
+    margin-bottom: -350px;
+  }
+  
+  h2 {
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  h5 {
+    margin-left: 50px;
+    font-size: 22px;
+  }
+
+  p {
+    margin-left: 50px;
+    margin-right: 50px;
+    font-size: 18px;
+  }
+
+  .margTitre {
+    margin-top: 50px;
+  }
