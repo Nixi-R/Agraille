@@ -84,7 +84,7 @@
         for ($x = 0; $x < count($id_ingredient); $x++) {
             if ($id_ingredient[$x][1] == $_POST["ingredient_$y"]) {
                 $id_recette_as_ingredient = randomize("id_recette_as_ingredient", "recette_as_ingredient");
-                $ingredient_id = $id_ingredient[$x][0];             //tu fais un = donc ingredient_id est égal à 1, du coup les id des ingredients suivant seront tous = 1
+                $ingredient_id = $id_ingredient[$x][0];            
                 $query_ingredient = "INSERT INTO recette_as_ingredient (id_recette_as_ingredient, id_ingredient, id_recette) VALUES ($id_recette_as_ingredient, $ingredient_id, $idRecette);";
                 $insert_ingredient = $bdd->prepare($query_ingredient);
                 $insert_ingredient->execute();
