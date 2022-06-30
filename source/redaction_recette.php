@@ -57,7 +57,7 @@ catch (Exception $e)
                         <a class="nav-link" href="../index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">A propos</a>
+                        <a class="nav-link" href="./a_propos">A propos</a>
                     </li>
                 </ul>
                 <div class="hamburger">
