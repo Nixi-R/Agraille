@@ -26,6 +26,8 @@
         $methode_cuisson = "";
     }
 
+    $ing_v = 0;
+    $ing_nv = 0;
 
     for($i = 0; isset($_POST["ingredient_$i"]); $i++){
        if($_POST["mesure_$i"] == "Aucune"){
@@ -34,6 +36,18 @@
        }
 
         $ingredient[$i] = $_POST["quantite_$i"]  ." " .$_POST["mesure_$i"] ." de " .$_POST["ingredient_$i"];
+        $ing_v++;
+    }
+
+    for($o = 1; isset($_POST["ingredient_prop_$o"]); $o++){
+        if($_POST["ingredient_prop_mesure_$o"] == "Aucune"){
+         $_POST["ingredient_prop_mesure_$o"] = "";
+ 
+        }
+ 
+        $ingredient[$i] = $_POST["ingredient_prop_quantite_$i"]  ." " .$_POST["ingredient_prop_mesure_$i"] ." de " .$_POST["ingredient_prop_$i"];
+        $i++;
+        $ing_nv++;
     }
 
 
@@ -49,7 +63,7 @@
 
         $tempo = $_POST["ingredient_prop_quantite_$i"] ." " .$_POST["ingredient_prop_mesure_$i"] ."de" .$ingredient_prop[$i];
 
-        $ingredient = array_push($tempo);
+        array_push($ingredient, $tempo);
     }
 
     $ingredient = implode(". ", $ingredient);
@@ -66,7 +80,7 @@
     else
         $temps_realisation = "00:".$temps_realisation.":00";
     
-    $sql = "INSERT INTO recette (id_recette, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, categorie, difficulte, valider,ingredient) VALUES ($idRecette,'$title','$description',NOW(),'$str_etape','$temps_realisation',?,'$methode_cuisson','$type_recette','$difficulte', 0,'$ingredient');";
+    $sql = "INSERT INTO recette (id_recette, nom, representation, date_publication, etape, temps_realisation, illustration, methode_cuisson, categorie, difficulte, valider) VALUES ($idRecette,'$title','$description',NOW(),'$str_etape','$temps_realisation',?,'$methode_cuisson','$type_recette','$difficulte', 0);";
     $insert_sql = $bdd->prepare($sql);
     $insert_sql -> bindValue(1, $recette_image, PDO::PARAM_LOB);
     $insert_sql->execute();
@@ -80,9 +94,19 @@
     $id_ingredient -> execute();
     $id_ingredient = $id_ingredient -> fetchAll();
 
-    for ($y = 0; isset($_POST["ingredient_$y"]); $y++) {
+    $total_ing = $ing_nv + $ing_v;
+
+    for ($y = 0; $y < $total_ing; $y++) {
         for ($x = 0; $x < count($id_ingredient); $x++) {
-            if ($id_ingredient[$x][1] == $_POST["ingredient_$y"]) {
+            if ( $y < $ing_v  && $id_ingredient[$x][1] == $_POST["ingredient_$y"]) {
+                $id_recette_as_ingredient = randomize("id_recette_as_ingredient", "recette_as_ingredient");
+                $ingredient_id = $id_ingredient[$x][0];            
+                $query_ingredient = "INSERT INTO recette_as_ingredient (id_recette_as_ingredient, id_ingredient, id_recette) VALUES ($id_recette_as_ingredient, $ingredient_id, $idRecette);";
+                $insert_ingredient = $bdd->prepare($query_ingredient);
+                $insert_ingredient->execute();
+            }
+            else if ($y >= $ing_v && $id_ingredient[$x][1] == $ingredient_prop[$y-$ing_v+1])
+            {
                 $id_recette_as_ingredient = randomize("id_recette_as_ingredient", "recette_as_ingredient");
                 $ingredient_id = $id_ingredient[$x][0];            
                 $query_ingredient = "INSERT INTO recette_as_ingredient (id_recette_as_ingredient, id_ingredient, id_recette) VALUES ($id_recette_as_ingredient, $ingredient_id, $idRecette);";
@@ -109,6 +133,10 @@ function randomize (string $champs, string $table)
     $recipeStatement = $recipeStatement -> fetchAll();
 
     $verify =true;
+
+    if (empty($recipeStatement)){
+        $verify = false;
+    }
 
     while($verify)
     {
