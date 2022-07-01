@@ -17,7 +17,11 @@ catch (Exception $e)
     $valider = $bdd->prepare('SELECT valider FROM recette where id_recette = '.$_GET["id"]);
     $valider -> execute();
     $valider = $valider->fetch();
-
+    if($valider == false)
+    {
+        header("Location: ../404.php?erreur=cette recette n'existe pas");
+    }
+    
     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
     {
         if ($valider['valider'] == 1)
@@ -49,6 +53,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $recette = $bdd->prepare('SELECT * FROM recette WHERE id_recette= ?');
     $recette->execute(array($getid));
     $recette = $recette->fetch(PDO::FETCH_ASSOC);
+    
 
     $compteasrecette = $bdd->prepare('SELECT id_compte_as_recette FROM compte_as_recette WHERE id_recette = ?');
     $compteasrecette->execute(array($getid));
@@ -68,11 +73,42 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $auteure->execute();
     $auteur = $auteure->fetch();
 
-    $req = $bdd->prepare("SELECT ingredient.ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient INNER JOIN recette ON recette.id_recette = recette_as_ingredient.id_recette WHERE recette.id_recette = ". $getid);
+    $req = $bdd->prepare("SELECT ingredient.ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient WHERE recette_as_ingredient.id_recette = ". $getid ." AND valider = 1");
     $req->execute();
-    $req = $req->fetch();
+    $req = $req->fetchAll();
 
-    var_dump($req);
+    $ingr_valider = $bdd->prepare("SELECT ingredient.ingredient, ingredient.id_ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient WHERE recette_as_ingredient.id_recette = ". $getid ." AND valider = 0");
+    $ingr_valider->execute();
+    $ingr_valider = $ingr_valider->fetchAll();
+
+    for ($o = 0; $o < count($ingr_valider); $o++)
+    {
+        if(isset($_POST['valider_'.$o]) && $_POST['valider_'.$o] = "valider")
+        {
+            $validat = $bdd->prepare("UPDATE ingredient SET valider = 1 WHERE id_ingredient = " . $ingr_valider[$o][1]);
+            $validat-> execute();
+        }
+        else if (isset($_POST['refuser_'.$o]) && $_POST['refuser_'.$o] = "refuser")
+        {
+            $validat = $bdd->prepare("DELETE FROM ingredient WHERE id_ingredient = " . $ingr_valider[$o][1]);
+            $validat-> execute();
+            $validat = $bdd->prepare("DELETE FROM recette WHERE id_recette = " . $getid);
+            $validat-> execute();
+            $validat = $bdd->prepare("DELETE FROM recette_as_ingredient WHERE id_ingredient = " . $ingr_valider[$o][1]);
+            $validat-> execute();
+            $temp = fopen("../blacklist_ingredient.txt", "rw+");
+            fwrite($temp, $ingr_valier[$o][0] . ",");
+        }
+    }
+
+    
+    $req = $bdd->prepare("SELECT ingredient.ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient WHERE recette_as_ingredient.id_recette = ". $getid ." AND valider = 1");
+    $req->execute();
+    $req = $req->fetchAll();
+
+    $ingr_valider = $bdd->prepare("SELECT ingredient.ingredient, ingredient.id_ingredient FROM ingredient INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = ingredient.id_ingredient WHERE recette_as_ingredient.id_recette = ". $getid ." AND valider = 0");
+    $ingr_valider->execute();
+    $ingr_valider = $ingr_valider->fetchAll();
 
     $title = $recette['nom'];
     $description = $recette['representation'];
@@ -165,7 +201,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                         <a class="nav-link" href="../index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">A propos</a>
+                        <a class="nav-link" href="./a_propos">A propos</a>
                     </li>
                 </ul>
                 <div class="hamburger">
@@ -287,12 +323,17 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             <h2>Ingredients</h2>
             <?php
             if ($admin){
-                for ($o = 0; $o < (count($req) - 1); $o++ ){
-                echo "<input type='text' id='ingredients' name='ingredients' value='". $req[$o] ."'>";
+                for ($l = 0; $l < count($req); $l++ ){
+                echo "<input type='text' id='ingredients' name='ingredients_$l' value='". $req[$l][0] ."'>";
+                }
+                for ($o = 0; $o < count($ingr_valider); $o++ ){
+                    echo "<input type='text' id='ingredients' name='ingredients_$o' value='". $ingr_valider[$o][0] ."'>
+                    <input type='submit' id='ingredients' name='valider_$o' value='valider' formaction='#'>
+                    <input type='submit' id='ingredients' name='refuser_$o' value='refuser' formaction='#'>";
                 }
             }
             else 
-                echo $recette['ingredient'];
+                echo $req[$o];
             ?>
         </section>
         <section id="etape">
