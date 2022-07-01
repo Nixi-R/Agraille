@@ -90,14 +90,15 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
         }
         else if (isset($_POST['refuser_'.$o]) && $_POST['refuser_'.$o] = "refuser")
         {
-            $validat = $bdd->prepare("DELETE FROM ingredient WHERE id_ingredient = " . $ingr_valider[$o][1]);
+            $validat = $bdd->prepare("DELETE i FROM ingredient i INNER JOIN recette_as_ingredient ON recette_as_ingredient.id_ingredient = i.id_ingredient WHERE i.valider = 0 AND recette_as_ingredient.id_recette = " . $getid);
             $validat-> execute();
             $validat = $bdd->prepare("DELETE FROM recette WHERE id_recette = " . $getid);
             $validat-> execute();
-            $validat = $bdd->prepare("DELETE FROM recette_as_ingredient WHERE id_ingredient = " . $ingr_valider[$o][1]);
+            $validat = $bdd->prepare("DELETE FROM recette_as_ingredient WHERE id_recette = " . $getid);
             $validat-> execute();
             $temp = fopen("../blacklist_ingredient.txt", "rw+");
-            fwrite($temp, $ingr_valier[$o][0] . ",");
+            fwrite($temp, $ingr_valider[$o][0] . ",");
+            header("Location: ../404.php?erreur=cette recette n'existe pas");
         }
     }
 

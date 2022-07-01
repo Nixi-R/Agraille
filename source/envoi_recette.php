@@ -44,8 +44,8 @@
          $_POST["ingredient_prop_mesure_$o"] = "";
  
         }
- 
-        $ingredient[$i] = $_POST["ingredient_prop_quantite_$i"]  ." " .$_POST["ingredient_prop_mesure_$i"] ." de " .$_POST["ingredient_prop_$i"];
+        
+        $ingredient[$i] = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
         $i++;
         $ing_nv++;
     }
