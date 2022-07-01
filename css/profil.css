@@ -19,6 +19,13 @@ main{
     
     h1 {
         text-align:center;
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
+    h2 {
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
     
     #container_profil {
@@ -60,6 +67,8 @@ main{
     label {
         font-weight: bolder;
         font-size: large;
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
     
     #send_form_button {
@@ -98,4 +107,17 @@ main{
         width: 190px;
         height: 190px;
         border-radius: 100%;
+    }
+
+    #wrapper_information input{
+        border-radius: 4px;
+        border: solid black;
+    }
+
+    #profil_pic_button #submit_image{
+        width: 150px;
+        height: 40px;
+        background: #1d1e22;
+        color: #9A1818;
+        font-weight: bold;
     }

@@ -114,7 +114,7 @@ $insertP = $insertP->fetchAll();
                         </div>
                         <div id="profil_pic_button">
                             <input id="file_button" type="file" name="profil_pic" accept="image/*">
-                            <input type="submit">
+                            <input id="submit_image"type="submit">
                         </div>
                 </div>
                 </form>
