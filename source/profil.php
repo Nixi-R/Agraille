@@ -7,10 +7,29 @@ $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','',
 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 
+if (isset($_REQUEST['id']))
+{
+    $insertP = $bdd->prepare('SELECT * FROM compte WHERE id_compte ='. $_REQUEST['id']);
+    $insertP -> execute();
+    $insertP = $insertP->fetchAll();
 
-$insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
-$insertP -> execute();
-$insertP = $insertP->fetchAll();
+    
+    $insertPp = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
+    $insertPp -> execute();
+    $insertPp = $insertPp->fetchAll();
+
+    if (empty($insertP))
+    {
+        header("Location: ../404.php?erreur=ce profil n'existe pas");
+        exit();
+    }
+}
+else{
+    $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
+    $insertP -> execute();
+    $insertP = $insertP->fetchAll();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +87,19 @@ $insertP = $insertP->fetchAll();
                 <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
-                        if(isset($_SESSION['idCompte'])){        
+                        if(isset($_SESSION['idCompte']) && isset($_REQUEST['id'])){        
+                            if (preg_match('/GIF/i',substr($insertPp[0]['photo_de_profil'], 0, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertPp[0]['photo_de_profil']) . '">';
+                            else if (preg_match('/PNG/i',substr($insertPp[0]['photo_de_profil'], 1, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertPp[0]['photo_de_profil']) . '">';
+                            else
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertPp[0]['photo_de_profil']) . '">';
+                            echo "<div class='container_arrow'>
+                                    <span class='arrow'></span>
+                                    <span class='arrow'></span>
+                                 </div>";
+                        }
+                        else if (isset($_SESSION['idCompte']) && !(isset($_REQUEST['id']))) {
                             if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
@@ -79,7 +110,8 @@ $insertP = $insertP->fetchAll();
                                     <span class='arrow'></span>
                                     <span class='arrow'></span>
                                  </div>";
-                        }else{
+                        }
+                        else{
                             echo"<a href='./source/connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
                             <a href='./source/inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
                         }
@@ -102,39 +134,55 @@ $insertP = $insertP->fetchAll();
             <form action="./update.php" enctype="multipart/form-data" method="POST">
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
-                        <div id="profil_pic">
-                            <?php
-                            if (preg_match('/JFIF/i',substr($insertP[0][0], 0, 10)))
+                        <div id="profil_pic">';
+                    <?php
+                            if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
                                 echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
-                            else if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
+                            else if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
-                            else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
+                            else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
                                 echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
-                            ?>
-                        </div>
+                            
+                        if (!(isset($_REQUEST['id']))){
+                        echo '</div>
                         <div id="profil_pic_button">
                             <input id="file_button" type="file" name="profil_pic" accept="image/*">
                             <input id="submit_image"type="submit">
-                        </div>
-                </div>
-                </form>
-            <form action="update.php" method="POST">
+                            </div>
+                            </div>
+                            </form>
+                        <form action="update.php" method="POST">';
+                        }
+                    ?>
                 <h2>Informations</h2>
                 <div id="wrapper_information">
                     <div id="pseudo_container">
                         <label>Pseudo : </label>
-                        <input id="pseudo_input" type="text" name="pseudo_form" minlength=4 maxlength=30 placeholder="<?php echo $_SESSION['pseudo'] ?>">
-                        <!-- <a  id="pseudo_button" onclick="javascript:document.getElementById('pseudo_input').removeAttribute('readonly');">Modifier pseudo</a onclick="javascript:document.getElementById('password_input').style.opacity='1';"> -->
-                    </div>
+                        <?php 
+                        if (!(isset($_REQUEST['id'])))
+                        {
+                            echo '<input id="pseudo_input" type="text" name="pseudo_form" minlength=4 maxlength=30 placeholder="'.$_SESSION['pseudo'] .'">';
+                        }
+                        else
+                        {
+                            echo "<p id='pseudo_input'>". $insertP[0]['pseudo']."</p>";
+                        }
+                        ?></div>
                     <div id="mail_container">
                         <label>Adresse e-mail : </label>
-                        <input id="email_input" type="email" name="email_form" placeholder="<?php echo $_SESSION['adresse_mail'] ?>">
-                        <!-- <a id="email_button" onclick="javascript:document.getElementById('email_input').removeAttribute('readonly');" >Modifier e-mail</a onclick="javascript:document.getElementById('password_input').style.opacity='1';"> -->
+                        <?php
+                        if (!(isset($_REQUEST['id'])))
+                            echo '<input id="email_input" type="email" name="email_form" placeholder="'.$_SESSION['adresse_mail'] .'">';
+                        else
+                            echo '<p id="email_input">'. $insertP[0]['adresse_mail'].'</p>';
+                        ?>
                     </div>
-                    <div id="password_container">
+                <?php
+                if (!(isset($_REQUEST['id'])))
+                    echo '<div id="password_container">
                         <label>Mot de passe : </label>
                         <input id="password_input" type="password" name="password_form">
-                        <!-- <a id="password_button"  onclick="javascript:document.getElementById('password_input').removeAttribute('readonly');">Modifier mot de passe</a> -->
+                        <!-- <a id="password_button"  onclick="javascript:document.getElementById(\'password_input\').removeAttribute(\'readonly\');">Modifier mot de passe</a> -->
                     </div>
                     <div id="send_form_button">
                         <input type="submit" name="send" value="Envoyer">
@@ -145,7 +193,8 @@ $insertP = $insertP->fetchAll();
                      <div id="uninscription_button">
                         <input  type="submit" name="uninscription" value="Se désinscrire">
                     </div>
-            </form>
+            </form>';
+            ?>
         </div>
     </main>
     <?php 
