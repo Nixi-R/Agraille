@@ -305,8 +305,6 @@ catch (Exception $e)
                 //     }
                 // }
 
-                echo $SQL;
-
                 if (!(empty($_POST)) && count($_POST) == 1 && strlen($_POST['nom']) > 0)
                 {
                     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
