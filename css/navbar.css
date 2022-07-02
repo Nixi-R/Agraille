@@ -224,8 +224,11 @@ background-color: black;
 height: 4px;
 }
 
-.container_arrow{
-cursor: pointer;
+.container_arrow {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 50px;
 }
 
 .container_arrow .arrow:nth-child(1){

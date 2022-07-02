@@ -164,7 +164,7 @@ catch (Exception $e)
                     $note = $note->fetch();
                     $note = $note['AVG(note)'];
  
-                    echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br>$note<p class='card-text'>Rédigé par $auteur</p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
+                    echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br><p>note:  $note</p><p class='card-text'>Rédigé par $auteur</p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
                     
 
                 };

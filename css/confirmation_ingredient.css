@@ -1,0 +1,24 @@
+main {
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#button_form {
+    width: 150px;
+    height: 40px;
+    background: #1d1e22;
+    color: #9A1818;
+    font-weight: bold;
+}
+
+h2 {
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
