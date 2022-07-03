@@ -84,7 +84,7 @@ catch (Exception $e)
                         </input>
                     </form>
                 </div>
-                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){  
@@ -120,7 +120,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <div id="main">
+        <div id="main_filtrage">
             <div class="margFiltreTitre"><h2>Filtrage</h2></div>
             <div class="filtre margFiltre flexCentre"> 
             <form action="#" method="post">
@@ -305,8 +305,6 @@ catch (Exception $e)
                 //     }
                 // }
 
-                echo $SQL;
-
                 if (!(empty($_POST)) && count($_POST) == 1 && strlen($_POST['nom']) > 0)
                 {
                     if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
@@ -347,6 +345,7 @@ catch (Exception $e)
 
                 if (isset($o))
                 {
+                    echo "<div class='container my-2'><div class='card-deck'>";
                     for($i=0; $i<count($SQL); $i++){
                         $id = $SQL[$i]['id_recette'];
 
@@ -367,8 +366,7 @@ catch (Exception $e)
                         $nom = $SQL[$i]['nom'];
                         $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
         
-                        echo("<div class='container my-2'>
-                        <div class='card-deck'>
+                        echo("
                                 <div class='card'>
                                     $img
                                     <div class='card-body'>
@@ -378,10 +376,9 @@ catch (Exception $e)
                                     <div class='card-footer text-center'>
                                 <a href='./recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
                                     </div>
-                                </div>
-                        </div>
-                    </div>");
+                                </div>");
                     }; 
+                    echo "</div></div>";
                 }
             ?>
         </div>

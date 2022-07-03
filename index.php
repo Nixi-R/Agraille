@@ -102,8 +102,8 @@ catch (Exception $e)
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
-                <a class="img_filtre" href="./source/page_filtrage.php"><img src="./img/filtre.png"/></a>
                 </div>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="./img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){        
@@ -163,8 +163,11 @@ catch (Exception $e)
                     $note->execute(array($id));
                     $note = $note->fetch();
                     $note = $note['AVG(note)'];
- 
-                    echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br><p>note:  $note</p><p class='card-text'>Rédigé par $auteur</p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
+                    
+                    if(!empty($note)){
+                        $note = "<p class='card-text'>note:  $note</p>";
+                    }
+                    echo("<div class='card' id='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br>$note<p class='card-text'>Rédigé par $auteur</p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
                     
 
                 };

@@ -139,13 +139,6 @@ font-size: 34px;
   width: 50%;
 }
 
-.img_filtre {
-  display: flex;
-  position: absolute;
-  height: 3%;
-  left: 78%;
-  top: 2.2%;
-}
 
 .search-input {
   width: 100%;
@@ -261,6 +254,8 @@ visibility: visible;
   border-radius: 100%;
 }
 
-#ul:th {
-
+#img_filtre {
+  width: 40px;
+  height: 40px;
+  margin-left: 25%;
 }
