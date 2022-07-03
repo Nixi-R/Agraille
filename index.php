@@ -152,11 +152,11 @@ catch (Exception $e)
                     else{
                         $img = '<img id="img_card" class="card-img-top img-fluid" src="data:image/jpg;base64,' . base64_encode($r['illustration']) . '">';
                     }
-                    $req = "SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
+                    $req = "SELECT pseudo, compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
                     $auteure = $bdd->prepare($req);
                     $auteure->execute();
                     $auteur = $auteure->fetch();
-                    $auteur = $auteur["pseudo"];
+                    $auteure = $auteur["pseudo"];
                     $nom = $r['nom'];
                     $id = $r['id_recette'];
                     $note = $bdd->prepare("SELECT AVG(note) FROM note WHERE id_recette = ?");
@@ -164,7 +164,7 @@ catch (Exception $e)
                     $note = $note->fetch();
                     $note = $note['AVG(note)'];
  
-                    echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br>$note<p class='card-text'>Rédigé par $auteur</p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
+                    echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br>$note<p class='card-text'>Rédigé par <a href='./source/profil.php?id=". $auteur['id_compte'] ."'>$auteure</a></p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
                     
 
                 };
