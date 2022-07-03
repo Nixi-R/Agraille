@@ -102,8 +102,8 @@ catch (Exception $e)
                             <i class="search-input-icon fa fa-search"></i>
                         </input>
                     </form>
-                <a class="img_filtre" href="./source/page_filtrage.php"><img src="./img/filtre.png"/></a>
                 </div>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="./img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){        

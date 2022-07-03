@@ -77,17 +77,17 @@ catch (Exception $e)
                         </input>
                     </form>
                 </div>
-                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){
                            
                             if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '">';
                             else
-                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '">';
                             echo "<div class='container_arrow'>
                                 <span class='arrow'></span>
                                 <span class='arrow'></span>
@@ -124,7 +124,7 @@ catch (Exception $e)
                 <h6>Les ingredients<h6>
                 <div id="ingredient_info_1">
                 <div class="tag-container">
-                    <p>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !<p>
+                    <p>Indiquer les ingredients nécessaire à la réalisation de la recette<p>
                         <?php 
                         $var = array();
                         $x = 0;
@@ -161,7 +161,7 @@ catch (Exception $e)
                             
                         ?>
                 </div>
-                <h6> Proposez nous vos ingrédients</h6>
+                <h6>Il n'y a pas les ingrédients utilisé dans votre recette ? Faites nous des propositions !</h6>
                 <div id="ingredient_prop_container"></div>
                 <span id="ingredient_prop" class="btn btn-primary">+</span>
             </section>
@@ -203,7 +203,7 @@ catch (Exception $e)
                 <h6>Choisissez une illustration pour votre recette !</h6>
                 <input id="recette_image" name="recette_image" type="file" accept="image/jpeg, image/png, image/gif, image/jpg" required>
             </section>
-            <input type="submit">
+            <input id="button_form" type="submit">
         </form>
     </main>
     <script src="../js/scriptIndex.js"></script>

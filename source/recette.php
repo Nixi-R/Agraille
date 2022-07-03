@@ -222,7 +222,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                         </input>
                     </form>
                 </div>
-                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){        
@@ -263,7 +263,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             echo '<form id="form" enctype="multipart/form-data" method="POST" action="./upload_recette.php" id="form_modif">
             <input type="text" id="title" name="nom" value="'.$title.'">'; 
         else 
-            echo "<h2>".$title."</h2>";?>
+            echo "<h1>".$title."</h1>";?>
         <div id="wrapper">
         <section id="image_plat">
             <?php if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1) 
@@ -304,17 +304,17 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             
             <?php
             if ($admin)
-                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
+                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='m".$recette['temps_realisation']."'></br>
                 <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
                 <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
                 <label>Type de recette</label></br><input type='text' name='categorie' value='".$recette['categorie']."'></br>
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
-                echo "<div id='tps_realisation'><label>Temps de réalisation : </label><span>".$recette['temps_realisation']."</span></div>
-                <div id='note1'><label>Note de la recette : </label><span>" .$note['AVG(note)'] ."</span><div>Nombre de personnes ayant noté la recette: " .$compteur['COUNT(note)'] .".</div></div>
-                <div id='methode_cuisson'><label>La méthode de cuisson : </label><span>".$recette['methode_cuisson']."</span></div>
-                <div id='difficulte'><label>La difficulté de la recette : </label><span>".$recette['difficulte']."</span></div>";
+                echo "<div id='tps_realisation'><label>Temps de réalisation : </label><p>".$recette['temps_realisation']."</p></div>
+                <div id='note1'><label>Note de la recette : </label><p>" .$note['AVG(note)'] ."</p><p>Nombre de personnes ayant noté la recette: " .$compteur['COUNT(note)'] .".</p></div>
+                <div id='methode_cuisson'><label>La méthode de cuisson : </label><p>".$recette['methode_cuisson']."</p></div>
+                <div id='difficulte'><label>La difficulté de la recette : </label><p>".$recette['difficulte']."</p></div>";
             }
             ?>
 
@@ -334,7 +334,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 }
             }
             else 
-                echo $req[$o];
+                echo "<p>".$recette['ingredient']."</p>";
             ?>
         </section>
         <section id="etape">
@@ -343,7 +343,13 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             if ($admin)
                 echo "<textarea id='etapes' name='etape' form='form'>".$recette['etape']."</textarea>";
             else
-                echo $recette['etape'];
+            $etape = array();
+            $etape= explode(".", $recette['etape']);
+
+            for($i = 0; $i < count($etape); $i++ ){
+                $j = $i+1;
+                print_r("<p>".$j ."- ".$etape[$i]."</p>");
+            }
             ?>
         </section>
         <?php if ($valider['valider'] == 1 && isset($_SESSION['idCompte']))
@@ -358,12 +364,12 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             </div>
             <form method="POST" action="recette.php?id='.$getid.'">
                 <input type="hidden" name="note" id="note" value="0">
-                <input type="submit" name="submit_note" />
+                <input id="sub_note" type="submit" name="submit_note" />
             </form>
             <h2>Commentaires</h2>
             <form method="POST" action="recette.php?id='.$getid.'">
                 <textarea name="commentaire" placeholder="Votre commentaire..."></textarea>
-                <input type="submit" value="valider" name="submit_commentaire">
+                <input id="sub_com" type="submit" value="valider" name="submit_commentaire">
                 <script src="../js/scriptNote.js"></script>
             </form>';
           ?>

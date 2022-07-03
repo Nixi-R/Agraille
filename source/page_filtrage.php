@@ -84,16 +84,16 @@ catch (Exception $e)
                         </input>
                     </form>
                 </div>
-                <a class="img_filtre" href="./page_filtrage.php"><img src="../img/filtre.png"/></a>
+                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){  
                             if (preg_match('/GIF/i',substr($insertP[0][0], 0, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0][0]) . '">';
                             else if (preg_match('/PNG/i',substr($insertP[0][0], 1, 3)))
-                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0][0]) . '">';
                             else
-                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '"';
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0][0]) . '">';
                             echo "<div class='container_arrow'>
                                 <span class='arrow'></span>
                                 <span class='arrow'></span>
@@ -120,7 +120,7 @@ catch (Exception $e)
         </ul>
     </div>
     <main>
-        <div id="main">
+        <div id="main_filtrage">
             <div class="margFiltreTitre"><h2>Filtrage</h2></div>
             <div class="filtre margFiltre flexCentre"> 
             <form action="#" method="post">
@@ -345,6 +345,7 @@ catch (Exception $e)
 
                 if (isset($o))
                 {
+                    echo "<div class='container my-2'><div class='card-deck'>";
                     for($i=0; $i<count($SQL); $i++){
                         $id = $SQL[$i]['id_recette'];
 
@@ -367,8 +368,7 @@ catch (Exception $e)
                         $idAut = $req[0]['id_compte'];
                         $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
         
-                        echo("<div class='container my-2'>
-                        <div class='card-deck'>
+                        echo("
                                 <div class='card'>
                                     $img
                                     <div class='card-body'>
@@ -378,10 +378,9 @@ catch (Exception $e)
                                     <div class='card-footer text-center'>
                                 <a href='./recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>
                                     </div>
-                                </div>
-                        </div>
-                    </div>");
+                                </div>");
                     }; 
+                    echo "</div></div>";
                 }
             ?>
         </div>

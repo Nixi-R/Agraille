@@ -1,0 +1,24 @@
+  form {
+    align-content: center;
+    align-items: center;
+  }
+  
+  h2 {
+    position: relative;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  h4 {
+    position: relative;
+    text-align: center;
+  }
+
+  p {
+    position: relative;
+    text-align: center;
+  }
+
+  .margTitre {
+    margin-top: 50px;
+  }

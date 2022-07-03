@@ -24,7 +24,7 @@ main {
   background-color: #9A1818;  
 }
 
-.card {
+#card {
   width: 40%;
 }
 
@@ -32,6 +32,7 @@ main {
   gap: 43px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center
 }
 
 #img_card{

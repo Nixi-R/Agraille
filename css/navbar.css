@@ -139,13 +139,6 @@ font-size: 34px;
   width: 50%;
 }
 
-.img_filtre {
-  display: flex;
-  position: absolute;
-  height: 3%;
-  left: 78%;
-  top: 2.2%;
-}
 
 .search-input {
   width: 100%;
@@ -224,8 +217,11 @@ background-color: black;
 height: 4px;
 }
 
-.container_arrow{
-cursor: pointer;
+.container_arrow {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  right: 50px;
 }
 
 .container_arrow .arrow:nth-child(1){
@@ -258,6 +254,8 @@ visibility: visible;
   border-radius: 100%;
 }
 
-#ul:th {
-
+#img_filtre {
+  width: 40px;
+  height: 40px;
+  margin-left: 25%;
 }
