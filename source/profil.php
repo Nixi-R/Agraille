@@ -12,6 +12,12 @@ if (!(isset($_REQUEST['id'])) && !(isset($_SESSION['idCompte'])))
     exit();
 }
 
+if (empty($_REQUEST['id']) && isset($_REQUEST['id']))
+{
+    header("Location: ../");
+    exit();
+}
+
 if (isset($_SESSION['idCompte'])){
     $insertPp = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
     $insertPp -> execute();
@@ -55,7 +61,12 @@ else{
     else
         echo '<link rel="stylesheet" href="../css/profil.css">';
     ?>
-    <title><?php echo $insertP[0]['pseudo']; ?></title>
+    <title><?php
+    if(isset($_REQUEST['id']))
+        echo $insertP[0]['pseudo'];
+    else
+        echo $_SESSION['pseudo'];
+    ?></title>
 </head>
 <body>
 <header>
@@ -135,7 +146,7 @@ else{
     {
         echo '<div class="profil_menu">
         <ul>
-            <li><?php echo "<b>Bonjour ".$_SESSION["pseudo"]."!</b>"; ?></li>
+            <li><b>Bonjour '.$_SESSION["pseudo"].'!</b></li>
             <li><a href="profil.php">Voir profil</a></li>
             <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <li><a onclick="location.href=\'./disconnect\'" href="#">Se déconnecter</a></li>
