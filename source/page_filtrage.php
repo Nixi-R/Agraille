@@ -222,33 +222,30 @@ catch (Exception $e)
                 // }
                 $SQL = "SELECT * FROM recette ";
 
+                $inner = 0;
+
                 if (isset($auteur) && $auteur != null){
                     $req = $bdd->prepare("SELECT compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette WHERE pseudo = '". $auteur ."'" );
                     $req->execute();
                     $req = $req->fetchAll();
 
                     $SQL = $SQL . " INNER JOIN compte_as_recette ON ". $req[0]['id_compte'] ." = compte_as_recette.id_compte AND compte_as_recette.id_recette = recette.id_recette ";
-        
+                    
+                    $test = 1;
+                }
+
+                if (isset($note) && $note != null){
+                    $SQL .= "INNER JOIN note ON recette.id_recette = note.id_recette HAVING SUM(note.note) >= ". $note;
                     $test = 1;
                 }
 
                 if (isset($temps) && $temps != null){
                     if ($test == 1){
-                        $SQL = $SQL . "AND (temps_realisation <= '" . $temps . "')";
+                        $SQL = $SQL . " AND (temps_realisation <= '" . $temps . "')";
                     }else {
                         $SQL = $SQL . "WHERE (temps_realisation <= '" . $temps . "')";
                     }
                     $test = 1;
-                }
-
-                if (isset($note) && $note != null){
-                    if ($test == 1){
-                        $SQL = $SQL . " AND (note = " . $note . ")";
-                    } else {
-                        $SQL = $SQL . "WHERE (note = " . $note . ")";
-                    }
-                    $test = 1;
-                    
                 }
 
                 if (isset($nom) && $nom != null){
@@ -262,9 +259,9 @@ catch (Exception $e)
 
                 if (isset($methode) && $methode != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (methode_cuisson = '" . $methode . "')";
+                        $SQL = $SQL . " AND (methode_cuisson LIKE '" . $methode . "')";
                     } else {
-                        $SQL = $SQL . "WHERE (methode_cuisson = '" . $methode . "')";
+                        $SQL = $SQL . "WHERE (methode_cuisson LIKE '" . $methode . "')";
                     }
                     $test = 1;
                 }

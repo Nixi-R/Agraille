@@ -135,7 +135,7 @@ else{
     {
         echo '<div class="profil_menu">
         <ul>
-            <li><?php echo "<b>Bonjour ".$_SESSION["pseudo"]."!</b>"; ?></li>
+            <li><b>Bonjour '.$_SESSION["pseudo"].'!</b>"; ?></li>
             <li><a href="profil.php">Voir profil</a></li>
             <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <li><a onclick="location.href=\'./disconnect\'" href="#">Se déconnecter</a></li>
