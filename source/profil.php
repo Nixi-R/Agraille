@@ -1,22 +1,28 @@
 <?php
 session_start();
-if(!(isset($_SESSION['idCompte'])))
+if(!(isset($_SESSION['idCompte'])) && isset($_REQUEST['id']) && !(empty($_REQUEST['id_compte'])))
     header('Location: ./connexion');
  
 $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+if (!(isset($_REQUEST['id'])) && !(isset($_SESSION['idCompte'])))
+{
+    header("Location: ./connexion.php");
+    exit();
+}
+
+if (isset($_SESSION['idCompte'])){
+    $insertPp = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
+    $insertPp -> execute();
+    $insertPp = $insertPp->fetchAll();
+}
 
 if (isset($_REQUEST['id']))
 {
     $insertP = $bdd->prepare('SELECT * FROM compte WHERE id_compte ='. $_REQUEST['id']);
     $insertP -> execute();
     $insertP = $insertP->fetchAll();
-
-    
-    $insertPp = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
-    $insertPp -> execute();
-    $insertPp = $insertPp->fetchAll();
 
     if (empty($insertP))
     {
@@ -134,7 +140,7 @@ else{
             <form action="./update.php" enctype="multipart/form-data" method="POST">
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
-                        <div id="profil_pic">';
+                        <div id="profil_pic">
                     <?php
                             if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
                                 echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';

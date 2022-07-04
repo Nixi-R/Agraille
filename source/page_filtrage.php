@@ -253,9 +253,9 @@ catch (Exception $e)
 
                 if (isset($nom) && $nom != null){
                     if ($test == 1){
-                        $SQL = $SQL . " AND (nom LIKE '" . $nom . "%')";
+                        $SQL = $SQL . " AND (nom LIKE '%" . $nom . "%')";
                     } else {
-                        $SQL = $SQL . "WHERE (nom LIKE '" . $nom . "%')";
+                        $SQL = $SQL . "WHERE (nom LIKE '%" . $nom . "%')";
                     }
                     $test = 1;
                 }
@@ -358,12 +358,14 @@ catch (Exception $e)
                             $img = '<img id="img_card" class="card-img-top img-fluid" src="data:image/jpg;base64,' . base64_encode($SQL[$i]['illustration']) . '">';
                         }
 
-                        $req = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON $id = compte_as_recette.id_recette");
+
+                        $req = $bdd->prepare("SELECT pseudo, compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte WHERE $id = compte_as_recette.id_recette");
                         $req->execute();
                         $req = $req->fetchAll();
-
-                        $auteur = $req[$i]['pseudo'];
+                        
+                        $auteur = $req[0]['pseudo'];
                         $nom = $SQL[$i]['nom'];
+                        $idAut = $req[0]['id_compte'];
                         $button = `<button onclick="location.href='./recette.php?id=$id'" class="btn btn-primary">J'veux le graille !</button>`;
         
                         echo("
@@ -371,7 +373,7 @@ catch (Exception $e)
                                     $img
                                     <div class='card-body'>
                                         <h5 class='card-title'>$nom</h5>
-                                        <p class='card-text'>Rédigé par $auteur</p>
+                                        <p class='card-text'>Rédigé par <a href='./profil.php?id=". $idAut ."'>$auteur</a></p>
                                     </div>
                                     <div class='card-footer text-center'>
                                 <a href='./recette.php?id=$id'><button id='recette_button' class='btn btn-primary'>J'veux le graille !</button></a>

@@ -1,10 +1,10 @@
 <?php
     $bdd = new PDO(
-        'mysql:host=localhost;dbname=messagerie;charset=utf8;',
+        'mysql:host=localhost;dbname=agrailledb;charset=utf8;',
         'root',
         ''
     );
-    $recupMessages = $bdd->query("SELECT * FROM messages");
+    $recupMessages = $bdd->query("SELECT * FROM messagerie");
     while($message = $recupMessages->fetch()){
         ?>
         <div class="message">
@@ -14,3 +14,4 @@
         <?php
     }
 ?>
+
