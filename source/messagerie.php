@@ -1,6 +1,39 @@
 <?php
+session_start();
+
+try{
     $bdd = new PDO(
-        'mysql:host=localhost;dbname=messagerie;charset=utf8;',
+        'mysql:host=localhost;dbname=agrailledb;charset=utf8',
+        'root',
+        '',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    }
+catch (Exception $e)
+    {
+            die('Erreur : ' . $e->getMessage());
+    }
+
+    if (isset($_SESSION['idCompte']))
+    {  
+        $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte'] );
+        $insertP -> execute();
+        $insertP = $insertP->fetchAll();
+    }
+
+    if (isset($_SESSION['mode']) && isset($_GET['mode']))
+        if ($_SESSION['mode'] == 1)
+            $_SESSION['mode'] = 0;
+        else
+            $_SESSION['mode'] = 1;
+
+            $ingredient = $bdd->prepare('SELECT * FROM ingredient');
+            $ingredient->execute();
+?>
+
+<?php
+    $bdd = new PDO(
+        'mysql:host=localhost;dbname=agrailledb;charset=utf8;',
         'root',
         ''
     );
@@ -8,7 +41,7 @@
     if(isset($_POST['valider'])) {
         if((isset($_POST['message'])) AND (!empty($_POST['message']))) {
             $id = random_int(0, 2147483647);
-            $pseudo = htmlspecialchars($_SESSION['pseudo']);
+            //$pseudo = htmlspecialchars($_SESSION['pseudo']);
             $message = nl2br(htmlspecialchars($_POST['message']));
             /*$ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, texte_commentaire, date_commentaire, id_compte_as_recette,id_compte) VALUES (?,?,NOW(),?,?)');
             $ins->execute(array($id, $commentaire,$getid,$_SESSION["idCompte"]));
@@ -16,7 +49,7 @@
             $req = $bdd->prepare('INSERT INTO compte_as_recette (id_compte_as_recette,id_compte,id_recette) VALUES(?,?,?)');
             $req->execute(array($id,$_SESSION["idCompte"],$getid));*/
 
-            $insererMessage = $bdd->prepare("INSERT INTO messagerie(id_messagerie, texte_messagerie, date_messagerie, id_compte_as_recette, id_compte) VALUES (?,?,NOW(),?,?)"); 
+            $insererMessage = $bdd->prepare("INSERT INTO messagerie(id_messagerie, texte_messagerie, date_messagerie, id_compte) VALUES (?,?,NOW(),?)"); 
             $insererMessage->execute(array($id, $message, $_SESSION["idCompte"]));
         }else {
             echo "Tous les champs doivent être complétés";
