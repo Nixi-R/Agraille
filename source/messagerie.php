@@ -4,17 +4,28 @@
         'root',
         ''
     );
+    
     if(isset($_POST['valider'])) {
-        if((!empty($_POST['pseudo'])) AND (!empty($_POST['message']))) {
-            $pseudo = $_POST['pseudo'];
-            $message = nl2br($_POST['message']);
+        if((isset($_POST['message'])) AND (!empty($_POST['message']))) {
+            $pseudo = htmlspecialchars($_SESSION['pseudo']);
+            $message = nl2br(htmlspecialchars($_POST['message']));
 
-            $insererMessage = $bdd->prepare("INSERT INTO messages(pseudo, message) VALUES(?, ?)"); 
+            /*$ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, texte_commentaire, date_commentaire, id_compte_as_recette,id_compte) VALUES (?,?,NOW(),?,?)');
+            $ins->execute(array($id, $commentaire,$getid,$_SESSION["idCompte"]));
+                
+            $req = $bdd->prepare('INSERT INTO compte_as_recette (id_compte_as_recette,id_compte,id_recette) VALUES(?,?,?)');
+            $req->execute(array($id,$_SESSION["idCompte"],$getid));*/
+
+            $insererMessage = $bdd->prepare("INSERT INTO messagerie(id_messagerie, texte_messagerie, date_messagerie, id_compte_as_recette, id_compte) VALUES (?,?,NOW(),?,?)"); 
             $insererMessage->execute(array($pseudo, $message));
         }else {
-            echo "Veuillez compléter tous les champs...";
+            echo "Tous les champs doivent être complétés";
         }
     }
+
+    $req_com = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN messagerie ON compte.id_compte = messagerie.id_compte WHERE  messagerie.id_messagerie = ?");
+    $req_com->bindValue(1, $c['id_messagerie']);
+    $req_com->execute();
 ?>
 
 <!DOCTYPE html>
@@ -100,17 +111,15 @@
             <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
-                echo "<li><a href='./page_filtrage?mode=change'>Changement de mode</a></li>";
+                echo "<li><a href='./messagerie?mode=change'>Changement de mode</a></li>";
             ?>
-            <li><a onclick="location.href='./disconnect?page=filtre'" href="#">Se déconnecter</a></li>
+            <li><a onclick="location.href='./disconnect?'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
         <div id="main">
             <div class="margTitre"><h2>CHAT EN LIGNE</h2></div><br/>
             <form method="POST" action="" align="center">
-                <h5>Pseudo</h5><input type="text" name="pseudo">
-                <br/><br/>
                 <h5>Message</h5><textarea name="message"></textarea>
                 <br/>
                 <input type="submit" name="valider">
