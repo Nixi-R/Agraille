@@ -12,6 +12,12 @@ if (!(isset($_REQUEST['id'])) && !(isset($_SESSION['idCompte'])))
     exit();
 }
 
+if (empty($_REQUEST['id']))
+{
+    header("Location: ../");
+    exit();
+}
+
 if (isset($_SESSION['idCompte'])){
     $insertPp = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
     $insertPp -> execute();
