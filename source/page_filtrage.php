@@ -217,9 +217,7 @@ catch (Exception $e)
                 if (isset($_POST['difficulte']) ){
                     $difficulte = $_POST['difficulte'];
                 }
-                // if ($_POST['ingredients'] != null ){
-                //     $ingredients = $_POST['ingredients'];
-                // }
+
                 $SQL = "SELECT * FROM recette ";
 
                 $inner = 0;
