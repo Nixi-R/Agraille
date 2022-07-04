@@ -68,7 +68,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
     $note->execute(array($getid));
     $note = $note->fetch(PDO::FETCH_ASSOC);
 
-    $req = "SELECT pseudo FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
+    $req = "SELECT pseudo, compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
     $auteure = $bdd->prepare($req);
     $auteure->execute();
     $auteur = $auteure->fetch();
@@ -280,7 +280,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                     echo '<img id="recette_image" src="data:image/png;base64,' . base64_encode($recette["illustration"]) . '"/>';
                 else
                     echo '<img id="recette_image" src="data:image/jpg;base64,' . base64_encode($recette["illustration"]) . '"/>';
-                echo "<p>auteur : " .$auteur["pseudo"] ."</p>";
+                echo "<p onclick='location.href=\"./profil.php?id=". $auteur['id_compte'] ."\"' style='cursor:pointer;'>auteur : " .$auteur["pseudo"] ."</p>";
             }
             else if ($recette['illustration'] != null && !(isset($_SESSION['mode'])))
             {
@@ -290,7 +290,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                     echo '<img id="recette_image" src="data:image/png;base64,' . base64_encode($recette["illustration"]) . '"/>';
                 else
                     echo '<img id="recette_image" src="data:image/jpg;base64,' . base64_encode($recette["illustration"]) . '"/>';
-                echo "<p>auteur : " .$auteur["pseudo"] ."</p>";
+                echo "<p onclick='location.href=\"./profil.php?id=". $auteur['id_compte'] ."\"' style='cursor:pointer;'>auteur : " .$auteur["pseudo"] ."</p>";
             }
             else if (isset($_SESSION['mode']) && $_SESSION['mode'] == 1)
                 echo "<input id='file' type='file' name='photo' accept='image/png, image/jpeg, image/gif, image/jpg' >"; 
