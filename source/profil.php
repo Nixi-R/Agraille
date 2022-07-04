@@ -6,6 +6,11 @@ if(!(isset($_SESSION['idCompte'])) && isset($_REQUEST['id']) && !(empty($_REQUES
 $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+if (!(isset($_REQUEST['id'])) && !(isset($_SESSION['idCompte'])))
+{
+    header("Location: ./connexion.php");
+    exit();
+}
 
 if (isset($_SESSION['idCompte'])){
     $insertPp = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte ='. $_SESSION['idCompte']);
