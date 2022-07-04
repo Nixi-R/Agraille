@@ -52,7 +52,7 @@ catch (Exception $e)
                         <a class="nav-link" href="index?categorie=dessert">Desserts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../source/a_propos">A propos</a>
+                        <a class="nav-link" href="../a_propos">A propos</a>
                     </li>
                 </ul>
                 <div class="hamburger">
@@ -102,9 +102,9 @@ catch (Exception $e)
             <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
-                echo "<li><a href='./index?mode=change'>Changement de mode</a></li>";
+                echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";
             ?>
-            <li><a onclick="location.href='./source/disconnect'" href="#">Se déconnecter</a></li>
+            <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
         </ul>
     </div>
     <main>
