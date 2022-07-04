@@ -49,15 +49,15 @@ catch (Exception $e)
             $req = $bdd->prepare('INSERT INTO compte_as_recette (id_compte_as_recette,id_compte,id_recette) VALUES(?,?,?)');
             $req->execute(array($id,$_SESSION["idCompte"],$getid));*/
 
-            $insererMessage = $bdd->prepare("INSERT INTO messagerie(id_messagerie, texte_messagerie, date_messagerie, id_compte) VALUES (?,?,NOW(),?)"); 
-            $insererMessage->execute(array($id, $message, $_SESSION["idCompte"]));
+            $insererMessage = $bdd->prepare("INSERT INTO messagerie(id_messagerie, texte_messagerie, date_messagerie, id_compte) VALUES ($id,$message,NOW()," . $_SESSION["idCompte"] . ")");
+             
+            $insererMessage->execute();
         }else {
             echo "Tous les champs doivent être complétés";
         }
     }
-
-    /*$req_com = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN messagerie ON compte.id_compte = messagerie.id_compte WHERE  messagerie.id_messagerie = ?");
-    $req_com->bindValue(1, $id['id_messagerie']);
+/*
+    $req_com = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN messagerie ON compte.id_compte = messagerie.id_compte WHERE messagerie.id_messagerie = " . $message['id_messagerie']);
     $req_com->execute();*/
 ?>
 
