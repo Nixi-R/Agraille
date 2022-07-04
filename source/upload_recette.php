@@ -22,7 +22,7 @@
         exit();
     }
     
-    if (isset($_FILES['photo']['type']))
+    if (isset($_FILES['photo']['type']) && !empty($_FILES['photo']['type']))
     {
         $img_mime = $_FILES['photo']['type'];
         if ($img_mime != "image/png" && $img_mime != "image/jpg" && $img_mime != "image/jpeg" && $img_mime != "image/gif")
@@ -34,7 +34,7 @@
 
     if (isset($_POST['valider']))
     {
-        if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients"]) < 1 || strlen($_POST["categorie"]) < 1 || strlen($_POST["difficulte"]) < 1 || !(isset($_FILES['photo']['tmp_name'])) || strlen($_FILES['photo']['tmp_name']) < 1)
+        if (strlen($_POST['nom']) < 1 || strlen($_POST["representation"]) < 1 || strlen($_POST["etape"]) < 1 || strlen($_POST["temps_realisation"]) < 1 || strlen($_POST["ingredients_0"]) < 1 || strlen($_POST["categorie"]) < 1 || strlen($_POST["difficulte"]) < 1 || !(isset($_FILES['photo']['tmp_name'])) || strlen($_FILES['photo']['tmp_name']) < 1)
         {
             if($_POST['categorie'] == 'plat' || $_POST['categorie'] == 'dessert')
             {
@@ -44,6 +44,12 @@
 
         }
 
+        $_POST['ingredients'] = "";
+
+        for ($i = 0; isset($_POST["ingredients_$i"]); $i++)
+        {
+            $_POST["ingredients"] .= $_POST["ingredients_$i"];
+        }
         
         $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
         date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
