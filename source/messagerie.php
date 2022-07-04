@@ -7,9 +7,9 @@
     
     if(isset($_POST['valider'])) {
         if((isset($_POST['message'])) AND (!empty($_POST['message']))) {
+            $id = random_int(0, 2147483647);
             $pseudo = htmlspecialchars($_SESSION['pseudo']);
             $message = nl2br(htmlspecialchars($_POST['message']));
-
             /*$ins = $bdd->prepare('INSERT INTO commentaire (id_commentaire, texte_commentaire, date_commentaire, id_compte_as_recette,id_compte) VALUES (?,?,NOW(),?,?)');
             $ins->execute(array($id, $commentaire,$getid,$_SESSION["idCompte"]));
                 
@@ -17,15 +17,15 @@
             $req->execute(array($id,$_SESSION["idCompte"],$getid));*/
 
             $insererMessage = $bdd->prepare("INSERT INTO messagerie(id_messagerie, texte_messagerie, date_messagerie, id_compte_as_recette, id_compte) VALUES (?,?,NOW(),?,?)"); 
-            $insererMessage->execute(array($pseudo, $message));
+            $insererMessage->execute(array($id, $message, $_SESSION["idCompte"]));
         }else {
             echo "Tous les champs doivent être complétés";
         }
     }
 
-    $req_com = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN messagerie ON compte.id_compte = messagerie.id_compte WHERE  messagerie.id_messagerie = ?");
-    $req_com->bindValue(1, $c['id_messagerie']);
-    $req_com->execute();
+    /*$req_com = $bdd->prepare("SELECT pseudo FROM compte INNER JOIN messagerie ON compte.id_compte = messagerie.id_compte WHERE  messagerie.id_messagerie = ?");
+    $req_com->bindValue(1, $id['id_messagerie']);
+    $req_com->execute();*/
 ?>
 
 <!DOCTYPE html>
