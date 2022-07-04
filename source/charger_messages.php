@@ -5,11 +5,12 @@
         ''
     );
     $recupMessages = $bdd->query("SELECT * FROM messagerie");
-    while($message = $recupMessages->fetch()){
+    /*$req_com = $bdd->query("SELECT pseudo FROM compte INNER JOIN messagerie ON compte.id_compte = messagerie.id_compte WHERE messagerie.id_messagerie = " . $message['id_messagerie']);*/
+
+    while($message = $recupMessages->fetch()/* && $pseudo = $req_com->fetch()*/){
         ?>
         <div class="message">
-            <h4><?= $message['pseudo']; ?></h4>
-            <p><?= $message['message']; ?></p>
+            <p><?= $message['date_messagerie'] . " " . $message['texte_messagerie']; ?></p>
         </div>
         <?php
     }
