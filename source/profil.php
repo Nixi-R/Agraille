@@ -49,8 +49,13 @@ else{
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/profil.css">
-    <title>Votre profil</title>
+    <?php
+    if (isset($_REQUEST['id']))
+        echo '<link rel="stylesheet" href="../css/profil_autre.css">';
+    else
+        echo '<link rel="stylesheet" href="../css/profil.css">';
+    ?>
+    <title><?php echo $insertP[0]['pseudo']; ?></title>
 </head>
 <body>
 <header>
@@ -126,22 +131,26 @@ else{
             </div>
         </nav>
     </header>
-    <div class="profil_menu">
+    <?php if (isset($_SESSION['idCompte']))
+    {
+        echo '<div class="profil_menu">
         <ul>
             <li><?php echo "<b>Bonjour ".$_SESSION["pseudo"]."!</b>"; ?></li>
             <li><a href="profil.php">Voir profil</a></li>
             <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
-            <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
+            <li><a onclick="location.href=\'./disconnect\'" href="#">Se déconnecter</a></li>
         </ul>
-    </div>
+    </div>';
+    }
+    ?>
     <main>
         <div id="main">
-            <h1>Profil</h1>
+            <h1 style="border-bottom:">Profil</h1>
             <form action="./update.php" enctype="multipart/form-data" method="POST">
                 <h2>Photo de profil</h2>
                 <div id="container_profil">
                         <div id="profil_pic">
-                    <?php
+                        <?php
                             if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
                                 echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
                             else if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
