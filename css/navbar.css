@@ -236,7 +236,7 @@ transform: translate(10px, -4px) rotate(-45deg);
 .profil_menu {
 display: flex;
 background-color: #9A1818;
-height: 20%;
+height: 210px;
 text-align: left;
 border: solid #1d1e22;
 justify-content: center;
@@ -258,4 +258,10 @@ visibility: visible;
   width: 40px;
   height: 40px;
   margin-left: 25%;
+}
+
+li a {
+  font-weight: bolder;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }

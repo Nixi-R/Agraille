@@ -72,7 +72,7 @@ catch (Exception $e)
                         </input>
                     </form>
                 </div>
-                <a class="img_filtre" href="./source/page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
+                <a class="img_filtre" href="./page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
                 <div class="d-grid gap-2 d-md-block">
                     <?php
                         if(isset($_SESSION['idCompte'])){        
@@ -97,9 +97,9 @@ catch (Exception $e)
     </header>
     <div class="profil_menu">
         <ul>
-            <li><?php echo $_SESSION["pseudo"]; ?></li>
-            <li><a href="./source/profil.php">Voir profil</a></li>
-            <li><a href="./source/confirmation_ingredient.php">Créer une recette</a></li>
+            <li><?php echo "<b>Bonjour ".$_SESSION["pseudo"]."!</b>"; ?></li>
+            <li><a href="./profil.php">Voir profil</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
             <?php
             if (isset($_SESSION['mode']))
                 echo "<li><a href='./index?mode=change'>Changement de mode</a></li>";

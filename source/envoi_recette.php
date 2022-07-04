@@ -2,6 +2,14 @@
     session_start();
     $bdd = new PDO ('mysql:host=localhost;dbname=agrailledb;charset=utf8','root','', [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+    if (isset($_SESSION['idCompte']))
+    {  
+        $insertP = $bdd->prepare('SELECT photo_de_profil FROM compte WHERE id_compte =' .$_SESSION['idCompte']);
+        $insertP -> execute();
+        $insertP = $insertP->fetchAll();
+    }
+    
+
     $title = $_POST["title"];
     $description = $_POST["description"];
     $methode_cuisson = $_POST["methode_cuisson"];
@@ -142,8 +150,103 @@
         }
     }
 
-    print("Nous avons reçu votre recette !");
-    echo "<a href='../index'>retour à l'accueil</a>";
+    
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/envoi_recette.css">
+    <link rel="icon" href="./img/icone_agraille2.png" sizes="any">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+    <nav>
+            <div class="nav-burger">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                       <a href="../index.php"><img src="../img/icone_agraille.png"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index?categorie=cocktail" >Cocktails</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index?categorie=plats">Plats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index?categorie=dessert">Desserts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./a_propos">A propos</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+            <div class="nav-container">
+                <div class="nav-logo">
+                <a href="../index.php"><img src="../img/logo_agraille.png"></a>
+                </div>
+                <div class="search-bar">
+                    <form action="./page_filtrage" method="post">
+                        <input class="search-input" type="text" name="nom" placeholder="Entrer un plat...">
+                            <i class="search-input-icon fa fa-search"></i>
+                        </input>
+                    </form>
+                </div>
+                <a class="img_filtre" href="./page_filtrage.php"><img id="img_filtre" src="../img/filtre.png"/></a>
+                <div class="d-grid gap-2 d-md-block">
+                    <?php
+                        if(isset($_SESSION['idCompte'])){        
+                            if (preg_match('/JFIF/i',substr($insertP[0]['photo_de_profil'], 0, 10)))
+                                echo '<img id="img_profil_pics" src="data:image/jpg;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
+                            else if (preg_match('/GIF/i',substr($insertP[0]['photo_de_profil'], 0, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/gif;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
+                            else if (preg_match('/PNG/i',substr($insertP[0]['photo_de_profil'], 1, 3)))
+                                echo '<img id="img_profil_pics" src="data:image/png;base64,' . base64_encode($insertP[0]['photo_de_profil']) . '">';
+                           echo "<div class='container_arrow'>
+                                    <span class='arrow'></span>
+                                    <span class='arrow'></span>
+                                 </div>";
+                        }else{
+                            echo"<a href='./connexion.php'><button type='button' class='btn btn-primary'>Se connecter</button></a>
+                            <a href='./inscription.php'><button type='button' class='btn btn-primary'>S'inscrire</button></a>";
+                        }
+                     ?>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="profil_menu">
+        <ul>
+            <li><?php echo "<b>Bonjour ".$_SESSION["pseudo"]."!</b>"; ?></li>
+            <li><a href="./profil.php">Voir profil</a></li>
+            <li><a href="./confirmation_ingredient.php">Créer une recette</a></li>
+            <?php
+            if (isset($_SESSION['mode']))
+                echo "<li><a href='../index?mode=change'>Changement de mode</a></li>";
+            ?>
+            <li><a onclick="location.href='./disconnect'" href="#">Se déconnecter</a></li>
+        </ul>
+    </div>
+    <main>
+        <h5>Nous avons reçu votre recette !</h5>
+        <a href='../index'>retour à l'acceuil</a>
+    </main> 
+    <script src="../js/scriptIndex.js"></script>
+</body>
+</html>
+<?php
 
 
 function randomize (string $champs, string $table)

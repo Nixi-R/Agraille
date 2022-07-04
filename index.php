@@ -128,7 +128,7 @@ catch (Exception $e)
     </header>
     <div class="profil_menu">
         <ul>
-            <li><?php echo $_SESSION["pseudo"]; ?></li>
+            <li><?php echo "<b>Bonjour ".$_SESSION["pseudo"]."!</b>"; ?></li>
             <li><a href="./source/profil.php">Voir profil</a></li>
             <li><a href="./source/confirmation_ingredient.php">Créer une recette</a></li>
             <?php
