@@ -126,7 +126,7 @@ catch (Exception $e)
                 <h5>👉 Qu'est-ce qu'Agraille ?</h5><br/>
                 <p>Agraille est un projet informatique d'élèves de semestre 2 de l'école INTECH.</p><br/><br/>
                 <h5>👉 En quoi consiste le projet ?</h5><br/>
-                <p>Notre projet est un site internet de recettes de cuisine. Vous pouvez accéder à de multiples recettes de qualité allant des cocktails aux desserts tout en passant par les plats. C'est l'endroit idéal si vous avez un creu mais que ne savez pas quoi faire !</p><br/><br/>
+                <p>Notre projet est un site internet de recettes de cuisine. Vous pouvez accéder à de multiples recettes de qualité allant des cocktails aux desserts tout en passant par les plats. C'est l'endroit idéal si vous avez un creux mais que ne savez pas quoi faire !</p><br/><br/>
                 <h5>👉 Qui est dans l'équipe ?</h5><br/>
                 <p>L'équipe est composée d'Iliane Benaabel, de Robin Châtillon, de Lucien Lafaye et de Nicolas Vavasseur.</p><br/><br/>
             </div>
