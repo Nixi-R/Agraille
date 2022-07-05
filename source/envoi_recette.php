@@ -54,36 +54,40 @@
         }
         $varchar = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
         array_push($ingredient,$varchar);
-        // $ingredient[$i] = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
-        // $i++;
+        $ingredient[$i] = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
+        $i++;
         $ing_nv++;
     }
 
     $dewa = file_get_contents("../blacklist_ingredient.txt");
 
     $limit = strlen($dewa) - 1;
-     echo $limit;
     for ($n = 1; $n <= $ing_nv; $n++)
     {
+        if ($limit <= 0)
+        {
+            $prevpos = 1;
+            $n = $ing_nv + 1;
+        }
         $prevpos = 0;
         $pos = 0;
         $t = 0;
 
-        // while($limit > $prevpos)
-        // {
-        //     $pos = strpos($dewa, ",", $prevpos +1);
+        while($limit > $prevpos)
+        {
+            $pos = strpos($dewa, ",", $prevpos +1);
 
-        //     $result = substr($dewa, $prevpos+$t, ($pos - $prevpos)- $t);
+            $result = substr($dewa, $prevpos+$t, ($pos - $prevpos)- $t);
 
-        //     if ($_POST["ingredient_prop_$n"] == $result)
-        //     {
-        //         header("Location: ./redaction_recette.php?erreur=ingredient interdit utilisé&ingredient_nombre=$ing_v");
-        //         exit();
-        //     }
+            if ($_POST["ingredient_prop_$n"] == $result)
+            {
+                header("Location: ./redaction_recette.php?erreur=ingredient interdit utilisé&ingredient_nombre=$ing_v");
+                exit();
+            }
 
-        //     $prevpos = $pos;
-        //     $t = 1;
-        // }
+            $prevpos = $pos;
+            $t = 1;
+        }
     }
 
 /////
