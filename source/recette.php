@@ -300,7 +300,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             if ($admin) 
                 echo '<label>Description</label><textarea id="description" name="representation" form="form">'.$description.'</textarea>'; 
             else 
-                echo '<p>'.$description.'</p><div id="recette_info">'; ?>
+                echo '<p id="desc">'.$description.'</p><div id="recette_info">'; ?>
             
             <?php
             if ($admin)
@@ -351,7 +351,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             $etape = array();
             $etape= explode(".", $recette['etape']);
 
-            for($i = 0; $i < count($etape); $i++ ){
+            for($i = 0; $i < count($etape)-1; $i++ ){
                 $j = $i+1;
                 print_r("<p>".$j ."- ".$etape[$i]."</p>");
             }

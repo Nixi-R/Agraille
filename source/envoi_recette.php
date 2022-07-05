@@ -247,7 +247,6 @@
     <main>
         <h5>Nous avons reçu votre recette !</h5>
         <a href='../index'>retour à l'acceuil</a>
-        <?php echo $limit; ?>
     </main> 
     <script src="../js/scriptIndex.js"></script>
 </body>

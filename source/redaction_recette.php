@@ -51,7 +51,7 @@ catch (Exception $e)
                         <a class="nav-link" href="../index?categorie=cocktail" >Cocktails</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index?categorie=plats">Plats</a>
+                        <a class="nav-link" href="../index?categorie=plat">Plats</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index?categorie=dessert">Desserts</a>

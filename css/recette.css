@@ -138,3 +138,7 @@ p, h1, h2, label{
         border: solid black;
         box-shadow: 1px 1px 10px 3px;
 }
+
+#desc {
+    text-align: justify;
+}
