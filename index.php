@@ -152,9 +152,9 @@ catch (Exception $e)
                     else{
                         $img = '<img id="img_card" class="card-img-top img-fluid" src="data:image/jpg;base64,' . base64_encode($r['illustration']) . '">';
                     }
-                    $req = "SELECT pseudo, compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette;";
-                    $auteure = $bdd->prepare($req);
-                    $auteure->execute();
+                    $req = $r["id_recette"];
+                    $auteure = $bdd->prepare("SELECT pseudo, compte.id_compte FROM compte INNER JOIN compte_as_recette ON compte.id_compte = compte_as_recette.id_compte INNER JOIN recette ON recette.id_recette = compte_as_recette.id_recette WHERE recette.id_recette = ?");
+                    $auteure->execute(array($req));
                     $auteur = $auteure->fetch();
                     $auteure = $auteur["pseudo"];
                     $nom = $r['nom'];

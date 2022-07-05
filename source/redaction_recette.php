@@ -136,7 +136,7 @@ catch (Exception $e)
                             $n = $_REQUEST["ingredient_nombre"];
                             for($i = 0; $i<$n; $i++){
                                 echo "<select name='mesure_$i'>
-                                <option>Aucune</option>
+                                <option>Unité</option>
                                 <option>centilitres</option>
                                 <option>litres</option>
                                 <option>grammes</option>

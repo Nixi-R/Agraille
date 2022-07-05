@@ -30,7 +30,7 @@
     $ingredient = array();
     $ingredient_prop = array();
 
-    if($_POST["methode_cuisson"] == "Aucune"){
+    if($_POST["methode_cuisson"] == "Unité"){
         $methode_cuisson = "";
     }
 
@@ -52,37 +52,38 @@
          $_POST["ingredient_prop_mesure_$o"] = "";
  
         }
-        
-        $ingredient[$i] = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
-        $i++;
+        $varchar = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
+        array_push($ingredient,$varchar);
+        // $ingredient[$i] = $_POST["ingredient_prop_quantite_$o"]  ." " .$_POST["ingredient_prop_mesure_$o"] ." de " .$_POST["ingredient_prop_$o"];
+        // $i++;
         $ing_nv++;
     }
 
     $dewa = file_get_contents("../blacklist_ingredient.txt");
 
     $limit = strlen($dewa) - 1;
-
+     echo $limit;
     for ($n = 1; $n <= $ing_nv; $n++)
     {
         $prevpos = 0;
         $pos = 0;
         $t = 0;
 
-        while($limit > $prevpos)
-        {
-            $pos = strpos($dewa, ",", $prevpos +1);
+        // while($limit > $prevpos)
+        // {
+        //     $pos = strpos($dewa, ",", $prevpos +1);
 
-            $result = substr($dewa, $prevpos+$t, ($pos - $prevpos)- $t);
+        //     $result = substr($dewa, $prevpos+$t, ($pos - $prevpos)- $t);
 
-            if ($_POST["ingredient_prop_$n"] == $result)
-            {
-                header("Location: ./redaction_recette.php?erreur=ingredient interdit utilisé&ingredient_nombre=$ing_v");
-                exit();
-            }
+        //     if ($_POST["ingredient_prop_$n"] == $result)
+        //     {
+        //         header("Location: ./redaction_recette.php?erreur=ingredient interdit utilisé&ingredient_nombre=$ing_v");
+        //         exit();
+        //     }
 
-            $prevpos = $pos;
-            $t = 1;
-        }
+        //     $prevpos = $pos;
+        //     $t = 1;
+        // }
     }
 
 /////
@@ -242,6 +243,7 @@
     <main>
         <h5>Nous avons reçu votre recette !</h5>
         <a href='../index'>retour à l'acceuil</a>
+        <?php echo $limit; ?>
     </main> 
     <script src="../js/scriptIndex.js"></script>
 </body>

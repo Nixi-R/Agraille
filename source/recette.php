@@ -98,7 +98,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             $validat-> execute();
             $temp = fopen("../blacklist_ingredient.txt", "rw+");
             fwrite($temp, $ingr_valider[$o][0] . ",");
-            header("Location: ../404.php?erreur=cette recette n'existe pas");
+            header("Location: ../index.php");
         }
     }
 
@@ -304,7 +304,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
             
             <?php
             if ($admin)
-                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='m".$recette['temps_realisation']."'></br>
+                echo "<label>Temps de réalisation</label></br><input id='tps_real' type='text' name='temps_realisation' value='".$recette['temps_realisation']."'></br>
                 <label>Méthode de cuisson</label></br><input type='text' name='methode_cuisson' value='".$recette['methode_cuisson']."'></br>
                 <label>Difficulté</label></br><input type='text' name='difficulte' value='".$recette['difficulte']."'></br>
                 <label>Type de recette</label></br><input type='text' name='categorie' value='".$recette['categorie']."'></br>

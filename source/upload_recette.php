@@ -50,9 +50,9 @@
         {
             $_POST["ingredients"] .= $_POST["ingredients_$i"];
         }
-        
+        $date = date("Y-m-d H:i:s");
         $insertRecipe = 'UPDATE recette SET nom = "'.$_POST['nom'].'", representation = "'. $_POST["representation"]. '",
-        date_publication = "'.date("Y-m-d H:i:s").'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
+        date_publication = "'.$date.'", etape = "'.$_POST["etape"].'", temps_realisation = "'.$_POST["temps_realisation"].'",
         ingredient = "'.$_POST["ingredients"]. '", methode_cuisson = "'.$_POST["methode_cuisson"].'", valider = 1, categorie = "'.$_POST["categorie"].'",
         difficulte = "'.$_POST["difficulte"].'" WHERE id_recette = "'.$_POST["id"].'"';
 

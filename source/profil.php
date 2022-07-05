@@ -201,6 +201,9 @@ else{
                             echo '<input id="email_input" type="email" name="email_form" placeholder="'.$_SESSION['adresse_mail'] .'">';
                         else
                             echo '<p id="email_input">'. $insertP[0]['adresse_mail'].'</p>';
+
+                        if(isset($_GET["err"])){echo "<p>".$_GET["err"]."</p>";}
+
                         ?>
                     </div>
                 <?php
@@ -220,6 +223,7 @@ else{
                         <input  type="submit" name="uninscription" value="Se désinscrire">
                     </div>
             </form>';
+
             ?>
         </div>
     </main>

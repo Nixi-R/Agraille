@@ -252,6 +252,7 @@ visibility: visible;
   width: 50px;
   height: 50px;
   border-radius: 100%;
+  margin-bottom: 5px;
 }
 
 #img_filtre {

@@ -6,8 +6,8 @@
     if(isset($_REQUEST['email_form'])){
         $email = $_REQUEST['email_form'];
         if(!empty($email)){
-            if (!(preg_match("/@/i", $_POST['email_form'])) || !(preg_match("/./i", stristr($_POST['email_form'], "@")))){
-                header("Location: ./profil.php");
+            if (!(preg_match("/@/i", $email)) || !(preg_match("/\./i", stristr($email, "@")))){
+                header("Location: ./profil.php?err=format mail incorrect");
                 exit();
             }else{
                 $req = $bdd->prepare("UPDATE compte SET adresse_mail = '$email' WHERE id_compte=$id");
