@@ -311,7 +311,11 @@ if(isset($_GET['id']) AND !empty($_GET['id'])){
                 <input type='hidden' name='id' value='".$_GET['id']."'>";
             else
             {   
-                $notes = number_format($note['AVG(note)'],1);
+                if(isset($note['AVG(note)'])){
+                    $notes = number_format($note['AVG(note)'],1);
+                    $notes = $notes ."/5";
+                }else
+                $notes = "";
                 echo "<div id='tps_realisation'><label>Temps de réalisation : </label><p>".$recette['temps_realisation']."</p></div>
                 <div id='note1'><label>Note de la recette : </label><p>" .$notes ."</p><p>Nombre de personnes ayant noté la recette: " .$compteur['COUNT(note)'] .".</p></div>
                 <div id='methode_cuisson'><label>La méthode de cuisson : </label><p>".$recette['methode_cuisson']."</p></div>

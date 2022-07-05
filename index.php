@@ -163,10 +163,11 @@ catch (Exception $e)
                     $note->execute(array($id));
                     $note = $note->fetch();
 
-                    if(!empty($note)){
+                    if(!empty($note["AVG(note)"])){
                         $notes = number_format($note['AVG(note)'],1);
-                        $notes = "<p class='card-text'>note:  $notes</p>";
-                    } 
+                        $notes = "<p class='card-text'>note:  $notes/5</p>";
+                    }else
+                    $notes = "";
                     echo("<div class='card'>$img<div class='card-body'><h5 class='card-title'>$nom</h5></br>$notes<p class='card-text'>Rédigé par <a href='./source/profil.php?id=". $auteur['id_compte'] ."'>$auteure</a></p></div><div class='card-footer text-center'><a href='./source/recette.php?id=$id'><div class='btn btn-primary'>J'veux la graille</div></a></div></div>");
                     
 
